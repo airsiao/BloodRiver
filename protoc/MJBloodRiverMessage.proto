@@ -1,0 +1,246 @@
+package com.ourgame.mahjong.bloodriver.protoc.message.game;
+
+//========================================================================================
+// 麻将游戏服务消息结构定义
+// 创建：郭英奎、刘潇
+// OGID_BASE_MESSAGE = 0X00000000
+// OGID_GAME_MESSAGE = OGID_BASE_MESSAGE + 1200
+// CLENT	= 0X00000000
+// SERVER	= 0X00000001
+//========================================================================================
+
+// 一副牌的成牌类型
+enum MeldType{
+	MELD_PAIR = 1;							//对子，将牌或7对
+	MELD_CHI = 2;							//吃牌
+	MELD_PENG = 3;							//碰牌
+	MELD_MING_GANG = 4;						//普通明杠，手里三种，别人打出一张
+	MELD_BU_GANG = 5;						//补杠，先碰，再抓到一张
+	MELD_AN_GANG = 6;						//暗杠
+	MELD_IN_HAND = 7;						//手中的成牌
+}
+
+// 动作
+enum ActionType{
+	ACT_GIVEUP = 0;
+	ACT_CHI = 1;
+	ACT_PENG = 2;
+	ACT_GANG = 4;
+	ACT_BUGANG = 8;
+	ACT_ANGANG =16;
+	ACT_WIN = 32;
+	ACT_TING = 64;
+	ACT_SHOW = 128;
+	ACT_BUHUA = 256;
+}
+
+// 一副牌，吃碰杠
+message Meld{
+	required MeldType meldType = 1;			//类型
+	required uint32 provider = 2;			//打出最后一张牌的玩家座位号
+	required uint32 lastTile = 3;			//最后一张牌
+	repeated uint32 rootTile = 4;			//手中牌
+}
+
+// 和牌时的牌
+message Set{
+	required uint32 seat = 1;				//座位号
+	required uint32 winType = 2;			//和牌方式，游戏自己定义
+	required uint32 lastTile = 3;			//最后一张牌
+	required uint32 provider = 4;			//最后一张是谁打的，等于seat就是自摸
+	repeated Meld melds = 5;				//牌
+	optional uint32 params = 6;				//其他参数，抢杠，海底捞，绝张等
+}
+
+// 玩家信息
+message Player{
+	required uint64 id = 1;					//id
+	required string name = 2;				//名字
+	required uint32 score = 3;				//积分
+	required uint32 money = 4;				//财富
+	optional uint32 seat = 5;				//座位号
+	optional uint32 gender = 6;				//性别
+	optional uint32 level = 7;				//等级
+	optional string headImage = 8;			//头像
+	optional uint32 vip = 9;				//vip等级
+}
+
+// 历史消息
+message CurrentTileInfo{
+	required uint32 seat = 1;				//座位号
+	required uint32 inhandAmount = 2;		//手中牌数量
+	repeated Meld  showTiles = 3;			//吃碰杠
+	repeated uint32 discardedTiles = 4;		//打出的牌
+	repeated uint32 inhandTiles	= 5;		//手中的牌
+	optional uint32 flowers = 6;			//花牌
+}
+
+
+
+//========================================================================================
+// 进入游戏
+// #define OGID_GAME_ENTER						( OGID_GAME_MESSAGE + 1 )
+message CReqEnterGame{
+	required uint64 gameId = 1;
+}
+
+message SAckEnterGame{
+	required uint64 gameId = 1;
+	required uint32 result = 2;					//结果，0为成功
+	optional string failReason = 3;				//失败原因
+}
+
+//========================================================================================
+// 游戏开始
+// #define OGID_GAME_START						( OGID_GAME_MESSAGE + 3 )
+message NtfStartGame{
+	required uint64 gameId = 1;					//游戏ID
+	required uint32 gameType = 2;				//麻将种类
+	repeated Player players = 3;				//玩家
+	required uint32 dealer = 4;					//庄家座位号
+	required uint32 basicScore = 5;				//基础分，每番多少分
+	required uint32 stage = 6;					//阶段号
+	required uint32 round = 7;					//第几圈
+	required uint32 serial = 8;					//第几局
+}
+
+//========================================================================================
+// 重新开始游戏
+// #define OGID_GAME_RESUME						( OGID_GAME_MESSAGE + 5 )
+message NtfResumeGame{
+	required uint32 dealer = 1;					//庄家座位号
+	required uint32 basicScore = 2;				//基础分，每番多少分
+	required uint32 stage = 3;					//阶段号
+	required uint32 round = 4;					//第几圈
+	required uint32 serial = 5;					//第几局
+}
+
+//========================================================================================
+// 洗牌，抓牌
+// #define OGID_SHUFFLE							( OGID_GAME_MESSAGE + 7 )
+message NtfShuffle{
+	required uint32 shuffleTime = 1;			//洗牌时间，单位秒
+	required uint32 dealsTime = 2;				//抓牌时间，单位秒
+}
+
+//========================================================================================
+// 掷骰子
+// #define OGID_DICE							( OGID_GAME_MESSAGE + 9 )
+message NtfCastDice{
+	required uint32 seat = 1;					//座位号
+	repeated uint32 points = 2;					//色子的点数
+}
+
+//========================================================================================
+// 开门抓牌
+// #define OGID_DEAL							( OGID_GAME_MESSAGE + 11 )
+message NtfDeals{
+	required uint32 startSeat = 1;				//从哪一家门前抓牌
+	required uint32 startFrusta = 2;			//从第几墩开始抓牌
+	repeated uint32 tiles = 3;					//抓到的牌
+	required uint32 waitingTime = 4;			//等候庄家反应的时间
+}
+
+//========================================================================================
+// 有人打牌
+// #define OGID_DISCARD							( OGID_GAME_MESSAGE + 13 )
+message NtfDiscard{
+	required uint32 tile = 1;
+	required uint32 seat = 2;
+}
+
+//========================================================================================
+// 抓牌
+// #define OGID_DRAW							( OGID_GAME_MESSAGE + 15 )
+message NtfDraw{
+	required uint32 seat = 1;					//抓牌者座位号
+	required bool front = 2 [default = true];	//从前边抓还是后面抓牌
+	optional uint32 tileId = 3;					//自己抓牌时，抓的牌的ID
+}
+
+//========================================================================================
+// 动作请求
+// #define OGID_ACTION							( OGID_GAME_MESSAGE + 17 )
+message SReqAct{
+	required ActionType act = 1;				//动作类型，可能有多个
+	required uint32 time = 2; 					//最长反应时间
+}
+message CAckAct{
+	required uint32 seat = 1;
+	required ActionType act = 2;				//放弃，吃，碰，杠，听，打牌
+	optional uint32 provider = 3;
+	optional uint32 targetTile = 4;
+	repeated uint32 rootTiles = 5;
+}
+
+//========================================================================================
+// 有玩家动作
+// #define OGID_PLAYER_ACTION					( OGID_GAME_MESSAGE + 19 )
+message NtfPlayerAction{
+	required uint32 seat = 1;
+	required ActionType act = 2;				//放弃，吃，碰，杠，听
+	optional uint32 provider = 3;
+	optional uint32 targetTile = 4;
+	repeated uint32 rootTiles = 5;
+}
+
+//========================================================================================
+// 有玩家胡牌
+// #define OGID_PLAYER_WIN						( OGID_GAME_MESSAGE + 21 )
+message NtfWin{
+	required uint32 seat = 1;					//座位号
+	required uint32 provider = 2;				//点炮
+	required uint32 targetTile = 3;				//最后一张牌
+	repeated Set set = 4;						//牌型
+	required uint32 winType = 5;				//和牌类型
+	required uint32 winTimes = 6;				//番数
+	repeated uint32 scores = 7;					//最终积分
+	optional uint32 winParams = 8;				//和牌参数
+	optional uint32 flowers = 9;				//花牌
+	optional bool end = 10;						//是否结束游戏
+}
+
+//========================================================================================
+// 荒庄
+// #define OGID_DRAW_GAME						( OGID_GAME_MESSAGE + 23 )
+message NtfDrawGame{
+}
+
+//========================================================================================
+// 断线重连
+// #define OGID_DRAW_GAME						( OGID_GAME_MESSAGE + 25 )
+message NtfGameStatus{
+	required uint32 gameId = 1;					//游戏ID
+	required uint32 gameType = 2;				//麻将种类
+	repeated Player players = 3;				//玩家
+	required uint32 dealer = 4;					//庄家座位号
+	required uint32 basicScore = 5;				//基础分，每番多少分
+	required uint32 stage = 6;					//阶段号
+	required uint32 round = 7;					//第几圈
+	required uint32 serial = 8;					//第几局
+	required uint32 startSeat = 9;				//开门的座位号
+	required uint32 startFrusta = 10;			//开门的墩数
+	required uint32 frontDrewTiles = 11;		//前边抓过多少张牌
+	required uint32 backDrewTiles = 12;			//后边抓过多少张牌
+	repeated CurrentTileInfo tileInfos = 13;	//用户牌的信息
+}
+
+//========================================================================================
+// 托管
+// #define OGID_GAME_HOSTING					( OGID_GAME_MESSAGE + 27 )
+message CReqUserTrust{
+	required uint64 gameId = 1;
+	required int32 trust = 2;					//0为解除托管,1手动托管，2超时自动托管，4断线自动托管
+}
+message SAckUserTrust{
+	required uint64 gameId = 1;
+	required int32 seat = 2;					//座位号
+	required int32 trust = 3;
+}
+
+//========================================================================================
+// 游戏结束
+// #define OGID_GAME_END						( OGID_GAME_MESSAGE + 29 )
+message NtfEndGame{
+	required uint64 gameId = 1;
+}
