@@ -1,6 +1,5 @@
 package com.ourgame.mahjong.bloodriver.utils
 {
-	import com.ourgame.mahjong.bloodriver.enum.CardColor;
 	import com.ourgame.mahjong.bloodriver.vo.Card;
 	import com.wecoit.errors.SingletonError;
 	
@@ -53,28 +52,6 @@ package com.ourgame.mahjong.bloodriver.utils
 		// -------------------------------------------------------------------------------------------------------- 方法
 		
 		/**
-		 * 生成一副麻将牌
-		 */
-		public function createMahjong():Vector.<Card>
-		{
-			var mahjong:Vector.<Card> = new Vector.<Card>();
-			
-			//生成万条饼
-			for (var c:int = CardColor.WAN; c <= CardColor.BING; c++)
-			{
-				for (var p:int = 1; p < 10; p++)
-				{
-					for (var i:int = 0; i < 4; i++)
-					{
-						mahjong.push(this.createCard(c, p, i));
-					}
-				}
-			}
-			
-			return mahjong;
-		}
-		
-		/**
 		 * 生成一张麻将牌
 		 * @param color
 		 * @param point
@@ -82,7 +59,7 @@ package com.ourgame.mahjong.bloodriver.utils
 		 * @param isMagic
 		 * @return
 		 */
-		public function createCard(color:int, point:int, index:int=0, isMagic:Boolean=false):Card
+		public function create(color:int, point:int, index:int=0, isMagic:Boolean=false):Card
 		{
 			var id:int = 0;
 			id |= index;
@@ -95,30 +72,6 @@ package com.ourgame.mahjong.bloodriver.utils
 			}
 			
 			return new Card(id);
-		}
-		
-		/**
-		 * 随机生成一副手牌
-		 * @param count 张数
-		 * @return
-		 */
-		public function randomCards(count:uint):Vector.<Card>
-		{
-			var mahjong:Vector.<Card> = this.createMahjong();
-			var cards:Vector.<Card> = new Vector.<Card>();
-			
-			for (var i:int = 0; i < count; i++)
-			{
-				var index:uint = Math.floor(Math.random() * mahjong.length);
-				
-				cards.push(mahjong[index]);
-				
-				mahjong.splice(index, 1);
-			}
-			
-			cards.sort(compareCardByID);
-			
-			return cards;
 		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数

@@ -52,7 +52,7 @@ package com.ourgame.mahjong.bloodriver.vo
 		}
 		
 		/**
-		 * 花色
+		 * CardColor，花色
 		 */
 		public function get color():uint
 		{

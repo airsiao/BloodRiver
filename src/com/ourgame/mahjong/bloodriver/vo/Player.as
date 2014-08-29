@@ -1,11 +1,12 @@
 package com.ourgame.mahjong.bloodriver.vo
 {
+	import com.wecoit.data.ValueObject;
 	
 	/**
-	 * 麻将牌组
+	 * 玩家对象
 	 * @author SiaoLeon
 	 */
-	public class CardGroup
+	public class Player extends ValueObject
 	{
 		// -------------------------------------------------------------------------------------------------------- 静态常量
 		
@@ -17,54 +18,18 @@ package com.ourgame.mahjong.bloodriver.vo
 		
 		// -------------------------------------------------------------------------------------------------------- 属性
 		
-		private var _type:uint;
-		
 		/**
-		 * CardGroupType，牌组类型
+		 * 手牌
 		 * @return
 		 */
-		public function get type():uint
+		public function get handCards():HandCards
 		{
-			return this._type;
+			return this.getProperty("handCards", new HandCards());
 		}
 		
-		/**
-		 * CardColor，牌组花色
-		 * @return
-		 */
-		public function get color():uint
+		public function set handCards(value:HandCards):void
 		{
-			if (this.cards != null && this.cards.length > 0)
-			{
-				return this.cards[0].color;
-			}
-			
-			return -1;
-		}
-		
-		/**
-		 * 牌组起始点数（如果为碰、杠则点数一样，如果为顺则为最小点数）
-		 * @return
-		 */
-		public function get point():uint
-		{
-			if (this.cards != null && this.cards.length > 0)
-			{
-				return this.cards[0].point;
-			}
-			
-			return -1;
-		}
-		
-		private var _cards:Vector.<Card>;
-		
-		/**
-		 * 牌列表
-		 * @return
-		 */
-		public function get cards():Vector.<Card>
-		{
-			return this.cards;
+			this.setProperty("handCards", value);
 		}
 		
 		// -------------------------------------------------------------------------------------------------------- 变量
@@ -74,22 +39,12 @@ package com.ourgame.mahjong.bloodriver.vo
 		/**
 		 * 构造函数
 		 */
-		public function CardGroup(... cards)
+		public function Player()
 		{
-			this._cards = new Vector.<Card>();
-			
-			for each (var card:Card in cards)
-			{
-				this._cards.push(card);
-			}
+			super();
 		}
-		
+	
 		// -------------------------------------------------------------------------------------------------------- 方法
-		
-		public function toString():String
-		{
-			return "(" + this.cards.join(",") + ")";
-		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数
 	

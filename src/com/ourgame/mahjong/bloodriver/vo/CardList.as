@@ -188,7 +188,7 @@ package com.ourgame.mahjong.bloodriver.vo
 					
 					for (var p:int = 1; p < 10; p++)
 					{
-						var card:Card = MahjongFactory.instance.createCard(c, p, 0);
+						var card:Card = MahjongFactory.instance.create(c, p, 0);
 						var cards:CardList = new CardList(this.list.concat());
 						cards.add(card);
 						
@@ -255,6 +255,10 @@ package com.ourgame.mahjong.bloodriver.vo
 			return color;
 		}
 		
+		/**
+		 * 列表
+		 * @default
+		 */
 		public var list:Vector.<Card>;
 		
 		// -------------------------------------------------------------------------------------------------------- 变量

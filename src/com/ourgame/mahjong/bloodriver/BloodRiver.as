@@ -1,18 +1,11 @@
 package com.ourgame.mahjong.bloodriver
 {
-	import com.ourgame.mahjong.bloodriver.enum.CardColor;
 	import com.ourgame.mahjong.bloodriver.state.StartupState;
-	import com.ourgame.mahjong.bloodriver.utils.MahjongFactory;
-	import com.ourgame.mahjong.bloodriver.vo.Card;
-	import com.ourgame.mahjong.bloodriver.vo.CardList;
-	import com.ourgame.mahjong.bloodriver.vo.HandCards;
 	import com.ourgame.mahjong.libaray.vo.GameInfo;
 	import com.wecoit.core.AssetsManager;
 	import com.wecoit.data.HashMap;
 	import com.wecoit.mvc.Application;
 	import com.wecoit.mvc.core.IState;
-	
-	import flash.utils.getTimer;
 	
 	[SWF(width="960", height="600", backgroundColor="#000000", frameRate="25")]
 	
@@ -64,40 +57,41 @@ package com.ourgame.mahjong.bloodriver
 		public function BloodRiver(root:IState=null)
 		{
 			super(new StartupState());
-			
-			var time:Number = getTimer();
-			
-			var cards:CardList = new CardList();
-			
-			cards.add(MahjongFactory.instance.createCard(CardColor.WAN, 1, 0));
-			cards.add(MahjongFactory.instance.createCard(CardColor.WAN, 1, 1));
-			cards.add(MahjongFactory.instance.createCard(CardColor.WAN, 1, 2));
-			cards.add(MahjongFactory.instance.createCard(CardColor.WAN, 2, 0));
-			cards.add(MahjongFactory.instance.createCard(CardColor.WAN, 3, 0));
-			cards.add(MahjongFactory.instance.createCard(CardColor.WAN, 4, 0));
-			cards.add(MahjongFactory.instance.createCard(CardColor.WAN, 5, 0));
-			cards.add(MahjongFactory.instance.createCard(CardColor.WAN, 6, 0));
-			cards.add(MahjongFactory.instance.createCard(CardColor.WAN, 7, 0));
-			cards.add(MahjongFactory.instance.createCard(CardColor.WAN, 8, 0));
-			cards.add(MahjongFactory.instance.createCard(CardColor.WAN, 9, 0));
-			cards.add(MahjongFactory.instance.createCard(CardColor.WAN, 9, 1));
-			cards.add(MahjongFactory.instance.createCard(CardColor.WAN, 9, 2));
-			
-			var hands:HandCards = new HandCards();
-			hands.cards = cards;
-			trace("手牌：", hands);
-			
-			trace("听牌：", hands.cards.tings);
-			
-			var draw:Card = MahjongFactory.instance.createCard(CardColor.WAN, 9, 3);
-			trace("抓牌：", draw);
-			hands.cards.add(draw);
-			
-			trace(hands.cards.isWin);
-			
-			trace(hands.fanTypes);
-			
-			trace("耗时：", getTimer() - time);
+		
+			//			//胡牌测试
+			//			
+			//			var time:Number = getTimer();
+			//			
+			//			var cards:CardList = new CardList();
+			//			cards.add(MahjongFactory.instance.createCard(CardColor.WAN, 1, 0));
+			//			cards.add(MahjongFactory.instance.createCard(CardColor.WAN, 1, 1));
+			//			cards.add(MahjongFactory.instance.createCard(CardColor.WAN, 1, 2));
+			//			cards.add(MahjongFactory.instance.createCard(CardColor.WAN, 2, 0));
+			//			cards.add(MahjongFactory.instance.createCard(CardColor.WAN, 3, 0));
+			//			cards.add(MahjongFactory.instance.createCard(CardColor.WAN, 4, 0));
+			//			cards.add(MahjongFactory.instance.createCard(CardColor.WAN, 5, 0));
+			//			cards.add(MahjongFactory.instance.createCard(CardColor.WAN, 6, 0));
+			//			cards.add(MahjongFactory.instance.createCard(CardColor.WAN, 7, 0));
+			//			cards.add(MahjongFactory.instance.createCard(CardColor.WAN, 8, 0));
+			//			cards.add(MahjongFactory.instance.createCard(CardColor.WAN, 9, 0));
+			//			cards.add(MahjongFactory.instance.createCard(CardColor.WAN, 9, 1));
+			//			cards.add(MahjongFactory.instance.createCard(CardColor.WAN, 9, 2));
+			//			
+			//			var hands:HandCards = new HandCards();
+			//			hands.cards = cards;
+			//			trace("手牌：", hands);
+			//			
+			//			trace("听牌：", hands.cards.tings);
+			//			
+			//			var draw:Card = MahjongFactory.instance.createCard(CardColor.WAN, 9, 3);
+			//			trace("抓牌：", draw);
+			//			hands.cards.add(draw);
+			//			
+			//			trace(hands.cards.isWin);
+			//			
+			//			trace(hands.fanTypes);
+			//			
+			//			trace("耗时：", getTimer() - time);
 		}
 	
 		// -------------------------------------------------------------------------------------------------------- 方法

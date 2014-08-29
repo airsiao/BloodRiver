@@ -1,13 +1,13 @@
 package com.ourgame.mahjong.bloodriver.vo
 {
 	import com.ourgame.mahjong.bloodriver.enum.CardColor;
-	import com.ourgame.mahjong.bloodriver.enum.FanType;
+	import com.ourgame.mahjong.bloodriver.utils.MahjongFactory;
 	
 	/**
-	 * 手牌
+	 * 一副麻将牌
 	 * @author SiaoLeon
 	 */
-	public class HandCards
+	public class Mahjong
 	{
 		// -------------------------------------------------------------------------------------------------------- 静态常量
 		
@@ -20,42 +20,10 @@ package com.ourgame.mahjong.bloodriver.vo
 		// -------------------------------------------------------------------------------------------------------- 属性
 		
 		/**
-		 * 胡牌番种列表
-		 * @return
-		 */
-		public function get fanTypes():Vector.<uint>
-		{
-			var result:Vector.<uint> = new Vector.<uint>();
-			
-			if (!this.cards.isWin)
-			{
-				return result;
-			}
-			
-			if (this.cards.isPeng && this.groups.isPeng)
-			{
-				result.push(FanType.PENGPENG);
-			}
-			
-			if (this.cards.color != CardColor.UNKNOW && (this.groups.color == CardColor.UNKNOW || this.cards.color == this.groups.color))
-			{
-				result.push(FanType.QINGYISE);
-			}
-			
-			return result;
-		}
-		
-		/**
 		 * 牌列表
 		 * @default
 		 */
-		public var cards:CardList;
-		
-		/**
-		 * 牌组列表
-		 * @default
-		 */
-		public var groups:GroupList;
+		public var cards:Vector.<Card>;
 		
 		// -------------------------------------------------------------------------------------------------------- 变量
 		
@@ -64,17 +32,44 @@ package com.ourgame.mahjong.bloodriver.vo
 		/**
 		 * 构造函数
 		 */
-		public function HandCards(cards:CardList=null, groups:GroupList=null)
+		public function Mahjong()
 		{
-			this.cards = (cards == null) ? new CardList() : cards;
-			this.groups = (groups == null) ? new GroupList() : groups;
+			this.cards = new Vector.<Card>();
+			this.shuffle();
 		}
 		
 		// -------------------------------------------------------------------------------------------------------- 方法
 		
-		public function toString():String
+		/**
+		 * 洗牌，重新创建一副完整的麻将牌
+		 */
+		public function shuffle():void
 		{
-			return this.cards + this.groups;
+			this.cards.splice(0, this.cards.length);
+			
+			for (var c:int = CardColor.WAN; c <= CardColor.BING; c++)
+			{
+				for (var p:int = 1; p < 10; p++)
+				{
+					for (var i:int = 0; i < 4; i++)
+					{
+						this.cards.push(MahjongFactory.instance.create(c, p, i));
+					}
+				}
+			}
+		}
+		
+		/**
+		 * 随机抓一张牌，并将该张牌从整幅麻将牌中删除
+		 * @return
+		 */
+		public function deal():Card
+		{
+			var index:int = Math.floor(Math.random() * this.cards.length);
+			var card:Card = this.cards[index];
+			this.cards.splice(index, 1);
+			
+			return card;
 		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数
