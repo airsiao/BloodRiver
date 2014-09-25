@@ -7,6 +7,7 @@ package com.ourgame.mahjong.bloodriver.controller
 	import com.ourgame.mahjong.libaray.DataExchange;
 	import com.ourgame.mahjong.libaray.GameLoader;
 	import com.ourgame.mahjong.libaray.vo.GameInfo;
+	import com.ourgame.mahjong.libaray.vo.TableInfo;
 	import com.wecoit.core.AssetsManager;
 	import com.wecoit.core.FlashPlayer;
 	import com.wecoit.data.Config;
@@ -96,6 +97,9 @@ package com.ourgame.mahjong.bloodriver.controller
 				data.ticket = Application.stage.loaderInfo.parameters["IDCertificate"];
 				data.channelID = Application.stage.loaderInfo.parameters["channelID"];
 				
+				data.table = new TableInfo();
+				data.table.mode = Application.stage.loaderInfo.parameters["PlayMode"];
+				
 				(this.context as State).manager.switchState(ConnectState);
 			}
 		}
@@ -111,6 +115,9 @@ package com.ourgame.mahjong.bloodriver.controller
 			data.nickname = config.getValue("nickname");
 			data.ticket = config.getValue("ticket");
 			data.channelID = config.getValue("channelID");
+			
+			data.table = new TableInfo();
+			data.table.mode = config.getValue("PlayMode");
 			
 			AssetsManager.instance.saveAsset(config.name, (event.target as BytesLoader).content);
 			

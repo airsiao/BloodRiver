@@ -21,8 +21,11 @@
 	<!-- 渠道号 -->
 	<option name="channelID">0</option>
 	
+	<!-- 游戏模式 0-联网，1-单机 -->
+	<option name="PlayMode">0</option>
+	
 	<!-- 服务器地址 -->
-	<option name="ServerHost">172.28.41.28</option> 
+	<option name="ServerHost">172.28.14.82</option> 
 	<!-- 服务器端口 -->
 	<option name="ServerPort">22411</option>
 	

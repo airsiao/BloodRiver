@@ -139,6 +139,26 @@ package com.ourgame.mahjong.bloodriver.vo
 			
 			return result;
 		}
+		
+		/**
+		 * 获取一种花色的牌组列表
+		 * @param color
+		 * @return
+		 */
+		public function getGroupsByColor(color:uint):Vector.<CardGroup>
+		{
+			var result:Vector.<CardGroup> = new Vector.<CardGroup>();
+			
+			for each (var group:CardGroup in this.list)
+			{
+				if (group.color == color)
+				{
+					result.push(group);
+				}
+			}
+			
+			return result;
+		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数
 	

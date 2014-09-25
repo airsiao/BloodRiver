@@ -1,20 +1,13 @@
 package com.ourgame.mahjong.bloodriver.state
 {
-	import com.ourgame.mahjong.bloodriver.BloodRiver;
-	import com.ourgame.mahjong.bloodriver.controller.ConsoleController;
-	import com.ourgame.mahjong.bloodriver.controller.GameSocketController;
-	import com.ourgame.mahjong.bloodriver.controller.TableController;
-	import com.ourgame.mahjong.bloodriver.model.ConsoleModel;
-	import com.ourgame.mahjong.bloodriver.model.MainSocketModel;
-	import com.ourgame.mahjong.bloodriver.view.TableView;
-	import com.ourgame.mahjong.libaray.enum.PlayMode;
+	import com.wecoit.debug.Log;
 	import com.wecoit.mvc.State;
 	
 	/**
-	 * 桌子状态
+	 * 换牌状态
 	 * @author SiaoLeon
 	 */
-	public class TableState extends State
+	public class ChangeCardsState extends State
 	{
 		// -------------------------------------------------------------------------------------------------------- 静态常量
 		
@@ -26,8 +19,6 @@ package com.ourgame.mahjong.bloodriver.state
 		
 		// -------------------------------------------------------------------------------------------------------- 属性
 		
-		public var view:TableView;
-		
 		// -------------------------------------------------------------------------------------------------------- 变量
 		
 		// -------------------------------------------------------------------------------------------------------- 构造
@@ -35,36 +26,21 @@ package com.ourgame.mahjong.bloodriver.state
 		/**
 		 * 构造函数
 		 */
-		public function TableState(key:Object=null)
+		public function ChangeCardsState(key:Object=null)
 		{
 			super(key);
-			
-			this.add(new GameState());
 		}
 		
 		// -------------------------------------------------------------------------------------------------------- 方法
 		
-		override public function onInit():void
-		{
-			this.view = new TableView();
-		}
-		
 		override public function onEnter():void
 		{
-			if ((this.manager as BloodRiver).info.data.table.mode == PlayMode.CONSOLE)
-			{
-				this.addModel(ConsoleModel);
-				this.addController(new ConsoleController());
-			}
-			else
-			{
-				this.addModel(MainSocketModel);
-				this.addController(new GameSocketController());
-			}
-			
-			this.addView(this.view);
-			
-			this.addController(new TableController());
+			Log.debug("进入", this.key);
+		}
+		
+		override public function onExit():void
+		{
+			Log.debug("离开", this.key);
 		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数

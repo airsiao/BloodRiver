@@ -20,6 +20,11 @@ package com.ourgame.mahjong.bloodriver.vo
 		
 		// -------------------------------------------------------------------------------------------------------- 属性
 		
+		public function get length():uint
+		{
+			return this.list.length;
+		}
+		
 		/**
 		 * 是否除将外全为刻
 		 * @return
@@ -41,6 +46,33 @@ package com.ourgame.mahjong.bloodriver.vo
 				}
 				
 				if (this.getCards(card.color, card.point).length < 3)
+				{
+					return false;
+				}
+			}
+			
+			return true;
+		}
+		
+		/**
+		 * 是否同色连续
+		 */
+		public function get isColorSerial():Boolean
+		{
+			this.list.sort(compareCardByID);
+			
+			var color:int = CardColor.UNKNOW;
+			
+			for (var i:int = 0; i < this.list.length; i++)
+			{
+				var card:Card = this.list[i];
+				
+				if (color == CardColor.UNKNOW)
+				{
+					color = card.color;
+				}
+				
+				if (card.color == color || card.point - this.list[0].point != i)
 				{
 					return false;
 				}
@@ -139,33 +171,6 @@ package com.ourgame.mahjong.bloodriver.vo
 			}
 			
 			return false;
-		}
-		
-		/**
-		 * 是否同色连续
-		 */
-		public function get isColorSerial():Boolean
-		{
-			this.list.sort(compareCardByID);
-			
-			var color:int = CardColor.UNKNOW;
-			
-			for (var i:int = 0; i < this.list.length; i++)
-			{
-				var card:Card = this.list[i];
-				
-				if (color == CardColor.UNKNOW)
-				{
-					color = card.color;
-				}
-				
-				if (card.color == color || card.point - this.list[0].point != i)
-				{
-					return false;
-				}
-			}
-			
-			return true;
 		}
 		
 		/**

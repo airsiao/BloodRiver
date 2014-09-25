@@ -1,13 +1,13 @@
 package com.ourgame.mahjong.bloodriver.state
 {
-	import com.ourgame.mahjong.bloodriver.controller.StartupController;
+	import com.wecoit.debug.Log;
 	import com.wecoit.mvc.State;
 	
 	/**
-	 * 启动状态
+	 * 洗牌状态
 	 * @author SiaoLeon
 	 */
-	public class StartupState extends State
+	public class ShuffleState extends State
 	{
 		// -------------------------------------------------------------------------------------------------------- 静态常量
 		
@@ -26,21 +26,23 @@ package com.ourgame.mahjong.bloodriver.state
 		/**
 		 * 构造函数
 		 */
-		public function StartupState(key:Object=null)
+		public function ShuffleState(key:Object=null)
 		{
 			super(key);
-			
-			this.add(new ConnectState());
-			this.add(new TableState());
 		}
-		
+	
 		// -------------------------------------------------------------------------------------------------------- 方法
 		
 		override public function onEnter():void
 		{
-			this.addController(new StartupController());
+			Log.debug("进入", this.key);
 		}
-	
+		
+		override public function onExit():void
+		{
+			Log.debug("离开", this.key);
+		}
+		
 		// -------------------------------------------------------------------------------------------------------- 函数
 	
 	}

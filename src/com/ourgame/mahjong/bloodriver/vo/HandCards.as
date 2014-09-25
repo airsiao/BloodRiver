@@ -46,6 +46,37 @@ package com.ourgame.mahjong.bloodriver.vo
 		}
 		
 		/**
+		 * 是否断一门
+		 * @return
+		 */
+		public function get isLack():Boolean
+		{
+			var wan:uint = this.cards.getCards(CardColor.WAN).length + this.groups.getGroupsByColor(CardColor.WAN).length;
+			var tiao:uint = this.cards.getCards(CardColor.TIAO).length + this.groups.getGroupsByColor(CardColor.TIAO).length;
+			var bing:uint = this.cards.getCards(CardColor.BING).length + this.groups.getGroupsByColor(CardColor.BING).length;
+			
+			return (wan == 0 || tiao == 0 || bing == 0);
+		}
+		
+		/**
+		 * 是否可和
+		 * @return
+		 */
+		public function get isWin():Boolean
+		{
+			return this.isLack && this.cards.isWin;
+		}
+		
+		/**
+		 * 可听的牌
+		 * @return
+		 */
+		public function get tings():Vector.<Card>
+		{
+			return (this.isLack) ? this.cards.tings : new Vector.<Card>();
+		}
+		
+		/**
 		 * 牌列表
 		 * @default
 		 */

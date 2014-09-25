@@ -1,6 +1,6 @@
 package com.ourgame.mahjong.bloodriver
 {
-	import com.ourgame.mahjong.bloodriver.state.StartupState;
+	import com.ourgame.mahjong.bloodriver.state.MainState;
 	import com.ourgame.mahjong.libaray.vo.GameInfo;
 	import com.wecoit.core.AssetsManager;
 	import com.wecoit.data.HashMap;
@@ -56,7 +56,7 @@ package com.ourgame.mahjong.bloodriver
 		 */
 		public function BloodRiver(root:IState=null)
 		{
-			super(new StartupState());
+			super(new MainState());
 		
 			//			//胡牌测试
 			//			
@@ -92,6 +92,18 @@ package com.ourgame.mahjong.bloodriver
 			//			trace(hands.fanTypes);
 			//			
 			//			trace("耗时：", getTimer() - time);
+		
+			//			//换牌测试
+			//			var mahjong:Mahjong = new Mahjong();
+			//			var player:Player = new Player();
+			//			
+			//			for (var i:int = 0; i < 14; i++)
+			//			{
+			//				player.handCards.cards.add(mahjong.deal());
+			//			}
+			//			
+			//			trace("玩家手牌", player.handCards);
+			//			trace("玩家换牌", player.swap);
 		}
 	
 		// -------------------------------------------------------------------------------------------------------- 方法

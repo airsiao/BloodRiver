@@ -1,20 +1,13 @@
 package com.ourgame.mahjong.bloodriver.state
 {
-	import com.ourgame.mahjong.bloodriver.BloodRiver;
-	import com.ourgame.mahjong.bloodriver.controller.ConsoleController;
-	import com.ourgame.mahjong.bloodriver.controller.GameSocketController;
-	import com.ourgame.mahjong.bloodriver.controller.TableController;
-	import com.ourgame.mahjong.bloodriver.model.ConsoleModel;
-	import com.ourgame.mahjong.bloodriver.model.MainSocketModel;
-	import com.ourgame.mahjong.bloodriver.view.TableView;
-	import com.ourgame.mahjong.libaray.enum.PlayMode;
+	import com.ourgame.mahjong.bloodriver.controller.StartupController;
 	import com.wecoit.mvc.State;
 	
 	/**
-	 * 桌子状态
+	 * 主状态
 	 * @author SiaoLeon
 	 */
-	public class TableState extends State
+	public class MainState extends State
 	{
 		// -------------------------------------------------------------------------------------------------------- 静态常量
 		
@@ -26,8 +19,6 @@ package com.ourgame.mahjong.bloodriver.state
 		
 		// -------------------------------------------------------------------------------------------------------- 属性
 		
-		public var view:TableView;
-		
 		// -------------------------------------------------------------------------------------------------------- 变量
 		
 		// -------------------------------------------------------------------------------------------------------- 构造
@@ -35,36 +26,19 @@ package com.ourgame.mahjong.bloodriver.state
 		/**
 		 * 构造函数
 		 */
-		public function TableState(key:Object=null)
+		public function MainState(key:Object=null)
 		{
 			super(key);
 			
-			this.add(new GameState());
+			this.add(new ConnectState());
+			this.add(new TableState());
 		}
 		
 		// -------------------------------------------------------------------------------------------------------- 方法
 		
-		override public function onInit():void
-		{
-			this.view = new TableView();
-		}
-		
 		override public function onEnter():void
 		{
-			if ((this.manager as BloodRiver).info.data.table.mode == PlayMode.CONSOLE)
-			{
-				this.addModel(ConsoleModel);
-				this.addController(new ConsoleController());
-			}
-			else
-			{
-				this.addModel(MainSocketModel);
-				this.addController(new GameSocketController());
-			}
-			
-			this.addView(this.view);
-			
-			this.addController(new TableController());
+			this.addController(new StartupController());
 		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数

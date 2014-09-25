@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <assets>
 
+	<!-- 桌子UI -->
+	<asset name="Table" ver="0.0.0.1" description="桌子UI" path="assets/">table.swf</asset>
+	
 	<!-- 主程序 -->
 	<asset name="BloodRiver" ver="0.0.0.1" description="主程序">BloodRiver.swf</asset>
 	

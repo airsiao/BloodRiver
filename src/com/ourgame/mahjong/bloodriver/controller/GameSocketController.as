@@ -1,13 +1,12 @@
-package com.ourgame.mahjong.bloodriver.vo
+package com.ourgame.mahjong.bloodriver.controller
 {
-	import com.wecoit.data.ArrayList;
-	import com.wecoit.data.ValueObject;
+	import com.wecoit.mvc.Controller;
 	
 	/**
-	 * 游戏对象
+	 * 游戏Socket控制器
 	 * @author SiaoLeon
 	 */
-	public class Game extends ValueObject
+	public class GameSocketController extends Controller
 	{
 		// -------------------------------------------------------------------------------------------------------- 静态常量
 		
@@ -19,48 +18,6 @@ package com.ourgame.mahjong.bloodriver.vo
 		
 		// -------------------------------------------------------------------------------------------------------- 属性
 		
-		/**
-		 * 庄位
-		 * @return
-		 */
-		public function get dealer():uint
-		{
-			return this.getProperty("dealer", 0);
-		}
-		
-		public function set dealer(value:uint):void
-		{
-			this.setProperty("dealer", value);
-		}
-		
-		/**
-		 * 玩家列表
-		 * @return
-		 */
-		public function get playerList():ArrayList
-		{
-			return this.getProperty("playerList", new ArrayList());
-		}
-		
-		public function set playerList(value:ArrayList):void
-		{
-			this.setProperty("playerList", value);
-		}
-		
-		/**
-		 * 牌池
-		 * @return
-		 */
-		public function get poolCards():Vector.<Card>
-		{
-			return this.getProperty("poolCards", new Vector.<Card>());
-		}
-		
-		public function set poolCards(value:Vector.<Card>):void
-		{
-			this.setProperty("poolCards", value);
-		}
-		
 		// -------------------------------------------------------------------------------------------------------- 变量
 		
 		// -------------------------------------------------------------------------------------------------------- 构造
@@ -68,8 +25,9 @@ package com.ourgame.mahjong.bloodriver.vo
 		/**
 		 * 构造函数
 		 */
-		public function Game()
+		public function GameSocketController()
 		{
+			super();
 		}
 	
 		// -------------------------------------------------------------------------------------------------------- 方法
