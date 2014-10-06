@@ -85,6 +85,7 @@ package com.ourgame.mahjong.bloodriver.controller
 			
 			this.socket = new SocketProcessor();
 			this.socket.addEventListener(SocketEvent.CONNECTED, onConnected, false, 0, true);
+			this.socket.addEventListener(SocketEvent.ERROR, onError, false, 0, true);
 			this.socket.addEventListener(SocketEvent.RECIVE, onRecive, false, 0, true);
 			
 			var host:String = AssetsManager.instance.getConfig("debug").getString("ServerHost");
@@ -98,6 +99,11 @@ package com.ourgame.mahjong.bloodriver.controller
 		private function onConnected(event:SocketEvent):void
 		{
 			this.login();
+		}
+		
+		private function onError(event:SocketEvent):void
+		{
+			(this.context as State).manager.switchState(TableState);
 		}
 		
 		private function onRecive(event:SocketEvent):void

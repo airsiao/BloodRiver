@@ -5,6 +5,7 @@ package com.ourgame.mahjong.bloodriver.state
 	import com.ourgame.mahjong.bloodriver.controller.GameSocketController;
 	import com.ourgame.mahjong.bloodriver.controller.TableController;
 	import com.ourgame.mahjong.bloodriver.model.ConsoleModel;
+	import com.ourgame.mahjong.bloodriver.model.GameModel;
 	import com.ourgame.mahjong.bloodriver.model.MainSocketModel;
 	import com.ourgame.mahjong.bloodriver.view.TableView;
 	import com.ourgame.mahjong.libaray.enum.PlayMode;
@@ -51,6 +52,8 @@ package com.ourgame.mahjong.bloodriver.state
 		
 		override public function onEnter():void
 		{
+			this.addModel(GameModel);
+			
 			if ((this.manager as BloodRiver).info.data.table.mode == PlayMode.CONSOLE)
 			{
 				this.addModel(ConsoleModel);

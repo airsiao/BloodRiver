@@ -1,14 +1,16 @@
-package com.ourgame.mahjong.bloodriver.state
+package com.ourgame.mahjong.bloodriver.model
 {
-	import com.ourgame.mahjong.bloodriver.controller.StartupController;
-	import com.ourgame.mahjong.bloodriver.view.MainView;
+	import com.ourgame.mahjong.bloodriver.BloodRiver;
+	import com.ourgame.mahjong.bloodriver.method.GameMethod;
+	import com.ourgame.mahjong.libaray.IGameProxy;
+	import com.wecoit.mvc.Model;
 	import com.wecoit.mvc.State;
 	
 	/**
-	 * 主状态
+	 * 游戏数据模型
 	 * @author SiaoLeon
 	 */
-	public class MainState extends State
+	public class GameModel extends Model implements IGameProxy
 	{
 		// -------------------------------------------------------------------------------------------------------- 静态常量
 		
@@ -20,8 +22,6 @@ package com.ourgame.mahjong.bloodriver.state
 		
 		// -------------------------------------------------------------------------------------------------------- 属性
 		
-		public var view:MainView;
-		
 		// -------------------------------------------------------------------------------------------------------- 变量
 		
 		// -------------------------------------------------------------------------------------------------------- 构造
@@ -29,26 +29,26 @@ package com.ourgame.mahjong.bloodriver.state
 		/**
 		 * 构造函数
 		 */
-		public function MainState(key:Object=null)
+		public function GameModel()
 		{
-			super(key);
-			
-			this.add(new ConnectState());
-			this.add(new TableState());
+			super();
 		}
 		
 		// -------------------------------------------------------------------------------------------------------- 方法
 		
-		override public function onInit():void
+		override public function onAdd():void
 		{
-			this.view = new MainView();
+			((this.context as State).manager as BloodRiver).info.data.gameProxy = this;
 		}
 		
-		override public function onEnter():void
+		override public function onRemove():void
 		{
-			this.addView(this.view);
-			
-			this.addController(new StartupController());
+			((this.context as State).manager as BloodRiver).info.data.gameProxy = null;
+		}
+		
+		public function start():void
+		{
+			this.notify(GameMethod.GAME_ENTER);
 		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数

@@ -28,6 +28,11 @@ package com.ourgame.mahjong.bloodriver.vo
 			return this._type;
 		}
 		
+		public function set type(value:uint):void
+		{
+			this._type = value;
+		}
+		
 		/**
 		 * CardColor，牌组花色
 		 * @return
@@ -64,7 +69,7 @@ package com.ourgame.mahjong.bloodriver.vo
 		 */
 		public function get cards():Vector.<Card>
 		{
-			return this.cards;
+			return this._cards;
 		}
 		
 		// -------------------------------------------------------------------------------------------------------- 变量

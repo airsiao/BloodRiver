@@ -14,12 +14,17 @@ package com.ourgame.mahjong.bloodriver.method
 		private static const BASE:String = getQualifiedClassName(GameMethod) + "::";
 		
 		/**
-		 * 游戏开始
+		 * 进入游戏
+		 */
+		public static const GAME_ENTER:String = BASE + "GAME_ENTER";
+		
+		/**
+		 * 开始游戏
 		 */
 		public static const GAME_START:String = BASE + "GAME_START";
 		
 		/**
-		 * 游戏结束
+		 * 结束游戏
 		 */
 		public static const GAME_END:String = BASE + "GAME_END";
 		

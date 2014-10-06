@@ -1,14 +1,12 @@
-package com.ourgame.mahjong.bloodriver.state
+package com.ourgame.mahjong.bloodriver.view
 {
-	import com.ourgame.mahjong.bloodriver.controller.StartupController;
-	import com.ourgame.mahjong.bloodriver.view.MainView;
-	import com.wecoit.mvc.State;
+	import com.wecoit.mvc.View;
 	
 	/**
-	 * 主状态
+	 * 游戏视图
 	 * @author SiaoLeon
 	 */
-	public class MainState extends State
+	public class GameView extends View
 	{
 		// -------------------------------------------------------------------------------------------------------- 静态常量
 		
@@ -20,8 +18,6 @@ package com.ourgame.mahjong.bloodriver.state
 		
 		// -------------------------------------------------------------------------------------------------------- 属性
 		
-		public var view:MainView;
-		
 		// -------------------------------------------------------------------------------------------------------- 变量
 		
 		// -------------------------------------------------------------------------------------------------------- 构造
@@ -29,27 +25,12 @@ package com.ourgame.mahjong.bloodriver.state
 		/**
 		 * 构造函数
 		 */
-		public function MainState(key:Object=null)
+		public function GameView()
 		{
-			super(key);
-			
-			this.add(new ConnectState());
-			this.add(new TableState());
+			super();
 		}
-		
+	
 		// -------------------------------------------------------------------------------------------------------- 方法
-		
-		override public function onInit():void
-		{
-			this.view = new MainView();
-		}
-		
-		override public function onEnter():void
-		{
-			this.addView(this.view);
-			
-			this.addController(new StartupController());
-		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数
 	
