@@ -1,5 +1,8 @@
 package com.ourgame.mahjong.bloodriver.state
 {
+	import com.ourgame.mahjong.bloodriver.controller.GameController;
+	import com.ourgame.mahjong.bloodriver.controller.GameSocketController;
+	import com.ourgame.mahjong.bloodriver.view.GameView;
 	import com.wecoit.debug.Log;
 	import com.wecoit.mvc.State;
 	
@@ -19,6 +22,8 @@ package com.ourgame.mahjong.bloodriver.state
 		
 		// -------------------------------------------------------------------------------------------------------- 属性
 		
+		public var view:GameView;
+		
 		// -------------------------------------------------------------------------------------------------------- 变量
 		
 		// -------------------------------------------------------------------------------------------------------- 构造
@@ -33,22 +38,28 @@ package com.ourgame.mahjong.bloodriver.state
 			this.add(new ShuffleState()); //洗牌
 			this.add(new DealDiceState()); //发牌骰子
 			this.add(new DealCardsState()); //发牌
-			this.add(new ChangeDiceState()); //换牌骰子
-			this.add(new ChangeCardsState()); //换牌
+			this.add(new SelectSwapState()); //选择换牌
+			this.add(new SwapDiceState()); //选择换牌
+			this.add(new SwapCardsState()); //换牌
 			this.add(new PlayState()); //行牌
 			this.add(new ResultState()); //结算
 		}
 		
 		// -------------------------------------------------------------------------------------------------------- 方法
 		
+		override public function onInit():void
+		{
+			this.view = new GameView();
+		}
+		
 		override public function onEnter():void
 		{
 			Log.debug("进入", this.key);
-		}
-		
-		override public function onExit():void
-		{
-			Log.debug("离开", this.key);
+			
+			this.addView(this.view);
+			
+			this.addController(new GameSocketController());
+			this.addController(new GameController());
 		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数

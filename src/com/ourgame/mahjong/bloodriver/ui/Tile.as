@@ -68,6 +68,25 @@ package com.ourgame.mahjong.bloodriver.ui
 			this.draw();
 		}
 		
+		public function set select(value:Boolean):void
+		{
+			this.buttonMode = value;
+			this.display.y = value ? -20 : 0;
+		}
+		
+		private var _confirm:Boolean;
+		
+		public function get confirm():Boolean
+		{
+			return this._confirm;
+		}
+		
+		public function set confirm(value:Boolean):void
+		{
+			this._confirm = value;
+			this.display.y = value ? -20 : 0;
+		}
+		
 		// -------------------------------------------------------------------------------------------------------- 变量
 		
 		private var display:MovieClip;
@@ -171,12 +190,6 @@ package com.ourgame.mahjong.bloodriver.ui
 			
 			this.hotArea.width = this.display.width;
 			this.hotArea.height = this.display.height;
-		}
-		
-		public function set select(value:Boolean):void
-		{
-			this.buttonMode = value;
-			this.display.y = value ? -20 : 0;
 		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数

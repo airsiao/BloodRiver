@@ -1,12 +1,14 @@
 package com.ourgame.mahjong.bloodriver.state
 {
+	import com.ourgame.mahjong.bloodriver.view.SwapDiceView;
+	import com.wecoit.debug.Log;
 	import com.wecoit.mvc.State;
 	
 	/**
-	 * 行牌状态
+	 * 换牌骰子状态
 	 * @author SiaoLeon
 	 */
-	public class PlayState extends State
+	public class SwapDiceState extends State
 	{
 		// -------------------------------------------------------------------------------------------------------- 静态常量
 		
@@ -18,6 +20,8 @@ package com.ourgame.mahjong.bloodriver.state
 		
 		// -------------------------------------------------------------------------------------------------------- 属性
 		
+		public var view:SwapDiceView;
+		
 		// -------------------------------------------------------------------------------------------------------- 变量
 		
 		// -------------------------------------------------------------------------------------------------------- 构造
@@ -25,15 +29,24 @@ package com.ourgame.mahjong.bloodriver.state
 		/**
 		 * 构造函数
 		 */
-		public function PlayState(key:Object=null)
+		public function SwapDiceState(key:Object=null)
 		{
 			super(key);
-			
-			this.add(new DrawState()); //抓牌
-			this.add(new DiscardState()); //打牌
 		}
-	
+		
 		// -------------------------------------------------------------------------------------------------------- 方法
+		
+		override public function onInit():void
+		{
+			this.view = new SwapDiceView();
+		}
+		
+		override public function onEnter():void
+		{
+			Log.debug("进入", this.key);
+			
+			this.addView(this.view);
+		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数
 	

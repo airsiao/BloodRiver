@@ -5,7 +5,7 @@ package com.ourgame.mahjong.bloodriver.vo
 	 * 机器人
 	 * @author SiaoLeon
 	 */
-	public class Robot extends Player
+	public class Robot extends GamePlayer
 	{
 		// -------------------------------------------------------------------------------------------------------- 静态常量
 		
@@ -26,7 +26,7 @@ package com.ourgame.mahjong.bloodriver.vo
 		 */
 		public function Robot()
 		{
-			super();
+			super(null);
 		}
 	
 		// -------------------------------------------------------------------------------------------------------- 方法

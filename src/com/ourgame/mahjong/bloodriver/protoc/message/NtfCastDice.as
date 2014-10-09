@@ -21,7 +21,14 @@ package com.ourgame.mahjong.bloodriver.protoc.message {
 		/**
 		 *  @private
 		 */
-		public static const POINTS:RepeatedFieldDescriptor$TYPE_UINT32 = new RepeatedFieldDescriptor$TYPE_UINT32("com.ourgame.mahjong.bloodriver.protoc.message.NtfCastDice.points", "points", (2 << 3) | com.netease.protobuf.WireType.VARINT);
+		public static const TYPE:FieldDescriptor$TYPE_UINT32 = new FieldDescriptor$TYPE_UINT32("com.ourgame.mahjong.bloodriver.protoc.message.NtfCastDice.type", "type", (2 << 3) | com.netease.protobuf.WireType.VARINT);
+
+		public var type:uint;
+
+		/**
+		 *  @private
+		 */
+		public static const POINTS:RepeatedFieldDescriptor$TYPE_UINT32 = new RepeatedFieldDescriptor$TYPE_UINT32("com.ourgame.mahjong.bloodriver.protoc.message.NtfCastDice.points", "points", (3 << 3) | com.netease.protobuf.WireType.VARINT);
 
 		[ArrayElementType("uint")]
 		public var points:Array = [];
@@ -32,8 +39,10 @@ package com.ourgame.mahjong.bloodriver.protoc.message {
 		override com.netease.protobuf.used_by_generated_code final function writeToBuffer(output:com.netease.protobuf.WritingBuffer):void {
 			com.netease.protobuf.WriteUtils.writeTag(output, com.netease.protobuf.WireType.VARINT, 1);
 			com.netease.protobuf.WriteUtils.write$TYPE_UINT32(output, this.seat);
+			com.netease.protobuf.WriteUtils.writeTag(output, com.netease.protobuf.WireType.VARINT, 2);
+			com.netease.protobuf.WriteUtils.write$TYPE_UINT32(output, this.type);
 			for (var points$index:uint = 0; points$index < this.points.length; ++points$index) {
-				com.netease.protobuf.WriteUtils.writeTag(output, com.netease.protobuf.WireType.VARINT, 2);
+				com.netease.protobuf.WriteUtils.writeTag(output, com.netease.protobuf.WireType.VARINT, 3);
 				com.netease.protobuf.WriteUtils.write$TYPE_UINT32(output, this.points[points$index]);
 			}
 			for (var fieldKey:* in this) {
@@ -46,6 +55,7 @@ package com.ourgame.mahjong.bloodriver.protoc.message {
 		 */
 		override com.netease.protobuf.used_by_generated_code final function readFromSlice(input:flash.utils.IDataInput, bytesAfterSlice:uint):void {
 			var seat$count:uint = 0;
+			var type$count:uint = 0;
 			while (input.bytesAvailable > bytesAfterSlice) {
 				var tag:uint = com.netease.protobuf.ReadUtils.read$TYPE_UINT32(input);
 				switch (tag >> 3) {
@@ -57,6 +67,13 @@ package com.ourgame.mahjong.bloodriver.protoc.message {
 					this.seat = com.netease.protobuf.ReadUtils.read$TYPE_UINT32(input);
 					break;
 				case 2:
+					if (type$count != 0) {
+						throw new flash.errors.IOError('Bad data format: NtfCastDice.type cannot be set twice.');
+					}
+					++type$count;
+					this.type = com.netease.protobuf.ReadUtils.read$TYPE_UINT32(input);
+					break;
+				case 3:
 					if ((tag & 7) == com.netease.protobuf.WireType.LENGTH_DELIMITED) {
 						com.netease.protobuf.ReadUtils.readPackedRepeated(input, com.netease.protobuf.ReadUtils.read$TYPE_UINT32, this.points);
 						break;

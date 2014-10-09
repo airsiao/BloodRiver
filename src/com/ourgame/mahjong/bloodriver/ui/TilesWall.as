@@ -44,6 +44,7 @@ package com.ourgame.mahjong.bloodriver.ui
 		
 		public function init(dealer:uint=Position.CURRENT, dice:uint=0, count:uint=108, gang:uint=0):void
 		{
+			this.clear();
 			this.list = new Vector.<TilesWallPair>();
 			
 			var start:uint = 0;
@@ -144,6 +145,14 @@ package com.ourgame.mahjong.bloodriver.ui
 			}
 			
 			return null;
+		}
+		
+		public function deal():void
+		{
+			for (var i:int = 0; i < 13 * 4; i++)
+			{
+				this.draw();
+			}
 		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数

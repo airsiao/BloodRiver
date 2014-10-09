@@ -9150,9 +9150,27 @@ public final class MJBloodRiverMessage {
      */
     int getSeat();
 
-    // repeated uint32 points = 2;
+    // required uint32 type = 2;
     /**
-     * <code>repeated uint32 points = 2;</code>
+     * <code>required uint32 type = 2;</code>
+     *
+     * <pre>
+     *打色子的类型，作用，区分第几次
+     * </pre>
+     */
+    boolean hasType();
+    /**
+     * <code>required uint32 type = 2;</code>
+     *
+     * <pre>
+     *打色子的类型，作用，区分第几次
+     * </pre>
+     */
+    int getType();
+
+    // repeated uint32 points = 3;
+    /**
+     * <code>repeated uint32 points = 3;</code>
      *
      * <pre>
      *色子的点数
@@ -9160,7 +9178,7 @@ public final class MJBloodRiverMessage {
      */
     java.util.List<java.lang.Integer> getPointsList();
     /**
-     * <code>repeated uint32 points = 2;</code>
+     * <code>repeated uint32 points = 3;</code>
      *
      * <pre>
      *色子的点数
@@ -9168,7 +9186,7 @@ public final class MJBloodRiverMessage {
      */
     int getPointsCount();
     /**
-     * <code>repeated uint32 points = 2;</code>
+     * <code>repeated uint32 points = 3;</code>
      *
      * <pre>
      *色子的点数
@@ -9239,19 +9257,24 @@ public final class MJBloodRiverMessage {
               break;
             }
             case 16: {
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+              bitField0_ |= 0x00000002;
+              type_ = input.readUInt32();
+              break;
+            }
+            case 24: {
+              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
                 points_ = new java.util.ArrayList<java.lang.Integer>();
-                mutable_bitField0_ |= 0x00000002;
+                mutable_bitField0_ |= 0x00000004;
               }
               points_.add(input.readUInt32());
               break;
             }
-            case 18: {
+            case 26: {
               int length = input.readRawVarint32();
               int limit = input.pushLimit(length);
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002) && input.getBytesUntilLimit() > 0) {
+              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004) && input.getBytesUntilLimit() > 0) {
                 points_ = new java.util.ArrayList<java.lang.Integer>();
-                mutable_bitField0_ |= 0x00000002;
+                mutable_bitField0_ |= 0x00000004;
               }
               while (input.getBytesUntilLimit() > 0) {
                 points_.add(input.readUInt32());
@@ -9267,7 +9290,7 @@ public final class MJBloodRiverMessage {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e.getMessage()).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
           points_ = java.util.Collections.unmodifiableList(points_);
         }
         this.unknownFields = unknownFields.build();
@@ -9326,11 +9349,35 @@ public final class MJBloodRiverMessage {
       return seat_;
     }
 
-    // repeated uint32 points = 2;
-    public static final int POINTS_FIELD_NUMBER = 2;
+    // required uint32 type = 2;
+    public static final int TYPE_FIELD_NUMBER = 2;
+    private int type_;
+    /**
+     * <code>required uint32 type = 2;</code>
+     *
+     * <pre>
+     *打色子的类型，作用，区分第几次
+     * </pre>
+     */
+    public boolean hasType() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>required uint32 type = 2;</code>
+     *
+     * <pre>
+     *打色子的类型，作用，区分第几次
+     * </pre>
+     */
+    public int getType() {
+      return type_;
+    }
+
+    // repeated uint32 points = 3;
+    public static final int POINTS_FIELD_NUMBER = 3;
     private java.util.List<java.lang.Integer> points_;
     /**
-     * <code>repeated uint32 points = 2;</code>
+     * <code>repeated uint32 points = 3;</code>
      *
      * <pre>
      *色子的点数
@@ -9341,7 +9388,7 @@ public final class MJBloodRiverMessage {
       return points_;
     }
     /**
-     * <code>repeated uint32 points = 2;</code>
+     * <code>repeated uint32 points = 3;</code>
      *
      * <pre>
      *色子的点数
@@ -9351,7 +9398,7 @@ public final class MJBloodRiverMessage {
       return points_.size();
     }
     /**
-     * <code>repeated uint32 points = 2;</code>
+     * <code>repeated uint32 points = 3;</code>
      *
      * <pre>
      *色子的点数
@@ -9363,6 +9410,7 @@ public final class MJBloodRiverMessage {
 
     private void initFields() {
       seat_ = 0;
+      type_ = 0;
       points_ = java.util.Collections.emptyList();
     }
     private byte memoizedIsInitialized = -1;
@@ -9371,6 +9419,10 @@ public final class MJBloodRiverMessage {
       if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasSeat()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasType()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -9384,8 +9436,11 @@ public final class MJBloodRiverMessage {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeUInt32(1, seat_);
       }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeUInt32(2, type_);
+      }
       for (int i = 0; i < points_.size(); i++) {
-        output.writeUInt32(2, points_.get(i));
+        output.writeUInt32(3, points_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -9399,6 +9454,10 @@ public final class MJBloodRiverMessage {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt32Size(1, seat_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(2, type_);
       }
       {
         int dataSize = 0;
@@ -9533,8 +9592,10 @@ public final class MJBloodRiverMessage {
         super.clear();
         seat_ = 0;
         bitField0_ = (bitField0_ & ~0x00000001);
-        points_ = java.util.Collections.emptyList();
+        type_ = 0;
         bitField0_ = (bitField0_ & ~0x00000002);
+        points_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
 
@@ -9567,9 +9628,13 @@ public final class MJBloodRiverMessage {
           to_bitField0_ |= 0x00000001;
         }
         result.seat_ = seat_;
-        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.type_ = type_;
+        if (((bitField0_ & 0x00000004) == 0x00000004)) {
           points_ = java.util.Collections.unmodifiableList(points_);
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000004);
         }
         result.points_ = points_;
         result.bitField0_ = to_bitField0_;
@@ -9591,10 +9656,13 @@ public final class MJBloodRiverMessage {
         if (other.hasSeat()) {
           setSeat(other.getSeat());
         }
+        if (other.hasType()) {
+          setType(other.getType());
+        }
         if (!other.points_.isEmpty()) {
           if (points_.isEmpty()) {
             points_ = other.points_;
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000004);
           } else {
             ensurePointsIsMutable();
             points_.addAll(other.points_);
@@ -9607,6 +9675,10 @@ public final class MJBloodRiverMessage {
 
       public final boolean isInitialized() {
         if (!hasSeat()) {
+          
+          return false;
+        }
+        if (!hasType()) {
           
           return false;
         }
@@ -9681,16 +9753,65 @@ public final class MJBloodRiverMessage {
         return this;
       }
 
-      // repeated uint32 points = 2;
+      // required uint32 type = 2;
+      private int type_ ;
+      /**
+       * <code>required uint32 type = 2;</code>
+       *
+       * <pre>
+       *打色子的类型，作用，区分第几次
+       * </pre>
+       */
+      public boolean hasType() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>required uint32 type = 2;</code>
+       *
+       * <pre>
+       *打色子的类型，作用，区分第几次
+       * </pre>
+       */
+      public int getType() {
+        return type_;
+      }
+      /**
+       * <code>required uint32 type = 2;</code>
+       *
+       * <pre>
+       *打色子的类型，作用，区分第几次
+       * </pre>
+       */
+      public Builder setType(int value) {
+        bitField0_ |= 0x00000002;
+        type_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required uint32 type = 2;</code>
+       *
+       * <pre>
+       *打色子的类型，作用，区分第几次
+       * </pre>
+       */
+      public Builder clearType() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        type_ = 0;
+        onChanged();
+        return this;
+      }
+
+      // repeated uint32 points = 3;
       private java.util.List<java.lang.Integer> points_ = java.util.Collections.emptyList();
       private void ensurePointsIsMutable() {
-        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
           points_ = new java.util.ArrayList<java.lang.Integer>(points_);
-          bitField0_ |= 0x00000002;
+          bitField0_ |= 0x00000004;
          }
       }
       /**
-       * <code>repeated uint32 points = 2;</code>
+       * <code>repeated uint32 points = 3;</code>
        *
        * <pre>
        *色子的点数
@@ -9701,7 +9822,7 @@ public final class MJBloodRiverMessage {
         return java.util.Collections.unmodifiableList(points_);
       }
       /**
-       * <code>repeated uint32 points = 2;</code>
+       * <code>repeated uint32 points = 3;</code>
        *
        * <pre>
        *色子的点数
@@ -9711,7 +9832,7 @@ public final class MJBloodRiverMessage {
         return points_.size();
       }
       /**
-       * <code>repeated uint32 points = 2;</code>
+       * <code>repeated uint32 points = 3;</code>
        *
        * <pre>
        *色子的点数
@@ -9721,7 +9842,7 @@ public final class MJBloodRiverMessage {
         return points_.get(index);
       }
       /**
-       * <code>repeated uint32 points = 2;</code>
+       * <code>repeated uint32 points = 3;</code>
        *
        * <pre>
        *色子的点数
@@ -9735,7 +9856,7 @@ public final class MJBloodRiverMessage {
         return this;
       }
       /**
-       * <code>repeated uint32 points = 2;</code>
+       * <code>repeated uint32 points = 3;</code>
        *
        * <pre>
        *色子的点数
@@ -9748,7 +9869,7 @@ public final class MJBloodRiverMessage {
         return this;
       }
       /**
-       * <code>repeated uint32 points = 2;</code>
+       * <code>repeated uint32 points = 3;</code>
        *
        * <pre>
        *色子的点数
@@ -9762,7 +9883,7 @@ public final class MJBloodRiverMessage {
         return this;
       }
       /**
-       * <code>repeated uint32 points = 2;</code>
+       * <code>repeated uint32 points = 3;</code>
        *
        * <pre>
        *色子的点数
@@ -9770,7 +9891,7 @@ public final class MJBloodRiverMessage {
        */
       public Builder clearPoints() {
         points_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000004);
         onChanged();
         return this;
       }
@@ -18135,7 +18256,7 @@ public final class MJBloodRiverMessage {
    * <pre>
    *========================================================================================
    * 断线重连
-   * #define OGID_DRAW_GAME						( OGID_GAME_MESSAGE + 25 )
+   * #define OGID_GAME_STATUS						( OGID_GAME_MESSAGE + 25 )
    * </pre>
    */
   public static final class NtfGameStatus extends
@@ -18946,7 +19067,7 @@ public final class MJBloodRiverMessage {
      * <pre>
      *========================================================================================
      * 断线重连
-     * #define OGID_DRAW_GAME						( OGID_GAME_MESSAGE + 25 )
+     * #define OGID_GAME_STATUS						( OGID_GAME_MESSAGE + 25 )
      * </pre>
      */
     public static final class Builder extends
@@ -21681,7 +21802,7 @@ public final class MJBloodRiverMessage {
    * <pre>
    *========================================================================================
    * 游戏结果
-   * #define OGID_GAME_END						( OGID_GAME_MESSAGE + 29 )
+   * #define OGID_GAME_RESULT						( OGID_GAME_MESSAGE + 29 )
    * </pre>
    */
   public static final class NtfGameResult extends
@@ -24154,7 +24275,7 @@ public final class MJBloodRiverMessage {
      * <pre>
      *========================================================================================
      * 游戏结果
-     * #define OGID_GAME_END						( OGID_GAME_MESSAGE + 29 )
+     * #define OGID_GAME_RESULT						( OGID_GAME_MESSAGE + 29 )
      * </pre>
      */
     public static final class Builder extends
@@ -24828,64 +24949,64 @@ public final class MJBloodRiverMessage {
       "e\030\005 \002(\r\022\r\n\005stage\030\006 \002(\r\022\r\n\005round\030\007 \002(\r\022\016\n" +
       "\006serial\030\010 \002(\r\"a\n\rNtfResumeGame\022\016\n\006dealer" +
       "\030\001 \002(\r\022\022\n\nbasicScore\030\002 \002(\r\022\r\n\005stage\030\003 \002(" +
-      "\r\022\r\n\005round\030\004 \002(\r\022\016\n\006serial\030\005 \002(\r\"+\n\013NtfC" +
-      "astDice\022\014\n\004seat\030\001 \002(\r\022\016\n\006points\030\002 \003(\r\"\326\001" +
-      "\n\010NtfDeals\022\021\n\tstartSeat\030\001 \002(\r\022\023\n\013startFr" +
-      "usta\030\002 \002(\r\022\r\n\005tiles\030\003 \003(\r\022R\n\006amouts\030\004 \003(" +
-      "\0132B.com.ourgame.mahjong.bloodriver.proto" +
-      "c.message.NtfDeals.TileAmount\022\023\n\013waiting",
-      "Time\030\005 \002(\r\032*\n\nTileAmount\022\014\n\004seat\030\001 \002(\r\022\016" +
-      "\n\006amount\030\002 \002(\r\"\031\n\010CReqSwap\022\r\n\005tiles\030\001 \003(" +
-      "\r\"O\n\010SAckSwap\022\020\n\010oldTiles\030\001 \003(\r\022\020\n\010newTi" +
-      "les\030\002 \003(\r\022\016\n\006action\030\003 \001(\r\022\017\n\007actTime\030\004 \001" +
-      "(\r\"I\n\nNtfDiscard\022\014\n\004tile\030\001 \002(\r\022\014\n\004seat\030\002" +
-      " \002(\r\022\016\n\006action\030\003 \001(\r\022\017\n\007actTime\030\004 \001(\r\"]\n" +
-      "\007NtfDraw\022\014\n\004seat\030\001 \002(\r\022\023\n\005front\030\002 \002(\010:\004t" +
-      "rue\022\016\n\006tileId\030\003 \001(\r\022\016\n\006action\030\004 \001(\r\022\017\n\007a" +
-      "ctTime\030\005 \001(\r\"\230\001\n\007CReqAct\022\014\n\004seat\030\001 \002(\r\022F" +
-      "\n\003act\030\002 \002(\01629.com.ourgame.mahjong.bloodr",
-      "iver.protoc.message.ActionType\022\020\n\010provid" +
-      "er\030\003 \001(\r\022\022\n\ntargetTile\030\004 \001(\r\022\021\n\trootTile" +
-      "s\030\005 \003(\r\"\270\001\n\006NtfAct\022\014\n\004seat\030\001 \002(\r\022F\n\003act\030" +
-      "\002 \002(\01629.com.ourgame.mahjong.bloodriver.p" +
-      "rotoc.message.ActionType\022\020\n\010provider\030\003 \001" +
-      "(\r\022\022\n\ntargetTile\030\004 \001(\r\022\021\n\trootTiles\030\005 \003(" +
-      "\r\022\016\n\006action\030\006 \001(\r\022\017\n\007actTime\030\007 \001(\r\"\272\001\n\006N" +
-      "tfWin\022\017\n\007winType\030\001 \002(\r\022\017\n\007winTile\030\002 \002(\r\022" +
-      "O\n\010winInfos\030\003 \003(\0132=.com.ourgame.mahjong." +
-      "bloodriver.protoc.message.NtfWin.WinInfo",
-      "\032=\n\007WinInfo\022\022\n\nwinnerSeat\030\001 \002(\r\022\021\n\tloser" +
-      "Seat\030\002 \002(\r\022\013\n\003fan\030\003 \002(\r\"\365\002\n\rNtfGameStatu" +
-      "s\022\016\n\006gameId\030\001 \002(\r\022\020\n\010gameType\030\002 \002(\r\022F\n\007p" +
-      "layers\030\003 \003(\01325.com.ourgame.mahjong.blood" +
-      "river.protoc.message.Player\022\016\n\006dealer\030\004 " +
-      "\002(\r\022\022\n\nbasicScore\030\005 \002(\r\022\r\n\005stage\030\006 \002(\r\022\r" +
-      "\n\005round\030\007 \002(\r\022\016\n\006serial\030\010 \002(\r\022\021\n\tstartSe" +
-      "at\030\t \002(\r\022\023\n\013startFrusta\030\n \002(\r\022\026\n\016frontDr" +
-      "ewTiles\030\013 \002(\r\022\025\n\rbackDrewTiles\030\014 \002(\r\022Q\n\t" +
-      "tileInfos\030\r \003(\0132>.com.ourgame.mahjong.bl",
-      "oodriver.protoc.message.CurrentTileInfo\"" +
-      ".\n\rCReqUserTrust\022\016\n\006gameId\030\001 \002(\004\022\r\n\005trus" +
-      "t\030\002 \002(\005\";\n\014NtfUserTrust\022\016\n\006gameId\030\001 \002(\004\022" +
-      "\014\n\004seat\030\002 \002(\005\022\r\n\005trust\030\003 \002(\005\"\364\002\n\rNtfGame" +
-      "Result\022\016\n\006gameId\030\001 \002(\004\022T\n\007results\030\002 \003(\0132" +
-      "C.com.ourgame.mahjong.bloodriver.protoc." +
-      "message.NtfGameResult.Result\022\017\n\007maxWait\030" +
-      "\003 \002(\r\032B\n\006Detail\022\014\n\004type\030\001 \002(\r\022\014\n\004seat\030\002 " +
-      "\002(\r\022\016\n\006points\030\003 \002(\r\022\014\n\004tile\030\004 \002(\r\032\247\001\n\006Re" +
-      "sult\022\014\n\004seat\030\001 \002(\r\022\021\n\twinPoints\030\002 \002(\r\022\023\n",
-      "\013tilesInHand\030\003 \003(\r\022\021\n\006status\030\004 \002(\r:\0010\022T\n" +
-      "\007details\030\005 \003(\0132C.com.ourgame.mahjong.blo" +
-      "odriver.protoc.message.NtfGameResult.Det" +
-      "ail*\232\001\n\010MeldType\022\r\n\tMELD_PAIR\020\001\022\014\n\010MELD_" +
-      "CHI\020\002\022\r\n\tMELD_PENG\020\003\022\022\n\016MELD_MING_GANG\020\004" +
-      "\022\020\n\014MELD_BU_GANG\020\005\022\020\n\014MELD_AN_GANG\020\006\022\025\n\021" +
-      "MELD_IN_HAND_SHUN\020\007\022\023\n\017MELD_IN_HAND_KE\020\010" +
-      "*\241\001\n\nActionType\022\016\n\nACT_GIVEUP\020\000\022\017\n\013ACT_D" +
-      "ISCARD\020\001\022\013\n\007ACT_CHI\020\002\022\014\n\010ACT_PENG\020\004\022\014\n\010A" +
-      "CT_GANG\020\010\022\016\n\nACT_BUGANG\020\020\022\016\n\nACT_ANGANG\020",
-      " \022\013\n\007ACT_WIN\020@\022\r\n\010ACT_TING\020\200\001\022\r\n\010ACT_SHO" +
-      "W\020\200\002"
+      "\r\022\r\n\005round\030\004 \002(\r\022\016\n\006serial\030\005 \002(\r\"9\n\013NtfC" +
+      "astDice\022\014\n\004seat\030\001 \002(\r\022\014\n\004type\030\002 \002(\r\022\016\n\006p" +
+      "oints\030\003 \003(\r\"\326\001\n\010NtfDeals\022\021\n\tstartSeat\030\001 " +
+      "\002(\r\022\023\n\013startFrusta\030\002 \002(\r\022\r\n\005tiles\030\003 \003(\r\022" +
+      "R\n\006amouts\030\004 \003(\0132B.com.ourgame.mahjong.bl" +
+      "oodriver.protoc.message.NtfDeals.TileAmo",
+      "unt\022\023\n\013waitingTime\030\005 \002(\r\032*\n\nTileAmount\022\014" +
+      "\n\004seat\030\001 \002(\r\022\016\n\006amount\030\002 \002(\r\"\031\n\010CReqSwap" +
+      "\022\r\n\005tiles\030\001 \003(\r\"O\n\010SAckSwap\022\020\n\010oldTiles\030" +
+      "\001 \003(\r\022\020\n\010newTiles\030\002 \003(\r\022\016\n\006action\030\003 \001(\r\022" +
+      "\017\n\007actTime\030\004 \001(\r\"I\n\nNtfDiscard\022\014\n\004tile\030\001" +
+      " \002(\r\022\014\n\004seat\030\002 \002(\r\022\016\n\006action\030\003 \001(\r\022\017\n\007ac" +
+      "tTime\030\004 \001(\r\"]\n\007NtfDraw\022\014\n\004seat\030\001 \002(\r\022\023\n\005" +
+      "front\030\002 \002(\010:\004true\022\016\n\006tileId\030\003 \001(\r\022\016\n\006act" +
+      "ion\030\004 \001(\r\022\017\n\007actTime\030\005 \001(\r\"\230\001\n\007CReqAct\022\014" +
+      "\n\004seat\030\001 \002(\r\022F\n\003act\030\002 \002(\01629.com.ourgame.",
+      "mahjong.bloodriver.protoc.message.Action" +
+      "Type\022\020\n\010provider\030\003 \001(\r\022\022\n\ntargetTile\030\004 \001" +
+      "(\r\022\021\n\trootTiles\030\005 \003(\r\"\270\001\n\006NtfAct\022\014\n\004seat" +
+      "\030\001 \002(\r\022F\n\003act\030\002 \002(\01629.com.ourgame.mahjon" +
+      "g.bloodriver.protoc.message.ActionType\022\020" +
+      "\n\010provider\030\003 \001(\r\022\022\n\ntargetTile\030\004 \001(\r\022\021\n\t" +
+      "rootTiles\030\005 \003(\r\022\016\n\006action\030\006 \001(\r\022\017\n\007actTi" +
+      "me\030\007 \001(\r\"\272\001\n\006NtfWin\022\017\n\007winType\030\001 \002(\r\022\017\n\007" +
+      "winTile\030\002 \002(\r\022O\n\010winInfos\030\003 \003(\0132=.com.ou" +
+      "rgame.mahjong.bloodriver.protoc.message.",
+      "NtfWin.WinInfo\032=\n\007WinInfo\022\022\n\nwinnerSeat\030" +
+      "\001 \002(\r\022\021\n\tloserSeat\030\002 \002(\r\022\013\n\003fan\030\003 \002(\r\"\365\002" +
+      "\n\rNtfGameStatus\022\016\n\006gameId\030\001 \002(\r\022\020\n\010gameT" +
+      "ype\030\002 \002(\r\022F\n\007players\030\003 \003(\01325.com.ourgame" +
+      ".mahjong.bloodriver.protoc.message.Playe" +
+      "r\022\016\n\006dealer\030\004 \002(\r\022\022\n\nbasicScore\030\005 \002(\r\022\r\n" +
+      "\005stage\030\006 \002(\r\022\r\n\005round\030\007 \002(\r\022\016\n\006serial\030\010 " +
+      "\002(\r\022\021\n\tstartSeat\030\t \002(\r\022\023\n\013startFrusta\030\n " +
+      "\002(\r\022\026\n\016frontDrewTiles\030\013 \002(\r\022\025\n\rbackDrewT" +
+      "iles\030\014 \002(\r\022Q\n\ttileInfos\030\r \003(\0132>.com.ourg",
+      "ame.mahjong.bloodriver.protoc.message.Cu" +
+      "rrentTileInfo\".\n\rCReqUserTrust\022\016\n\006gameId" +
+      "\030\001 \002(\004\022\r\n\005trust\030\002 \002(\005\";\n\014NtfUserTrust\022\016\n" +
+      "\006gameId\030\001 \002(\004\022\014\n\004seat\030\002 \002(\005\022\r\n\005trust\030\003 \002" +
+      "(\005\"\364\002\n\rNtfGameResult\022\016\n\006gameId\030\001 \002(\004\022T\n\007" +
+      "results\030\002 \003(\0132C.com.ourgame.mahjong.bloo" +
+      "driver.protoc.message.NtfGameResult.Resu" +
+      "lt\022\017\n\007maxWait\030\003 \002(\r\032B\n\006Detail\022\014\n\004type\030\001 " +
+      "\002(\r\022\014\n\004seat\030\002 \002(\r\022\016\n\006points\030\003 \002(\r\022\014\n\004til" +
+      "e\030\004 \002(\r\032\247\001\n\006Result\022\014\n\004seat\030\001 \002(\r\022\021\n\twinP",
+      "oints\030\002 \002(\r\022\023\n\013tilesInHand\030\003 \003(\r\022\021\n\006stat" +
+      "us\030\004 \002(\r:\0010\022T\n\007details\030\005 \003(\0132C.com.ourga" +
+      "me.mahjong.bloodriver.protoc.message.Ntf" +
+      "GameResult.Detail*\232\001\n\010MeldType\022\r\n\tMELD_P" +
+      "AIR\020\001\022\014\n\010MELD_CHI\020\002\022\r\n\tMELD_PENG\020\003\022\022\n\016ME" +
+      "LD_MING_GANG\020\004\022\020\n\014MELD_BU_GANG\020\005\022\020\n\014MELD" +
+      "_AN_GANG\020\006\022\025\n\021MELD_IN_HAND_SHUN\020\007\022\023\n\017MEL" +
+      "D_IN_HAND_KE\020\010*\241\001\n\nActionType\022\016\n\nACT_GIV" +
+      "EUP\020\000\022\017\n\013ACT_DISCARD\020\001\022\013\n\007ACT_CHI\020\002\022\014\n\010A" +
+      "CT_PENG\020\004\022\014\n\010ACT_GANG\020\010\022\016\n\nACT_BUGANG\020\020\022",
+      "\016\n\nACT_ANGANG\020 \022\013\n\007ACT_WIN\020@\022\r\n\010ACT_TING" +
+      "\020\200\001\022\r\n\010ACT_SHOW\020\200\002"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -24945,7 +25066,7 @@ public final class MJBloodRiverMessage {
           internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfCastDice_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfCastDice_descriptor,
-              new java.lang.String[] { "Seat", "Points", });
+              new java.lang.String[] { "Seat", "Type", "Points", });
           internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfDeals_descriptor =
             getDescriptor().getMessageTypes().get(9);
           internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfDeals_fieldAccessorTable = new

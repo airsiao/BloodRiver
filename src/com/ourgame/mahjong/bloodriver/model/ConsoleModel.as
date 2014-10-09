@@ -1,9 +1,10 @@
 package com.ourgame.mahjong.bloodriver.model
 {
+	import com.netease.protobuf.UInt64;
 	import com.ourgame.mahjong.bloodriver.method.GameMethod;
 	import com.ourgame.mahjong.bloodriver.vo.Game;
+	import com.ourgame.mahjong.bloodriver.vo.GamePlayer;
 	import com.ourgame.mahjong.bloodriver.vo.Mahjong;
-	import com.ourgame.mahjong.bloodriver.vo.Player;
 	import com.ourgame.mahjong.bloodriver.vo.Robot;
 	import com.wecoit.mvc.Model;
 	
@@ -54,27 +55,19 @@ package com.ourgame.mahjong.bloodriver.model
 		
 		public function start():void
 		{
-			this.game = new Game();
-			this.game.playerList.add(new Player());
+			this.game = new Game(new UInt64());
+			this.game.playerList.add(new GamePlayer(null));
 			this.game.playerList.add(new Robot());
 			this.game.playerList.add(new Robot());
 			this.game.playerList.add(new Robot());
 			
 			this.notify(GameMethod.GAME_START, game, this);
 			
-			this.shuffle();
 			this.dealDice();
 			this.deal();
 		}
 		
 		// -------------------------------------------------------------------------------------------------------- 函数
-		
-		private function shuffle():void
-		{
-			this.mahjong.shuffle();
-			
-			this.notify(GameMethod.SHUFFLE, null, this);
-		}
 		
 		private function dealDice():void
 		{
@@ -87,7 +80,7 @@ package com.ourgame.mahjong.bloodriver.model
 		{
 			for (var i:int = 0; i < this.game.playerList.length; i++)
 			{
-				var player:Player = this.game.playerList.element(i);
+				var player:GamePlayer = this.game.playerList.element(i);
 				var count:int = (i == this.game.dealer) ? 14 : 13;
 				
 				while (player.handCards.cards.list.length < count)

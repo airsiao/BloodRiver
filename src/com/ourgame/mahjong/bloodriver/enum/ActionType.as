@@ -5,7 +5,7 @@ package com.ourgame.mahjong.bloodriver.enum
 	 * 动作
 	 * @author SiaoLeon
 	 */
-	public class Action
+	public class ActionType
 	{
 		/**
 		 * 弃

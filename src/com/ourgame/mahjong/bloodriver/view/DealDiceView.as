@@ -1,13 +1,16 @@
-package com.ourgame.mahjong.bloodriver.state
+package com.ourgame.mahjong.bloodriver.view
 {
-	import com.wecoit.debug.Log;
+	import com.ourgame.mahjong.bloodriver.BloodRiver;
+	import com.ourgame.mahjong.bloodriver.data.GameData;
+	import com.ourgame.mahjong.bloodriver.state.GameState;
 	import com.wecoit.mvc.State;
+	import com.wecoit.mvc.View;
 	
 	/**
-	 * 换牌骰子状态
+	 * 发牌骰子视图
 	 * @author SiaoLeon
 	 */
-	public class ChangeDiceState extends State
+	public class DealDiceView extends View
 	{
 		// -------------------------------------------------------------------------------------------------------- 静态常量
 		
@@ -26,23 +29,26 @@ package com.ourgame.mahjong.bloodriver.state
 		/**
 		 * 构造函数
 		 */
-		public function ChangeDiceState(key:Object=null)
+		public function DealDiceView()
 		{
-			super(key);
+			super();
 		}
-	
+		
 		// -------------------------------------------------------------------------------------------------------- 方法
 		
-		override public function onEnter():void
+		override public function onAdd():void
 		{
-			Log.debug("进入", this.key);
+			var dealer:uint = (this.module as BloodRiver).info.data.table.getSeatPosition(GameData.game.dealer);
+			var dice:uint = 0;
+			
+			for each (var point:uint in GameData.game.dealDice)
+			{
+				dice += point;
+			}
+			
+			((this.context as State).manager.getState(GameState) as GameState).view.scene.wall.init(dealer, dice);
 		}
-		
-		override public function onExit():void
-		{
-			Log.debug("离开", this.key);
-		}
-		
+	
 		// -------------------------------------------------------------------------------------------------------- 函数
 	
 	}

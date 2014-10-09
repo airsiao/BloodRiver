@@ -110,9 +110,9 @@ package com.ourgame.mahjong.bloodriver.controller
 			var data:DataExchange = ((this.context as State).manager as BloodRiver).info.data;
 			
 			data.ourgameID = config.getValue("ourgameID");
-			data.username = config.getValue("username");
-			data.rolename = config.getValue("rolename");
-			data.nickname = config.getValue("nickname");
+			data.username = config.getValue("ourgameID"); //config.getValue("username");
+			data.rolename = config.getValue("ourgameID"); // config.getValue("rolename");
+			data.nickname = config.getValue("ourgameID"); // config.getValue("nickname");
 			data.ticket = config.getValue("ticket");
 			data.channelID = config.getValue("channelID");
 			

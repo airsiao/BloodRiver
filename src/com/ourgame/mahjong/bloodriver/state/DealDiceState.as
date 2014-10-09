@@ -1,5 +1,6 @@
 package com.ourgame.mahjong.bloodriver.state
 {
+	import com.ourgame.mahjong.bloodriver.view.DealDiceView;
 	import com.wecoit.debug.Log;
 	import com.wecoit.mvc.State;
 	
@@ -19,6 +20,8 @@ package com.ourgame.mahjong.bloodriver.state
 		
 		// -------------------------------------------------------------------------------------------------------- 属性
 		
+		public var view:DealDiceView;
+		
 		// -------------------------------------------------------------------------------------------------------- 变量
 		
 		// -------------------------------------------------------------------------------------------------------- 构造
@@ -30,19 +33,21 @@ package com.ourgame.mahjong.bloodriver.state
 		{
 			super(key);
 		}
-	
+		
 		// -------------------------------------------------------------------------------------------------------- 方法
+		
+		override public function onInit():void
+		{
+			this.view = new DealDiceView();
+		}
 		
 		override public function onEnter():void
 		{
 			Log.debug("进入", this.key);
+			
+			this.addView(this.view);
 		}
-		
-		override public function onExit():void
-		{
-			Log.debug("离开", this.key);
-		}
-		
+	
 		// -------------------------------------------------------------------------------------------------------- 函数
 	
 	}

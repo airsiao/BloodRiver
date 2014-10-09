@@ -17,6 +17,12 @@ package com.ourgame.mahjong.bloodriver.method
 		 * 准备
 		 */
 		public static const READY:String = BASE + "READY";
+		
+		/**
+		 * 邀请进入游戏
+		 * params uint 游戏ID
+		 */
+		public static const GAME_INVITE:String = BASE + "GAME_INVITE";
 	
 	}
 }

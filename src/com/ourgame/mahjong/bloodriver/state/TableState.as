@@ -2,7 +2,7 @@ package com.ourgame.mahjong.bloodriver.state
 {
 	import com.ourgame.mahjong.bloodriver.BloodRiver;
 	import com.ourgame.mahjong.bloodriver.controller.ConsoleController;
-	import com.ourgame.mahjong.bloodriver.controller.GameSocketController;
+	import com.ourgame.mahjong.bloodriver.controller.MainSocketController;
 	import com.ourgame.mahjong.bloodriver.controller.TableController;
 	import com.ourgame.mahjong.bloodriver.model.ConsoleModel;
 	import com.ourgame.mahjong.bloodriver.model.GameModel;
@@ -62,7 +62,7 @@ package com.ourgame.mahjong.bloodriver.state
 			else
 			{
 				this.addModel(MainSocketModel);
-				this.addController(new GameSocketController());
+				this.addController(new MainSocketController());
 			}
 			
 			this.addView(this.view);

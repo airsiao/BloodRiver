@@ -1,6 +1,7 @@
 package com.ourgame.mahjong.bloodriver.controller
 {
 	import com.ourgame.mahjong.bloodriver.BloodRiver;
+	import com.ourgame.mahjong.bloodriver.method.TableMethod;
 	import com.ourgame.mahjong.bloodriver.state.TableState;
 	import com.ourgame.mahjong.libaray.DataExchange;
 	import com.ourgame.mahjong.libaray.SocketProcessor;
@@ -8,16 +9,26 @@ package com.ourgame.mahjong.bloodriver.controller
 	import com.ourgame.mahjong.libaray.enum.RoomType;
 	import com.ourgame.mahjong.libaray.events.SocketEvent;
 	import com.ourgame.mahjong.libaray.vo.RoomInfo;
+	import com.ourgame.mahjong.libaray.vo.TableInfo;
+	import com.ourgame.mahjong.libaray.vo.UserInfo;
 	import com.ourgame.mahjong.libaray.vo.socket.MJDataPack;
 	import com.ourgame.mahjong.message.CReqEnterRoom;
+	import com.ourgame.mahjong.message.CReqEnterTable;
 	import com.ourgame.mahjong.message.CReqLogin;
 	import com.ourgame.mahjong.message.CReqRoomList;
+	import com.ourgame.mahjong.message.CReqStandBy;
+	import com.ourgame.mahjong.message.NtfInviteGame;
+	import com.ourgame.mahjong.message.NtfInviteTable;
 	import com.ourgame.mahjong.message.Room;
 	import com.ourgame.mahjong.message.SAckEnterRoom;
+	import com.ourgame.mahjong.message.SAckEnterTable;
 	import com.ourgame.mahjong.message.SAckLogin;
 	import com.ourgame.mahjong.message.SAckRoomList;
+	import com.ourgame.mahjong.message.SAckStandBy;
+	import com.ourgame.mahjong.message.TablePlayer;
 	import com.ourgame.mahjong.protocol.MJLobbyProtocol;
 	import com.ourgame.mahjong.protocol.MJRoomProtocol;
+	import com.ourgame.mahjong.protocol.MJTableProtocol;
 	import com.wecoit.core.AssetsManager;
 	import com.wecoit.debug.Log;
 	import com.wecoit.mvc.Application;
@@ -124,8 +135,24 @@ package com.ourgame.mahjong.bloodriver.controller
 					this.on_enterRoom(data);
 					break;
 				
+				case MJRoomProtocol.SERVER + MJRoomProtocol.OGID_STAND_BY:
+					this.on_standby(data);
+					break;
+				
 				case MJRoomProtocol.SERVER + MJRoomProtocol.OGID_TABLE_LIST:
 					this.on_tableList(data);
+					break;
+				
+				case MJRoomProtocol.SERVER + MJRoomProtocol.OGID_TABLE_INVITE:
+					this.on_tableInvite(data);
+					break;
+				
+				case MJRoomProtocol.SERVER + MJRoomProtocol.OGID_TABLE_ENTER:
+					this.ON_enterTable(data);
+					break;
+				
+				case MJTableProtocol.SERVER + MJTableProtocol.OGID_GAME_INVITE:
+					this.on_gameInvite(data);
 					break;
 			}
 		}
@@ -244,7 +271,7 @@ package com.ourgame.mahjong.bloodriver.controller
 				
 				if (this.data.room.type == RoomType.AUTO)
 				{
-					(this.context as State).manager.switchState(TableState);
+					this.standby();
 				}
 				else
 				{
@@ -257,6 +284,28 @@ package com.ourgame.mahjong.bloodriver.controller
 			}
 		}
 		
+		private function standby():void
+		{
+			var body:CReqStandBy = new CReqStandBy();
+			
+			Log.debug("发送准备请求", body);
+			
+			this.socket.send(MJRoomProtocol.CLIENT + MJRoomProtocol.OGID_STAND_BY, body);
+		}
+		
+		private function on_standby(data:MJDataPack):void
+		{
+			var body:SAckStandBy = new SAckStandBy();
+			body.mergeFrom(data.body);
+			
+			Log.debug("请求准备结果", body);
+			
+			if (body.result != 0)
+			{
+				Log.error("请求准备失败原因", body.failReason);
+			}
+		}
+		
 		private function tableList():void
 		{
 		
@@ -265,6 +314,86 @@ package com.ourgame.mahjong.bloodriver.controller
 		private function on_tableList(data:MJDataPack):void
 		{
 			(this.context as State).manager.switchState(TableState);
+		}
+		
+		private function on_tableInvite(data:MJDataPack):void
+		{
+			var body:NtfInviteTable = new NtfInviteTable();
+			body.mergeFrom(data.body);
+			
+			Log.debug("收到桌子邀请消息", body);
+			
+			this.enterTable(body.tableId);
+		}
+		
+		private function enterTable(id:uint):void
+		{
+			var body:CReqEnterTable = new CReqEnterTable();
+			body.roomId = this.data.room.id;
+			body.tableId = id;
+			
+			Log.debug("发送进入桌子请求", body);
+			
+			this.socket.send(MJRoomProtocol.CLIENT + MJRoomProtocol.OGID_TABLE_ENTER, body);
+		}
+		
+		private function ON_enterTable(data:MJDataPack):void
+		{
+			var body:SAckEnterTable = new SAckEnterTable();
+			body.mergeFrom(data.body);
+			
+			Log.debug("请求进入桌子结果", body);
+			
+			if (body.result == 0)
+			{
+				if (this.data.room.type == RoomType.AUTO)
+				{
+					this.data.table = new TableInfo(body.tableId);
+				}
+				else
+				{
+					this.data.table = this.data.room.getTableByID(body.tableId);
+				}
+				
+				for each (var info:TablePlayer in body.player)
+				{
+					var user:UserInfo = (info.userId.low == this.data.user.id) ? this.data.user : new UserInfo(info.userId.low);
+					
+					if (info.userId.low == this.data.user.id)
+					{
+						this.data.table.currentSeat = info.seat;
+					}
+					
+					user.seat = info.seat;
+					user.nickname = info.nickname;
+					user.chips = info.score;
+					user.sex = info.gender;
+					user.headImage = info.headImage;
+					user.level = info.level;
+					user.experience = info.experience;
+					user.winRate = info.winRate;
+					
+					this.data.table.userList.add(user);
+				}
+			}
+			else
+			{
+				Log.error("进入桌子失败原因", body.failReason);
+			}
+		}
+		
+		private function on_gameInvite(data:MJDataPack):void
+		{
+			var body:NtfInviteGame = new NtfInviteGame();
+			body.mergeFrom(data.body);
+			
+			Log.debug("收到游戏邀请消息", body);
+			
+			this.data.gameID = body.gameId;
+			
+			(this.context as State).manager.switchState(TableState);
+			
+			this.notify(TableMethod.GAME_INVITE, body.tableId);
 		}
 	
 	}

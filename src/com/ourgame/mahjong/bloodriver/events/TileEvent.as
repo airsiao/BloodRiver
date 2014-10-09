@@ -1,14 +1,20 @@
-package com.ourgame.mahjong.bloodriver.state
+package com.ourgame.mahjong.bloodriver.events
 {
-	import com.wecoit.mvc.State;
+	import com.ourgame.mahjong.bloodriver.ui.Tile;
+	
+	import flash.events.Event;
 	
 	/**
-	 * 行牌状态
+	 * 牌事件
 	 * @author SiaoLeon
 	 */
-	public class PlayState extends State
+	public class TileEvent extends Event
 	{
 		// -------------------------------------------------------------------------------------------------------- 静态常量
+		
+		public static const SELECT:String = "select";
+		
+		public static const CONFIRM:String = "confirm";
 		
 		// -------------------------------------------------------------------------------------------------------- 静态变量
 		
@@ -18,6 +24,13 @@ package com.ourgame.mahjong.bloodriver.state
 		
 		// -------------------------------------------------------------------------------------------------------- 属性
 		
+		private var _tile:Tile;
+		
+		public function get tile():Tile
+		{
+			return this._tile;
+		}
+		
 		// -------------------------------------------------------------------------------------------------------- 变量
 		
 		// -------------------------------------------------------------------------------------------------------- 构造
@@ -25,12 +38,11 @@ package com.ourgame.mahjong.bloodriver.state
 		/**
 		 * 构造函数
 		 */
-		public function PlayState(key:Object=null)
+		public function TileEvent(type:String, tile:Tile)
 		{
-			super(key);
+			super(type, bubbles, cancelable);
 			
-			this.add(new DrawState()); //抓牌
-			this.add(new DiscardState()); //打牌
+			this._tile = tile;
 		}
 	
 		// -------------------------------------------------------------------------------------------------------- 方法

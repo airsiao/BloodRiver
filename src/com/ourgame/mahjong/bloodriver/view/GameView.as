@@ -1,5 +1,7 @@
 package com.ourgame.mahjong.bloodriver.view
 {
+	import com.ourgame.mahjong.bloodriver.ui.GameScene;
+	import com.ourgame.mahjong.bloodriver.ui.LayerManager;
 	import com.wecoit.mvc.View;
 	
 	/**
@@ -18,6 +20,8 @@ package com.ourgame.mahjong.bloodriver.view
 		
 		// -------------------------------------------------------------------------------------------------------- 属性
 		
+		public var scene:GameScene;
+		
 		// -------------------------------------------------------------------------------------------------------- 变量
 		
 		// -------------------------------------------------------------------------------------------------------- 构造
@@ -29,8 +33,20 @@ package com.ourgame.mahjong.bloodriver.view
 		{
 			super();
 		}
-	
+		
 		// -------------------------------------------------------------------------------------------------------- 方法
+		
+		override public function onAdd():void
+		{
+			this.scene = new GameScene();
+			LayerManager.instance.foreground.addChild(this.scene);
+		}
+		
+		override public function onRemove():void
+		{
+			LayerManager.instance.foreground.removeChild(this.scene);
+			this.scene = null;
+		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数
 	

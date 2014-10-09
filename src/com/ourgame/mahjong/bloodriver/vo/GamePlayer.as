@@ -1,13 +1,14 @@
 package com.ourgame.mahjong.bloodriver.vo
 {
 	import com.ourgame.mahjong.bloodriver.enum.CardColor;
+	import com.ourgame.mahjong.libaray.vo.UserInfo;
 	import com.wecoit.data.ValueObject;
 	
 	/**
 	 * 玩家对象
 	 * @author SiaoLeon
 	 */
-	public class Player extends ValueObject
+	public class GamePlayer extends ValueObject
 	{
 		// -------------------------------------------------------------------------------------------------------- 静态常量
 		
@@ -18,6 +19,11 @@ package com.ourgame.mahjong.bloodriver.vo
 		// -------------------------------------------------------------------------------------------------------- 静态函数
 		
 		// -------------------------------------------------------------------------------------------------------- 属性
+		
+		public function get user():UserInfo
+		{
+			return this.getProperty("user", null);
+		}
 		
 		/**
 		 * 换牌
@@ -49,8 +55,7 @@ package com.ourgame.mahjong.bloodriver.vo
 				while (result.length < 3)
 				{
 					var index:uint = Math.floor(Math.random() * cards.length);
-					var card:Card = cards[index];
-					result.push(card);
+					result = result.concat(cards.splice(index, 1));
 				}
 			}
 			
@@ -78,9 +83,11 @@ package com.ourgame.mahjong.bloodriver.vo
 		/**
 		 * 构造函数
 		 */
-		public function Player()
+		public function GamePlayer(user:UserInfo)
 		{
 			super();
+			
+			this.setProperty("user", user);
 		}
 	
 		// -------------------------------------------------------------------------------------------------------- 方法

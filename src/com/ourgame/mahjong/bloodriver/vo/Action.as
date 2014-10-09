@@ -1,12 +1,11 @@
-package com.ourgame.mahjong.bloodriver.state
+package com.ourgame.mahjong.bloodriver.vo
 {
-	import com.wecoit.mvc.State;
 	
 	/**
-	 * 行牌状态
+	 * 抓牌动作
 	 * @author SiaoLeon
 	 */
-	public class PlayState extends State
+	public class Action
 	{
 		// -------------------------------------------------------------------------------------------------------- 静态常量
 		
@@ -22,15 +21,35 @@ package com.ourgame.mahjong.bloodriver.state
 		
 		// -------------------------------------------------------------------------------------------------------- 构造
 		
+		private var _seat:uint;
+		
+		public function get seat():uint
+		{
+			return this._seat;
+		}
+		
+		private var _reverse:Boolean;
+		
+		public function get reverse():Boolean
+		{
+			return this._reverse;
+		}
+		
+		private var _card:Card;
+		
+		public function get card():Card
+		{
+			return this._card;
+		}
+		
 		/**
 		 * 构造函数
 		 */
-		public function PlayState(key:Object=null)
+		public function Action(seat:uint, card:Card, reverse:Boolean=false)
 		{
-			super(key);
-			
-			this.add(new DrawState()); //抓牌
-			this.add(new DiscardState()); //打牌
+			this._seat = seat;
+			this._card = card;
+			this._reverse = reverse;
 		}
 	
 		// -------------------------------------------------------------------------------------------------------- 方法

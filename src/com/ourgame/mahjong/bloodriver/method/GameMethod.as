@@ -24,16 +24,6 @@ package com.ourgame.mahjong.bloodriver.method
 		public static const GAME_START:String = BASE + "GAME_START";
 		
 		/**
-		 * 结束游戏
-		 */
-		public static const GAME_END:String = BASE + "GAME_END";
-		
-		/**
-		 * 洗牌
-		 */
-		public static const SHUFFLE:String = BASE + "SHUFFLE";
-		
-		/**
 		 * 发牌骰子
 		 */
 		public static const DEAL_DICE:String = BASE + "DEAL_DICE";
@@ -46,17 +36,35 @@ package com.ourgame.mahjong.bloodriver.method
 		/**
 		 * 换牌骰子
 		 */
-		public static const CHANGE_DICE:String = BASE + "CHANGE_DICE";
+		public static const SWAP_DICE:String = BASE + "SWAP_DICE";
+		
+		/**
+		 * 选择换牌
+		 */
+		public static const SELECT_SWAP:String = BASE + "SELECT_SWAP";
+		
+		/**
+		 * 确认换牌
+		 * params Vector.<Card> 换出的三张牌列表
+		 */
+		public static const CONFIRM_SWAP:String = BASE + "CONFIRM_SWAP";
 		
 		/**
 		 * 换牌
+		 * params Vector.<Card> 换入的三张牌列表
 		 */
-		public static const CHANGE_CARDS:String = BASE + "CHANGE_CARDS";
+		public static const SWAP_CARDS:String = BASE + "SWAP_CARDS";
 		
 		/**
-		 * 行牌
+		 * 抓牌
+		 * params DrawAction 抓牌动作
 		 */
-		public static const PLAY:String = BASE + "PLAY";
+		public static const DRAW:String = BASE + "DRAW";
+		
+		/**
+		 * 打牌
+		 */
+		public static const DISCARD:String = BASE + "DISCARD";
 		
 		/**
 		 * 结算

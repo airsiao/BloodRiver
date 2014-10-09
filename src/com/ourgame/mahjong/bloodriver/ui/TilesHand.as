@@ -2,12 +2,17 @@ package com.ourgame.mahjong.bloodriver.ui
 {
 	import com.ourgame.mahjong.bloodriver.enum.CardStatus;
 	import com.ourgame.mahjong.bloodriver.enum.Position;
+	import com.ourgame.mahjong.bloodriver.events.TileEvent;
 	import com.ourgame.mahjong.bloodriver.vo.Card;
 	import com.ourgame.mahjong.bloodriver.vo.CardGroup;
 	import com.ourgame.mahjong.bloodriver.vo.HandCards;
 	import com.wecoit.display.DisplayElement;
 	
 	import flash.events.MouseEvent;
+	
+	[Event(name="select", type="com.ourgame.mahjong.bloodriver.events.TileEvent")]
+	
+	[Event(name="confirm", type="com.ourgame.mahjong.bloodriver.events.TileEvent")]
 	
 	/**
 	 * 手牌
@@ -43,7 +48,7 @@ package com.ourgame.mahjong.bloodriver.ui
 		{
 			this._status = value;
 			
-			this.sort();
+			this.layout();
 		}
 		
 		private var _enable:Boolean;
@@ -132,11 +137,21 @@ package com.ourgame.mahjong.bloodriver.ui
 			this.initCards(hands.cards.list);
 		}
 		
-		public function initGroups(groups:Vector.<CardGroup>):void
+		public function initGroups(list:Vector.<CardGroup>):void
 		{
-			for (var i:int = 0; i < groups.length; i++)
+			while (this.groups.length > 0)
 			{
-				var group:CardGroup = groups[i];
+				var remove:TilesGroup = this.groups.pop();
+				
+				if (this.contains(remove))
+				{
+					this.removeChild(remove);
+				}
+			}
+			
+			for (var i:int = 0; i < list.length; i++)
+			{
+				var group:CardGroup = list[i];
 				var tile:TilesGroup = new TilesGroup(this.position, group);
 				
 				switch (position)
@@ -163,23 +178,33 @@ package com.ourgame.mahjong.bloodriver.ui
 				this.addChild(tile);
 			}
 			
-			this.sort();
+			this.layout();
 		}
 		
-		public function initCards(cards:Vector.<Card>):void
+		public function initCards(list:Vector.<Card>):void
 		{
-			for (var i:int = 0; i < cards.length; i++)
+			while (this.cards.length > 0)
 			{
-				var card:Card = cards[i];
+				var remove:Tile = this.cards.pop();
+				
+				if (this.contains(remove))
+				{
+					this.removeChild(remove);
+				}
+			}
+			
+			for (var i:int = 0; i < list.length; i++)
+			{
+				var card:Card = list[i];
 				var tile:Tile = new Tile(card, this.position);
 				this.cards.push(tile);
 				this.addChild(tile);
 			}
 			
-			this.sort();
+			this.layout();
 		}
 		
-		public function sort():void
+		public function layout():void
 		{
 			for (var i:int = 0; i < this.cards.length; i++)
 			{
@@ -230,6 +255,24 @@ package com.ourgame.mahjong.bloodriver.ui
 			}
 		}
 		
+		/**
+		 * 根据牌信息获取麻将牌
+		 * @param card
+		 * @return
+		 */
+		public function getTileByCard(card:Card):Tile
+		{
+			for each (var tile:Tile in this.cards)
+			{
+				if (tile.card == card)
+				{
+					return tile;
+				}
+			}
+			
+			return null;
+		}
+		
 		// -------------------------------------------------------------------------------------------------------- 函数
 		
 		private function onMouseOver(event:MouseEvent):void
@@ -246,23 +289,41 @@ package com.ourgame.mahjong.bloodriver.ui
 			this.update();
 			
 			this.addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
+			this.addEventListener(MouseEvent.CLICK, onMouseClick);
 		}
 		
 		private function onMouseOut(event:MouseEvent):void
 		{
 			this.removeEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
+			this.removeEventListener(MouseEvent.CLICK, onMouseClick);
 			
 			this._selected = null;
 			
 			this.update();
 		}
 		
+		private function onMouseClick(event:MouseEvent):void
+		{
+			var target:Tile = event.target as Tile;
+			
+			if (target == null)
+			{
+				return;
+			}
+			
+			target.confirm = !target.confirm;
+			
+			this.dispatchEvent(new TileEvent(TileEvent.CONFIRM, target));
+		}
+		
 		private function update():void
 		{
 			for each (var tile:Tile in this.cards)
 			{
-				tile.select = (tile == this.selected && this.enable);
+				tile.select = (tile == this.selected && this.enable || tile.confirm);
 			}
+			
+			this.dispatchEvent(new TileEvent(TileEvent.SELECT, this.selected));
 		}
 	
 	}

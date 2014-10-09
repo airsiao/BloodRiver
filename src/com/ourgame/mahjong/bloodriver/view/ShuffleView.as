@@ -1,12 +1,14 @@
-package com.ourgame.mahjong.bloodriver.state
+package com.ourgame.mahjong.bloodriver.view
 {
+	import com.ourgame.mahjong.bloodriver.state.GameState;
 	import com.wecoit.mvc.State;
+	import com.wecoit.mvc.View;
 	
 	/**
-	 * 行牌状态
+	 * 洗牌视图
 	 * @author SiaoLeon
 	 */
-	public class PlayState extends State
+	public class ShuffleView extends View
 	{
 		// -------------------------------------------------------------------------------------------------------- 静态常量
 		
@@ -25,15 +27,17 @@ package com.ourgame.mahjong.bloodriver.state
 		/**
 		 * 构造函数
 		 */
-		public function PlayState(key:Object=null)
+		public function ShuffleView()
 		{
-			super(key);
-			
-			this.add(new DrawState()); //抓牌
-			this.add(new DiscardState()); //打牌
+			super();
 		}
-	
+		
 		// -------------------------------------------------------------------------------------------------------- 方法
+		
+		override public function onAdd():void
+		{
+			((this.context as State).manager.getState(GameState) as GameState).view.scene.wall.init();
+		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数
 	

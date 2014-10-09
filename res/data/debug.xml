@@ -2,18 +2,18 @@
 <debug>
 
 	<!-- 默认房间ID -->
-	<option name="RoomID">5</option>
+	<option name="RoomID">1</option>
 	<!-- 默认桌子ID -->
-	<option name="TableID">5</option>
+	<option name="TableID">1</option>
 	
 	<!-- 联众ID -->
-	<option name="ourgameID">lx0025</option>
+	<option name="ourgameID">lx0004</option>
 	<!-- 用户名 -->
-	<option name="username">lx0025</option>
+	<option name="username">lx0017</option>
 	<!-- 角色名 -->
-	<option name="rolename">lx0025</option>
+	<option name="rolename">lx0017</option>
 	<!-- 昵称 -->
-	<option name="nickname">lx0025</option>
+	<option name="nickname">lx0017</option>
 	<!-- 证书 -->
 	<option name="ticket">
 	</option>

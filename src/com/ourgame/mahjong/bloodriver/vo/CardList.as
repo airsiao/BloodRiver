@@ -304,10 +304,13 @@ package com.ourgame.mahjong.bloodriver.vo
 		{
 			if (this.list.indexOf(card) < 0)
 			{
-				return;
+				card = this.getCardByID(0);
+				this.list.splice(this.list.indexOf(card), 1);
 			}
-			
-			this.list.splice(this.list.indexOf(card), 1);
+			else
+			{
+				this.list.splice(this.list.indexOf(card), 1);
+			}
 		}
 		
 		/**

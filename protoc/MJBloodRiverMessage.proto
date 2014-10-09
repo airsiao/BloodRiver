@@ -116,7 +116,8 @@ message NtfResumeGame{
 // #define OGID_DICE							( OGID_GAME_MESSAGE + 7 )
 message NtfCastDice{
 	required uint32 seat = 1;					//座位号
-	repeated uint32 points = 2;					//色子的点数
+	required uint32 type = 2;					//打色子的类型，作用，区分第几次
+	repeated uint32 points = 3;					//色子的点数
 }
 
 //========================================================================================
@@ -129,7 +130,7 @@ message NtfDeals{
 	}
 	required uint32 startSeat = 1;				//从哪一家门前抓牌
 	required uint32 startFrusta = 2;			//从第几墩开始抓牌
-	repeated uint32 tiles = 3;						//抓到的牌
+	repeated uint32 tiles = 3;					//抓到的牌
 	repeated TileAmount amouts = 4;				//其余人的牌张数
 	required uint32 waitingTime = 5;			//等候准备换牌的时间
 }

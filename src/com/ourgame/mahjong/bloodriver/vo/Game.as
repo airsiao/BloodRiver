@@ -1,5 +1,6 @@
 package com.ourgame.mahjong.bloodriver.vo
 {
+	import com.netease.protobuf.UInt64;
 	import com.wecoit.data.ArrayList;
 	import com.wecoit.data.ValueObject;
 	
@@ -20,6 +21,15 @@ package com.ourgame.mahjong.bloodriver.vo
 		// -------------------------------------------------------------------------------------------------------- 属性
 		
 		/**
+		 * ID
+		 * @return
+		 */
+		public function get id():UInt64
+		{
+			return this.getProperty("id", new UInt64());
+		}
+		
+		/**
 		 * 庄位
 		 * @return
 		 */
@@ -31,6 +41,76 @@ package com.ourgame.mahjong.bloodriver.vo
 		public function set dealer(value:uint):void
 		{
 			this.setProperty("dealer", value);
+		}
+		
+		/**
+		 * 开牌骰子
+		 * @return
+		 */
+		public function get dealDice():Array
+		{
+			return this.getProperty("dealDice", new Array());
+		}
+		
+		public function set dealDice(value:Array):void
+		{
+			this.setProperty("dealDice", value);
+		}
+		
+		/**
+		 * 换牌骰子
+		 * @return
+		 */
+		public function get swapDice():Array
+		{
+			return this.getProperty("swapDice", new Array());
+		}
+		
+		public function set swapDice(value:Array):void
+		{
+			this.setProperty("swapDice", value);
+		}
+		
+		/**
+		 * 换出的牌
+		 * @return
+		 */
+		public function get swapOut():Vector.<Card>
+		{
+			return this.getProperty("swapOut", new Vector.<Card>());
+		}
+		
+		public function set swapOut(value:Vector.<Card>):void
+		{
+			this.setProperty("swapOut", value);
+		}
+		
+		/**
+		 * 换入的牌
+		 * @return
+		 */
+		public function get swapIn():Vector.<Card>
+		{
+			return this.getProperty("swapIn", new Vector.<Card>());
+		}
+		
+		public function set swapIn(value:Vector.<Card>):void
+		{
+			this.setProperty("swapIn", value);
+		}
+		
+		/**
+		 * 基础分
+		 * @return
+		 */
+		public function get score():uint
+		{
+			return this.getProperty("score", 0);
+		}
+		
+		public function set score(value:uint):void
+		{
+			this.setProperty("score", value);
 		}
 		
 		/**
@@ -68,8 +148,11 @@ package com.ourgame.mahjong.bloodriver.vo
 		/**
 		 * 构造函数
 		 */
-		public function Game()
+		public function Game(id:UInt64)
 		{
+			super();
+			
+			this.setProperty("id", id);
 		}
 	
 		// -------------------------------------------------------------------------------------------------------- 方法
