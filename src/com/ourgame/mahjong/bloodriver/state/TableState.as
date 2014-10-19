@@ -54,7 +54,7 @@ package com.ourgame.mahjong.bloodriver.state
 		{
 			this.addModel(GameModel);
 			
-			if ((this.manager as BloodRiver).info.data.table.mode == PlayMode.CONSOLE)
+			if ((this.manager as BloodRiver).info.data.playMode == PlayMode.CONSOLE)
 			{
 				this.addModel(ConsoleModel);
 				this.addController(new ConsoleController());

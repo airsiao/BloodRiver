@@ -1,12 +1,12 @@
-package com.ourgame.mahjong.bloodriver.state
+package com.ourgame.mahjong.bloodriver.ui
 {
-	import com.wecoit.mvc.State;
+	import com.ourgame.mahjong.bloodriver.vo.Card;
 	
 	/**
-	 * 行牌状态
+	 * 动作按钮
 	 * @author SiaoLeon
 	 */
-	public class PlayState extends State
+	public class ActionButton extends CommonButton
 	{
 		// -------------------------------------------------------------------------------------------------------- 静态常量
 		
@@ -18,6 +18,20 @@ package com.ourgame.mahjong.bloodriver.state
 		
 		// -------------------------------------------------------------------------------------------------------- 属性
 		
+		private var _type:uint;
+		
+		public function get type():uint
+		{
+			return this._type;
+		}
+		
+		private var _card:Card;
+		
+		public function get card():Card
+		{
+			return this._card;
+		}
+		
 		// -------------------------------------------------------------------------------------------------------- 变量
 		
 		// -------------------------------------------------------------------------------------------------------- 构造
@@ -25,12 +39,12 @@ package com.ourgame.mahjong.bloodriver.state
 		/**
 		 * 构造函数
 		 */
-		public function PlayState(key:Object=null)
+		public function ActionButton(label:String, type:uint, card:Card)
 		{
-			super(key);
+			super(label);
 			
-			this.add(new DrawState()); //抓牌
-			this.add(new DiscardState()); //打牌
+			this._type = type;
+			this._card = card;
 		}
 	
 		// -------------------------------------------------------------------------------------------------------- 方法

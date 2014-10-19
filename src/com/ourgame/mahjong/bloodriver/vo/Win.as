@@ -1,14 +1,11 @@
-package com.ourgame.mahjong.bloodriver.state
+package com.ourgame.mahjong.bloodriver.vo
 {
-	import com.ourgame.mahjong.bloodriver.view.DealDiceView;
-	import com.wecoit.debug.Log;
-	import com.wecoit.mvc.State;
 	
 	/**
-	 * 发牌骰子状态
+	 * 胡牌信息
 	 * @author SiaoLeon
 	 */
-	public class DealDiceState extends State
+	public class Win
 	{
 		// -------------------------------------------------------------------------------------------------------- 静态常量
 		
@@ -20,7 +17,22 @@ package com.ourgame.mahjong.bloodriver.state
 		
 		// -------------------------------------------------------------------------------------------------------- 属性
 		
-		public var view:DealDiceView;
+		private var _type:uint;
+		
+		/**
+		 * 胡牌类型
+		 * @return
+		 */
+		public function get type():uint
+		{
+			return this._type;
+		}
+		
+		/**
+		 * 输赢翻数
+		 * @default
+		 */
+		public var fan:Array;
 		
 		// -------------------------------------------------------------------------------------------------------- 变量
 		
@@ -29,24 +41,13 @@ package com.ourgame.mahjong.bloodriver.state
 		/**
 		 * 构造函数
 		 */
-		public function DealDiceState(key:Object=null)
+		public function Win(type:uint)
 		{
-			super(key);
+			this._type = type;
+			this.fan = [0, 0, 0, 0];
 		}
-		
+	
 		// -------------------------------------------------------------------------------------------------------- 方法
-		
-		override public function onInit():void
-		{
-			this.view = new DealDiceView();
-		}
-		
-		override public function onEnter():void
-		{
-			Log.debug("进入", this.key);
-			
-			this.addView(this.view);
-		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数
 	

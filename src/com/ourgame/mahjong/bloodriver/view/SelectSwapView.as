@@ -1,17 +1,12 @@
 package com.ourgame.mahjong.bloodriver.view
 {
-	import com.ourgame.mahjong.bloodriver.BloodRiver;
-	import com.ourgame.mahjong.bloodriver.data.GameData;
 	import com.ourgame.mahjong.bloodriver.events.TileEvent;
-	import com.ourgame.mahjong.bloodriver.method.GameMethod;
+	import com.ourgame.mahjong.bloodriver.method.OperateMethod;
 	import com.ourgame.mahjong.bloodriver.state.GameState;
 	import com.ourgame.mahjong.bloodriver.ui.Tile;
 	import com.ourgame.mahjong.bloodriver.vo.Card;
-	import com.ourgame.mahjong.bloodriver.vo.GamePlayer;
 	import com.wecoit.mvc.State;
 	import com.wecoit.mvc.View;
-	
-	import flash.utils.setTimeout;
 	
 	/**
 	 * 选择换牌视图
@@ -47,16 +42,14 @@ package com.ourgame.mahjong.bloodriver.view
 		
 		override public function onAdd():void
 		{
-			setTimeout(change, 7000);
-			
-			((this.context as State).manager.getState(GameState) as GameState).view.scene.handCurrent.enable = true;
-			((this.context as State).manager.getState(GameState) as GameState).view.scene.handCurrent.addEventListener(TileEvent.CONFIRM, onSelect);
+			((this.context as State).manager.getState(GameState) as GameState).tiles.handCurrent.enable = true;
+			((this.context as State).manager.getState(GameState) as GameState).tiles.handCurrent.addEventListener(TileEvent.CONFIRM, onSelect);
 		}
 		
 		override public function onRemove():void
 		{
-			((this.context as State).manager.getState(GameState) as GameState).view.scene.handCurrent.removeEventListener(TileEvent.CONFIRM, onSelect);
-			((this.context as State).manager.getState(GameState) as GameState).view.scene.handCurrent.enable = false;
+			((this.context as State).manager.getState(GameState) as GameState).tiles.handCurrent.removeEventListener(TileEvent.CONFIRM, onSelect);
+			((this.context as State).manager.getState(GameState) as GameState).tiles.handCurrent.enable = false;
 		}
 		
 		// -------------------------------------------------------------------------------------------------------- 函数
@@ -65,6 +58,11 @@ package com.ourgame.mahjong.bloodriver.view
 		{
 			var tile:Tile = event.tile;
 			var index:int = this.cards.indexOf(tile.card);
+			
+			if (tile.confirm || this.cards.length < 3)
+			{
+				tile.confirm = !tile.confirm;
+			}
 			
 			if (index < 0)
 			{
@@ -77,16 +75,11 @@ package com.ourgame.mahjong.bloodriver.view
 			
 			if (this.cards.length >= 3)
 			{
-				this.notify(GameMethod.CONFIRM_SWAP, this.cards);
+				this.notify(OperateMethod.SWAP, this.cards);
+				
+				((this.context as State).manager.getState(GameState) as GameState).tiles.handCurrent.removeEventListener(TileEvent.CONFIRM, onSelect);
+				((this.context as State).manager.getState(GameState) as GameState).tiles.handCurrent.enable = false;
 			}
-		}
-		
-		private function change():void
-		{
-			var player:GamePlayer = GameData.game.playerList.element((this.module as BloodRiver).info.data.user.seat);
-			var swap:Vector.<Card> = player.swap;
-			
-			this.notify(GameMethod.CONFIRM_SWAP, swap);
 		}
 	
 	}

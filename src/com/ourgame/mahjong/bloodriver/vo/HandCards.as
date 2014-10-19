@@ -1,6 +1,7 @@
 package com.ourgame.mahjong.bloodriver.vo
 {
 	import com.ourgame.mahjong.bloodriver.enum.CardColor;
+	import com.ourgame.mahjong.bloodriver.enum.CardGroupType;
 	import com.ourgame.mahjong.bloodriver.enum.FanType;
 	
 	/**
@@ -74,6 +75,39 @@ package com.ourgame.mahjong.bloodriver.vo
 		public function get tings():Vector.<Card>
 		{
 			return (this.isLack) ? this.cards.tings : new Vector.<Card>();
+		}
+		
+		/**
+		 * 可杠的牌
+		 * @return
+		 */
+		public function get gangs():Vector.<CardGroup>
+		{
+			var result:Vector.<CardGroup> = new Vector.<CardGroup>();
+			var cards:CardList = new CardList(this.cards.list.concat());
+			
+			var pengs:Vector.<CardGroup> = this.groups.getGroupsByType(CardGroupType.KE);
+			
+			for each (var peng:CardGroup in pengs)
+			{
+				if (cards.getCards(peng.color, peng.point).length > 0)
+				{
+					var bu:CardGroup = new CardGroup();
+					bu.type = CardGroupType.GANG_BU;
+					bu.fill(peng.cards);
+					bu.cards.push(cards.getCards(peng.color, peng.point)[0]);
+					result.push(bu);
+				}
+			}
+			
+			var gangs:Vector.<CardGroup> = this.cards.gangs;
+			
+			for each (var an:CardGroup in gangs)
+			{
+				result.push(an);
+			}
+			
+			return result;
 		}
 		
 		/**

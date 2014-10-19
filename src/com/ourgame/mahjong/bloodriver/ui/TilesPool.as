@@ -59,11 +59,11 @@ package com.ourgame.mahjong.bloodriver.ui
 		{
 			for each (var card:Card in list)
 			{
-				this.add(card);
+				this.addCard(card);
 			}
 		}
 		
-		public function add(card:Card):void
+		public function addCard(card:Card):void
 		{
 			var tile:Tile = new Tile(card, this.position, CardStatus.POOL);
 			var index:uint = this.numChildren % 22;
@@ -90,6 +90,33 @@ package com.ourgame.mahjong.bloodriver.ui
 			}
 			
 			this.addChildAt(tile, (this.position == Position.NEXT || this.position == Position.OPPOSITE) ? Math.max(0, Math.floor(this.numChildren / 22) * 22) : this.numChildren);
+		}
+		
+		/**
+		 * 移除一张牌
+		 * @param card
+		 * @param sort
+		 */
+		public function removeCard(card:Card, sort:Boolean=false):void
+		{
+			for (var i:int = 0; i < this.numChildren; i++)
+			{
+				var tile:Tile = this.getChildAt(i) as Tile;
+				
+				if (tile == null)
+				{
+					continue;
+				}
+				
+				if (tile.card == card || tile.card.id == card.id)
+				{
+					if (this.contains(tile))
+					{
+						tile.alpha = 0.4;
+							//						this.removeChild(tile);
+					}
+				}
+			}
 		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数

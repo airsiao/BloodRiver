@@ -1,14 +1,11 @@
-package com.ourgame.mahjong.bloodriver.state
+package com.ourgame.mahjong.bloodriver.view
 {
-	import com.ourgame.mahjong.bloodriver.view.DealCardsView;
-	import com.wecoit.debug.Log;
-	import com.wecoit.mvc.State;
 	
 	/**
-	 * 发牌状态
+	 * 结算视图
 	 * @author SiaoLeon
 	 */
-	public class DealCardsState extends State
+	public class ResultView extends AbstractGameView
 	{
 		// -------------------------------------------------------------------------------------------------------- 静态常量
 		
@@ -20,8 +17,6 @@ package com.ourgame.mahjong.bloodriver.state
 		
 		// -------------------------------------------------------------------------------------------------------- 属性
 		
-		public var view:DealCardsView;
-		
 		// -------------------------------------------------------------------------------------------------------- 变量
 		
 		// -------------------------------------------------------------------------------------------------------- 构造
@@ -29,24 +24,12 @@ package com.ourgame.mahjong.bloodriver.state
 		/**
 		 * 构造函数
 		 */
-		public function DealCardsState(key:Object=null)
+		public function ResultView()
 		{
-			super(key);
+			super();
 		}
-		
+	
 		// -------------------------------------------------------------------------------------------------------- 方法
-		
-		override public function onInit():void
-		{
-			this.view = new DealCardsView();
-		}
-		
-		override public function onEnter():void
-		{
-			Log.debug("进入", this.key);
-			
-			this.addView(this.view);
-		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数
 	

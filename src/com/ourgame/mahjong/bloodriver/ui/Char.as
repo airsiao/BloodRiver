@@ -5,6 +5,7 @@ package com.ourgame.mahjong.bloodriver.ui
 	
 	import flash.display.Sprite;
 	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	
 	/**
@@ -27,6 +28,11 @@ package com.ourgame.mahjong.bloodriver.ui
 		
 		public function set user(value:UserInfo):void
 		{
+			if (this._user == value)
+			{
+				return;
+			}
+			
 			this._user = value;
 			
 			this.txtName.text = value.nickname;
@@ -47,6 +53,8 @@ package com.ourgame.mahjong.bloodriver.ui
 			
 			this.txtName = new TextField();
 			this.txtName.defaultTextFormat = new TextFormat("simsun", 12, 0XFFFFFF);
+			this.txtName.autoSize = TextFieldAutoSize.LEFT;
+			this.txtName.selectable = false;
 			this.addChild(this.txtName);
 			
 			switch (position)

@@ -95,6 +95,12 @@ package com.ourgame.mahjong.bloodriver.vo
 		{
 			return "(" + this.cards.join(",") + ")";
 		}
+		
+		public function fill(cards:Vector.<Card>):void
+		{
+			this._cards.splice(0, this._cards.length);
+			this._cards = cards.concat();
+		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数
 	

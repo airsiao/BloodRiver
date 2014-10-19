@@ -34,6 +34,7 @@ package com.ourgame.mahjong.bloodriver.controller
 	import com.wecoit.mvc.Application;
 	import com.wecoit.mvc.Controller;
 	import com.wecoit.mvc.State;
+	import com.wecoit.mvc.core.INotice;
 	import com.wecoit.utils.bytes.Base64;
 	
 	import flash.net.SharedObject;
@@ -76,7 +77,7 @@ package com.ourgame.mahjong.bloodriver.controller
 		{
 			this.data = ((this.context as State).manager as BloodRiver).info.data;
 			
-			this.CONNECT();
+			this.register(TableMethod.CONNECT, CONNECT);
 		}
 		
 		override public function onRemove():void
@@ -86,9 +87,9 @@ package com.ourgame.mahjong.bloodriver.controller
 		
 		// -------------------------------------------------------------------------------------------------------- 函数
 		
-		private function CONNECT():void
+		private function CONNECT(notice:INotice):void
 		{
-			if (((this.context as State).manager as BloodRiver).info.data.table.mode == PlayMode.CONSOLE)
+			if (((this.context as State).manager as BloodRiver).info.data.playMode == PlayMode.CONSOLE)
 			{
 				(this.context as State).manager.switchState(TableState);
 				return;
@@ -271,6 +272,12 @@ package com.ourgame.mahjong.bloodriver.controller
 				
 				if (this.data.room.type == RoomType.AUTO)
 				{
+					this.data.user.seat = 0;
+					this.data.table = new TableInfo();
+					this.data.table.userList.add(this.data.user);
+					
+					(this.context as State).manager.switchState(TableState);
+					
 					this.standby();
 				}
 				else
@@ -348,7 +355,7 @@ package com.ourgame.mahjong.bloodriver.controller
 			{
 				if (this.data.room.type == RoomType.AUTO)
 				{
-					this.data.table = new TableInfo(body.tableId);
+					this.data.table.id = body.tableId;
 				}
 				else
 				{
@@ -375,6 +382,8 @@ package com.ourgame.mahjong.bloodriver.controller
 					
 					this.data.table.userList.add(user);
 				}
+				
+				(this.context as State).manager.switchState(TableState);
 			}
 			else
 			{
@@ -390,8 +399,6 @@ package com.ourgame.mahjong.bloodriver.controller
 			Log.debug("收到游戏邀请消息", body);
 			
 			this.data.gameID = body.gameId;
-			
-			(this.context as State).manager.switchState(TableState);
 			
 			this.notify(TableMethod.GAME_INVITE, body.tableId);
 		}

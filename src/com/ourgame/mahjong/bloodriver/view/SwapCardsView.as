@@ -1,11 +1,13 @@
 package com.ourgame.mahjong.bloodriver.view
 {
-	import com.ourgame.mahjong.bloodriver.BloodRiver;
 	import com.ourgame.mahjong.bloodriver.data.GameData;
 	import com.ourgame.mahjong.bloodriver.state.GameState;
-	import com.ourgame.mahjong.bloodriver.vo.GamePlayer;
-	import com.wecoit.mvc.State;
+	import com.ourgame.mahjong.bloodriver.ui.TilesHand;
+	import com.ourgame.mahjong.bloodriver.vo.Card;
 	import com.wecoit.mvc.View;
+	import com.wecoit.mvc.core.INotice;
+	
+	import flash.utils.setTimeout;
 	
 	/**
 	 * 换牌视图
@@ -37,13 +39,40 @@ package com.ourgame.mahjong.bloodriver.view
 		
 		// -------------------------------------------------------------------------------------------------------- 方法
 		
-		override public function onAdd():void
+		public function outCards(notice:INotice):void
 		{
-			var player:GamePlayer = GameData.game.playerList.element((this.module as BloodRiver).info.data.user.seat);
-			((this.context as State).manager.getState(GameState) as GameState).view.scene.handCurrent.init(player.handCards);
+			var hand:TilesHand = (this.context as GameState).tiles.handCurrent;
+			
+			for each (var card:Card in GameData.currentGame.swapOut)
+			{
+				hand.removeCard(card);
+			}
+			
+			notice.complete();
 		}
-	
+		
+		public function inCards(notice:INotice):void
+		{
+			var hand:TilesHand = (this.context as GameState).tiles.handCurrent;
+			
+			for each (var card:Card in GameData.currentGame.swapIn)
+			{
+				hand.addCard(card);
+			}
+			
+			hand.resetTiles();
+			
+			setTimeout(this.sort, 3000, notice);
+		}
+		
 		// -------------------------------------------------------------------------------------------------------- 函数
+		
+		private function sort(notice:INotice):void
+		{
+			(this.context as GameState).tiles.handCurrent.sort();
+			
+			notice.complete();
+		}
 	
 	}
 }

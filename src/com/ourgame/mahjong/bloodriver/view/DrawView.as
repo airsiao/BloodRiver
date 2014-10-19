@@ -1,14 +1,12 @@
 package com.ourgame.mahjong.bloodriver.view
 {
 	import com.ourgame.mahjong.bloodriver.BloodRiver;
-	import com.ourgame.mahjong.bloodriver.data.GameData;
 	import com.ourgame.mahjong.bloodriver.enum.Position;
 	import com.ourgame.mahjong.bloodriver.state.GameState;
 	import com.ourgame.mahjong.bloodriver.ui.TilesHand;
 	import com.ourgame.mahjong.bloodriver.vo.Action;
-	import com.ourgame.mahjong.bloodriver.vo.GamePlayer;
-	import com.wecoit.mvc.State;
 	import com.wecoit.mvc.View;
+	import com.wecoit.mvc.core.INotice;
 	
 	/**
 	 * 抓牌视图
@@ -40,30 +38,32 @@ package com.ourgame.mahjong.bloodriver.view
 		
 		// -------------------------------------------------------------------------------------------------------- 方法
 		
-		public function draw(action:Action):void
+		public function play(notice:INotice):void
 		{
-			((this.context as State).manager.getState(GameState) as GameState).view.scene.wall.draw(action.reverse);
+			var action:Action = notice.params;
+			(this.context as GameState).tiles.wall.draw(action.params);
 			
-			var player:GamePlayer = GameData.game.playerList.element(action.seat);
 			var hand:TilesHand = null;
 			
-			switch ((this.module as BloodRiver).info.data.table.getSeatPosition(player.user.seat))
+			switch ((this.module as BloodRiver).info.data.table.getSeatPosition(action.seat))
 			{
 				case Position.CURRENT:
-					hand = ((this.context as State).manager.getState(GameState) as GameState).view.scene.handCurrent;
+					hand = (this.context as GameState).tiles.handCurrent;
 					break;
 				case Position.NEXT:
-					hand = ((this.context as State).manager.getState(GameState) as GameState).view.scene.handNext;
+					hand = (this.context as GameState).tiles.handNext;
 					break;
 				case Position.OPPOSITE:
-					hand = ((this.context as State).manager.getState(GameState) as GameState).view.scene.handOpposite;
+					hand = (this.context as GameState).tiles.handOpposite;
 					break;
 				case Position.PREV:
-					hand = ((this.context as State).manager.getState(GameState) as GameState).view.scene.handPrev;
+					hand = (this.context as GameState).tiles.handPrev;
 					break;
 			}
 			
-			hand.initCards(player.handCards.cards.list);
+			hand.addCard(action.card);
+			
+			notice.complete();
 		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数

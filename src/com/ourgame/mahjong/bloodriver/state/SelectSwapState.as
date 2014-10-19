@@ -5,7 +5,7 @@ package com.ourgame.mahjong.bloodriver.state
 	import com.wecoit.mvc.State;
 	
 	/**
-	 * 选择换牌状态
+	 * 换牌状态
 	 * @author SiaoLeon
 	 */
 	public class SelectSwapState extends State
@@ -20,7 +20,7 @@ package com.ourgame.mahjong.bloodriver.state
 		
 		// -------------------------------------------------------------------------------------------------------- 属性
 		
-		public var view:SelectSwapView;
+		public var selectSwap:SelectSwapView;
 		
 		// -------------------------------------------------------------------------------------------------------- 变量
 		
@@ -38,14 +38,14 @@ package com.ourgame.mahjong.bloodriver.state
 		
 		override public function onInit():void
 		{
-			this.view = new SelectSwapView();
+			this.selectSwap = new SelectSwapView();
 		}
 		
 		override public function onEnter():void
 		{
 			Log.debug("进入", this.key);
 			
-			this.addView(this.view);
+			this.addView(this.selectSwap);
 		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数

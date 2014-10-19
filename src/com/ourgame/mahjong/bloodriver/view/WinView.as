@@ -1,22 +1,22 @@
 package com.ourgame.mahjong.bloodriver.view
 {
 	import com.ourgame.mahjong.bloodriver.BloodRiver;
-	import com.ourgame.mahjong.bloodriver.data.GameData;
 	import com.ourgame.mahjong.bloodriver.enum.Position;
-	import com.ourgame.mahjong.bloodriver.method.GameMethod;
 	import com.ourgame.mahjong.bloodriver.state.GameState;
 	import com.ourgame.mahjong.bloodriver.ui.TilesHand;
-	import com.ourgame.mahjong.bloodriver.vo.GamePlayer;
+	import com.ourgame.mahjong.bloodriver.ui.TilesPool;
+	import com.ourgame.mahjong.bloodriver.ui.TilesWin;
+	import com.ourgame.mahjong.bloodriver.vo.Action;
+	import com.ourgame.mahjong.bloodriver.vo.Card;
+	import com.ourgame.mahjong.bloodriver.vo.Win;
 	import com.wecoit.mvc.View;
 	import com.wecoit.mvc.core.INotice;
 	
-	import flash.utils.setTimeout;
-	
 	/**
-	 * 发牌视图
+	 * 胡牌视图
 	 * @author SiaoLeon
 	 */
-	public class DealCardsView extends View
+	public class WinView extends View
 	{
 		// -------------------------------------------------------------------------------------------------------- 静态常量
 		
@@ -30,14 +30,12 @@ package com.ourgame.mahjong.bloodriver.view
 		
 		// -------------------------------------------------------------------------------------------------------- 变量
 		
-		private var notice:INotice;
-		
 		// -------------------------------------------------------------------------------------------------------- 构造
 		
 		/**
 		 * 构造函数
 		 */
-		public function DealCardsView()
+		public function WinView()
 		{
 			super();
 		}
@@ -46,47 +44,66 @@ package com.ourgame.mahjong.bloodriver.view
 		
 		public function play(notice:INotice):void
 		{
-			this.notice = notice;
+			var action:Action = notice.params;
+			var info:Win = action.params;
+			var pool:TilesPool = null;
+			var hand:TilesHand = null;
 			
-			(this.context as GameState).tiles.wall.deal();
-			
-			for (var i:int = 0; i < GameData.currentGame.playerList.length; i++)
+			switch ((this.module as BloodRiver).info.data.table.getSeatPosition(action.seat))
 			{
-				var player:GamePlayer = GameData.currentGame.playerList.element(i);
-				var hand:TilesHand = null;
+				case Position.CURRENT:
+					pool = (this.context as GameState).tiles.poolCurrent;
+					hand = (this.context as GameState).tiles.handCurrent;
+					break;
+				case Position.NEXT:
+					pool = (this.context as GameState).tiles.poolNext;
+					hand = (this.context as GameState).tiles.handNext;
+					break;
+				case Position.OPPOSITE:
+					pool = (this.context as GameState).tiles.poolOpposite;
+					hand = (this.context as GameState).tiles.handOpposite;
+					break;
+				case Position.PREV:
+					pool = (this.context as GameState).tiles.poolPrev;
+					hand = (this.context as GameState).tiles.handPrev;
+					break;
+			}
+			
+			pool.removeCard(action.card, true);
+			hand.removeCard(action.card, true);
+			
+			for (var i:int = 0; i < info.fan.length; i++)
+			{
+				if (info.fan[i] <= 0)
+				{
+					continue;
+				}
 				
-				switch ((this.module as BloodRiver).info.data.table.getSeatPosition(player.user.seat))
+				var win:TilesWin = null;
+				
+				switch ((this.module as BloodRiver).info.data.table.getSeatPosition(i))
 				{
 					case Position.CURRENT:
-						hand = (this.context as GameState).tiles.handCurrent;
+						win = (this.context as GameState).tiles.winCurrent;
 						break;
 					case Position.NEXT:
-						hand = (this.context as GameState).tiles.handNext;
+						win = (this.context as GameState).tiles.winNext;
 						break;
 					case Position.OPPOSITE:
-						hand = (this.context as GameState).tiles.handOpposite;
+						win = (this.context as GameState).tiles.winOpposite;
 						break;
 					case Position.PREV:
-						hand = (this.context as GameState).tiles.handPrev;
+						win = (this.context as GameState).tiles.winPrev;
 						break;
 				}
 				
-				hand.init(player.handCards);
+				win.add(new Card(action.card.id));
 			}
 			
-			setTimeout(this.sort, 3000);
+			notice.complete();
 		}
-		
+	
 		// -------------------------------------------------------------------------------------------------------- 函数
-		
-		private function sort():void
-		{
-			(this.context as GameState).tiles.handCurrent.sort();
-			
-			this.notice.complete();
-			
-			this.notify(GameMethod.SELECT_SWAP);
-		}
 	
 	}
 }

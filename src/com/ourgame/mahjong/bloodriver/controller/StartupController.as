@@ -2,12 +2,11 @@ package com.ourgame.mahjong.bloodriver.controller
 {
 	import com.ourgame.mahjong.bloodriver.BloodRiver;
 	import com.ourgame.mahjong.bloodriver.data.CoreData;
-	import com.ourgame.mahjong.bloodriver.state.ConnectState;
+	import com.ourgame.mahjong.bloodriver.method.TableMethod;
 	import com.ourgame.mahjong.bloodriver.state.TableState;
 	import com.ourgame.mahjong.libaray.DataExchange;
 	import com.ourgame.mahjong.libaray.GameLoader;
 	import com.ourgame.mahjong.libaray.vo.GameInfo;
-	import com.ourgame.mahjong.libaray.vo.TableInfo;
 	import com.wecoit.core.AssetsManager;
 	import com.wecoit.core.FlashPlayer;
 	import com.wecoit.data.Config;
@@ -72,6 +71,8 @@ package com.ourgame.mahjong.bloodriver.controller
 				var loader:GameLoader = new GameLoader();
 				loader.addEventListener(BytesEvent.COMPLETE, onGameLoadComplete);
 				loader.load(game);
+				
+				this.context.addController(new ConnectController());
 			}
 			else
 			{
@@ -96,11 +97,10 @@ package com.ourgame.mahjong.bloodriver.controller
 				data.nickname = Application.stage.loaderInfo.parameters["DisplayName"];
 				data.ticket = Application.stage.loaderInfo.parameters["IDCertificate"];
 				data.channelID = Application.stage.loaderInfo.parameters["channelID"];
+				data.playMode = Application.stage.loaderInfo.parameters["PlayMode"];
 				
-				data.table = new TableInfo();
-				data.table.mode = Application.stage.loaderInfo.parameters["PlayMode"];
-				
-				(this.context as State).manager.switchState(ConnectState);
+				this.notify(TableMethod.CONNECT);
+					//				(this.context as State).manager.switchState(ConnectState);
 			}
 		}
 		
@@ -115,13 +115,12 @@ package com.ourgame.mahjong.bloodriver.controller
 			data.nickname = config.getValue("ourgameID"); // config.getValue("nickname");
 			data.ticket = config.getValue("ticket");
 			data.channelID = config.getValue("channelID");
-			
-			data.table = new TableInfo();
-			data.table.mode = config.getValue("PlayMode");
+			data.playMode = config.getValue("PlayMode");
 			
 			AssetsManager.instance.saveAsset(config.name, (event.target as BytesLoader).content);
 			
-			(this.context as State).manager.switchState(ConnectState);
+			this.notify(TableMethod.CONNECT);
+			//			(this.context as State).manager.switchState(ConnectState);
 		}
 	
 	}

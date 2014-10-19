@@ -38,6 +38,11 @@ package com.ourgame.mahjong.bloodriver.vo
 			return this._id;
 		}
 		
+		public function set id(value:uint):void
+		{
+			this._id = value;
+		}
+		
 		/**
 		 * 相同花色点数牌的索引
 		 */
@@ -133,15 +138,15 @@ package com.ourgame.mahjong.bloodriver.vo
 			switch (this.color)
 			{
 				case CardColor.WAN:
-					return POINTS[this.point - 1] + "万";
+					return POINTS[this.point - 1] + "万" + this.id;
 					break;
 				
 				case CardColor.TIAO:
-					return POINTS[this.point - 1] + "条";
+					return POINTS[this.point - 1] + "条" + this.id;
 					break;
 				
 				case CardColor.BING:
-					return POINTS[this.point - 1] + "饼";
+					return POINTS[this.point - 1] + "饼" + this.id;
 					break;
 				
 				case CardColor.WIND:
@@ -162,7 +167,7 @@ package com.ourgame.mahjong.bloodriver.vo
 				
 			}
 			
-			return "未知";
+			return "未知" + this.id;
 		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数

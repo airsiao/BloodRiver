@@ -3,8 +3,8 @@ package com.ourgame.mahjong.bloodriver.view
 	import com.ourgame.mahjong.bloodriver.BloodRiver;
 	import com.ourgame.mahjong.bloodriver.data.GameData;
 	import com.ourgame.mahjong.bloodriver.state.GameState;
-	import com.wecoit.mvc.State;
 	import com.wecoit.mvc.View;
+	import com.wecoit.mvc.core.INotice;
 	
 	/**
 	 * 发牌骰子视图
@@ -36,17 +36,19 @@ package com.ourgame.mahjong.bloodriver.view
 		
 		// -------------------------------------------------------------------------------------------------------- 方法
 		
-		override public function onAdd():void
+		public function play(notice:INotice):void
 		{
-			var dealer:uint = (this.module as BloodRiver).info.data.table.getSeatPosition(GameData.game.dealer);
+			var dealer:uint = (this.module as BloodRiver).info.data.table.getSeatPosition(GameData.currentGame.dealer);
 			var dice:uint = 0;
 			
-			for each (var point:uint in GameData.game.dealDice)
+			for each (var point:uint in GameData.currentGame.dealDice)
 			{
 				dice += point;
 			}
 			
-			((this.context as State).manager.getState(GameState) as GameState).view.scene.wall.init(dealer, dice);
+			(this.context as GameState).tiles.wall.init(dealer, dice);
+			
+			notice.complete();
 		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数

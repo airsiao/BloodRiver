@@ -4,8 +4,8 @@ package com.ourgame.mahjong.bloodriver.utils
 	
 	/**
 	 * 根据ID比较麻将牌
-	 * @param c1
-	 * @param c2
+	 * @param card1
+	 * @param card2
 	 * @return
 	 */
 	public function compareCardByID(card1:Card, card2:Card):Number

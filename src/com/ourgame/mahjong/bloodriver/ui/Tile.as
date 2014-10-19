@@ -71,7 +71,7 @@ package com.ourgame.mahjong.bloodriver.ui
 		public function set select(value:Boolean):void
 		{
 			this.buttonMode = value;
-			this.display.y = value ? -20 : 0;
+			this.display.y = (value || this.confirm) ? -20 : 0;
 		}
 		
 		private var _confirm:Boolean;
@@ -84,7 +84,8 @@ package com.ourgame.mahjong.bloodriver.ui
 		public function set confirm(value:Boolean):void
 		{
 			this._confirm = value;
-			this.display.y = value ? -20 : 0;
+			
+			this.alpha = (value) ? 0.4 : 1;
 		}
 		
 		// -------------------------------------------------------------------------------------------------------- 变量

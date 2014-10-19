@@ -1,14 +1,17 @@
-package com.ourgame.mahjong.bloodriver.view
+package com.ourgame.mahjong.bloodriver.ui
 {
-	import com.ourgame.mahjong.bloodriver.ui.GameScene;
-	import com.ourgame.mahjong.bloodriver.ui.LayerManager;
-	import com.wecoit.mvc.View;
+	import com.wecoit.component.StateButton;
+	
+	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	
 	/**
-	 * 游戏视图
+	 * 通用按钮
 	 * @author SiaoLeon
 	 */
-	public class GameView extends View
+	public class CommonButton extends StateButton
 	{
 		// -------------------------------------------------------------------------------------------------------- 静态常量
 		
@@ -20,33 +23,37 @@ package com.ourgame.mahjong.bloodriver.view
 		
 		// -------------------------------------------------------------------------------------------------------- 属性
 		
-		public var scene:GameScene;
-		
 		// -------------------------------------------------------------------------------------------------------- 变量
+		
+		private var txtLabel:TextField;
 		
 		// -------------------------------------------------------------------------------------------------------- 构造
 		
 		/**
 		 * 构造函数
 		 */
-		public function GameView()
+		public function CommonButton(label:String, width:Number=100, height:Number=30, textColor:uint=0XFFFFFF, backgroundColor:uint=0X000000, backgroundAlpha:Number=1.0)
 		{
 			super();
+			
+			this.buttonMode = true;
+			this.width = width;
+			this.height = height;
+			
+			this.txtLabel = new TextField();
+			this.txtLabel.defaultTextFormat = new TextFormat("simsun", 12, textColor, null, null, null, null, null, TextFormatAlign.CENTER);
+			this.txtLabel.selectable = false;
+			this.txtLabel.mouseEnabled = false;
+			this.txtLabel.autoSize = TextFieldAutoSize.CENTER;
+			this.txtLabel.text = label;
+			this.txtLabel.x = (this.width - this.txtLabel.width) / 2;
+			this.txtLabel.y = (this.height - this.txtLabel.height) / 2;
+			this.addChild(this.txtLabel);
+			
+			this.draw(backgroundColor, backgroundAlpha);
 		}
-		
+	
 		// -------------------------------------------------------------------------------------------------------- 方法
-		
-		override public function onAdd():void
-		{
-			this.scene = new GameScene();
-			LayerManager.instance.foreground.addChild(this.scene);
-		}
-		
-		override public function onRemove():void
-		{
-			LayerManager.instance.foreground.removeChild(this.scene);
-			this.scene = null;
-		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数
 	

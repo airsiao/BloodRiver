@@ -3,6 +3,7 @@ package com.ourgame.mahjong.bloodriver.ui
 	import com.ourgame.mahjong.bloodriver.enum.CardStatus;
 	import com.ourgame.mahjong.bloodriver.enum.Position;
 	import com.ourgame.mahjong.bloodriver.events.TileEvent;
+	import com.ourgame.mahjong.bloodriver.utils.compareTileByID;
 	import com.ourgame.mahjong.bloodriver.vo.Card;
 	import com.ourgame.mahjong.bloodriver.vo.CardGroup;
 	import com.ourgame.mahjong.bloodriver.vo.HandCards;
@@ -115,11 +116,11 @@ package com.ourgame.mahjong.bloodriver.ui
 					break;
 				case Position.PREV:
 					this.x = 144;
-					this.y = 140;
+					this.y = 118;
 					break;
 				case Position.NEXT:
 					this.x = 815;
-					this.y = 390;
+					this.y = 412;
 					break;
 			}
 			
@@ -131,12 +132,20 @@ package com.ourgame.mahjong.bloodriver.ui
 		
 		// -------------------------------------------------------------------------------------------------------- 方法
 		
+		/**
+		 * 初始化
+		 * @param hands
+		 */
 		public function init(hands:HandCards):void
 		{
 			this.initGroups(hands.groups.list);
 			this.initCards(hands.cards.list);
 		}
 		
+		/**
+		 * 初始化牌组
+		 * @param list
+		 */
 		public function initGroups(list:Vector.<CardGroup>):void
 		{
 			while (this.groups.length > 0)
@@ -170,7 +179,7 @@ package com.ourgame.mahjong.bloodriver.ui
 						break;
 					case Position.NEXT:
 						tile.x = -32.2;
-						tile.y = (i == 0) ? -63.7 : 66.65 * i * -1 - 63.7;
+						tile.y = (i == 0) ? -63.7 + 7 : 66.65 * i * -1 - 63.7 + 7;
 						break;
 				}
 				
@@ -181,6 +190,10 @@ package com.ourgame.mahjong.bloodriver.ui
 			this.layout();
 		}
 		
+		/**
+		 * 初始化手牌
+		 * @param list
+		 */
 		public function initCards(list:Vector.<Card>):void
 		{
 			while (this.cards.length > 0)
@@ -204,6 +217,9 @@ package com.ourgame.mahjong.bloodriver.ui
 			this.layout();
 		}
 		
+		/**
+		 * 布局
+		 */
 		public function layout():void
 		{
 			for (var i:int = 0; i < this.cards.length; i++)
@@ -237,6 +253,7 @@ package com.ourgame.mahjong.bloodriver.ui
 						spacing = (this.status == CardStatus.STAND) ? 22.05 : 18.95;
 						tileX = 0;
 						tileY = (index == 13) ? spacing * index + 15 + offset : spacing * index + offset;
+						this.setChildIndex(tile, this.groups.length + this.cards.length - 1);
 						break;
 					case Position.NEXT:
 						offset = (this.status == CardStatus.STAND) ? 7 : 10 * this.groups.length + 7;
@@ -256,6 +273,66 @@ package com.ourgame.mahjong.bloodriver.ui
 		}
 		
 		/**
+		 * 整理排序
+		 */
+		public function sort():void
+		{
+			this.cards.sort(compareTileByID);
+			this.layout();
+		}
+		
+		/**
+		 * 添加一张牌
+		 * @param card
+		 * @param sort
+		 */
+		public function addCard(card:Card, sort:Boolean=false):void
+		{
+			var tile:Tile = new Tile(card, this.position);
+			this.cards.push(tile);
+			this.addChild(tile);
+			
+			if (sort)
+			{
+				this.sort();
+			}
+			else
+			{
+				this.layout();
+			}
+		}
+		
+		/**
+		 * 移除一张牌
+		 * @param card
+		 * @param sort
+		 */
+		public function removeCard(card:Card, sort:Boolean=false):void
+		{
+			for each (var tile:Tile in this.cards)
+			{
+				if (tile.card == card || tile.card.id == card.id)
+				{
+					this.cards.splice(this.cards.indexOf(tile), 1);
+					
+					if (this.contains(tile))
+					{
+						this.removeChild(tile);
+					}
+				}
+			}
+			
+			if (sort)
+			{
+				this.sort();
+			}
+			else
+			{
+				this.layout();
+			}
+		}
+		
+		/**
 		 * 根据牌信息获取麻将牌
 		 * @param card
 		 * @return
@@ -271,6 +348,18 @@ package com.ourgame.mahjong.bloodriver.ui
 			}
 			
 			return null;
+		}
+		
+		/**
+		 * 重置牌状态
+		 */
+		public function resetTiles():void
+		{
+			for each (var tile:Tile in this.cards)
+			{
+				tile.confirm = false;
+				tile.select = (tile == this.selected && this.enable);
+			}
 		}
 		
 		// -------------------------------------------------------------------------------------------------------- 函数
@@ -304,14 +393,17 @@ package com.ourgame.mahjong.bloodriver.ui
 		
 		private function onMouseClick(event:MouseEvent):void
 		{
+			if (!this.enable)
+			{
+				return;
+			}
+			
 			var target:Tile = event.target as Tile;
 			
 			if (target == null)
 			{
 				return;
 			}
-			
-			target.confirm = !target.confirm;
 			
 			this.dispatchEvent(new TileEvent(TileEvent.CONFIRM, target));
 		}
@@ -320,7 +412,7 @@ package com.ourgame.mahjong.bloodriver.ui
 		{
 			for each (var tile:Tile in this.cards)
 			{
-				tile.select = (tile == this.selected && this.enable || tile.confirm);
+				tile.select = ((tile == this.selected && this.enable) || (tile.confirm && this.enable));
 			}
 			
 			this.dispatchEvent(new TileEvent(TileEvent.SELECT, this.selected));

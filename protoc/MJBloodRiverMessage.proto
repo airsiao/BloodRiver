@@ -138,11 +138,20 @@ message NtfDeals{
 //========================================================================================
 // 换三张牌
 // #define OGID_SWAP							( OGID_GAME_MESSAGE + 11 )
-//客户端发送准备交换的三张牌
+// 客户端发送准备交换的三张牌
 message CReqSwap{
 	repeated uint32 tiles = 1;
 }
-//服务器返回换回的三张牌
+// 有玩家准备好换牌
+message NTFSwapPrepared{
+	required uint32 seat = 1;					//座位号
+	repeated uint32 tiles = 2;					//本人发送拿出的3张牌，其他人收到3个0
+}
+
+//========================================================================================
+// 换三张牌
+// #define OGID_SWAP_RESULT						( OGID_GAME_MESSAGE + 13 )
+// 服务器返回换回的三张牌
 message SAckSwap{
 	repeated uint32 oldTiles  = 1;
 	repeated uint32 newTiles = 2;
@@ -152,7 +161,7 @@ message SAckSwap{
 
 //========================================================================================
 // 有人打牌
-// #define OGID_DISCARD							( OGID_GAME_MESSAGE + 13 )
+// #define OGID_DISCARD							( OGID_GAME_MESSAGE + 15 )
 message NtfDiscard{
 	required uint32 tile = 1;
 	required uint32 seat = 2;
@@ -162,7 +171,7 @@ message NtfDiscard{
 
 //========================================================================================
 // 抓牌
-// #define OGID_DRAW							( OGID_GAME_MESSAGE + 15 )
+// #define OGID_DRAW							( OGID_GAME_MESSAGE + 17 )
 message NtfDraw{
 	required uint32 seat = 1;					//抓牌者座位号
 	required bool front = 2 [default = true];	//从前边抓还是后面抓牌
@@ -173,7 +182,7 @@ message NtfDraw{
 
 //========================================================================================
 // 动作请求
-// #define OGID_ACTION							( OGID_GAME_MESSAGE + 17 )
+// #define OGID_ACTION							( OGID_GAME_MESSAGE + 19 )
 message CReqAct{
 	required uint32 seat = 1;
 	required ActionType act = 2;				//放弃，吃，碰，杠，听
@@ -201,7 +210,7 @@ message NtfWin{
 		required uint32 loserSeat = 2;
 		required uint32 fan = 3;
 	}
-	required uint32 winType = 1;		//0：正常一人点炮一人和，1：自摸，2:一炮多响
+	required uint32 winType = 1;				//0：正常一人点炮一人和，1：自摸，2:一炮多响
 	required uint32 winTile = 2;
 	repeated WinInfo winInfos = 3;
 }
@@ -258,4 +267,15 @@ message NtfGameResult{
 	required uint64 gameId = 1;
 	repeated Result results = 2;
 	required uint32 maxWait = 3;				//最长等待时间，自动配桌散桌，这个值是0
+}
+
+//========================================================================================
+// 定缺
+// #define OGID_ABSENT_COLOR					( OGID_GAME_MESSAGE + 31 )
+message CREQAbsentColor{
+	required uint32 color = 1;
+}
+message NtfAbsentColor{
+	required uint32 seat = 1;
+	required uint32 color = 2;
 }

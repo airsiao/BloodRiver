@@ -14,6 +14,11 @@ package com.ourgame.mahjong.bloodriver.method
 		private static const BASE:String = getQualifiedClassName(TableMethod) + "::";
 		
 		/**
+		 * 连接
+		 */
+		public static const CONNECT:String = BASE + "CONNECT";
+		
+		/**
 		 * 准备
 		 */
 		public static const READY:String = BASE + "READY";

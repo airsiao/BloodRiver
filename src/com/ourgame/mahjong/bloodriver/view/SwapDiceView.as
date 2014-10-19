@@ -1,6 +1,7 @@
 package com.ourgame.mahjong.bloodriver.view
 {
 	import com.wecoit.mvc.View;
+	import com.wecoit.mvc.core.INotice;
 	
 	/**
 	 * 换牌骰子视图
@@ -29,8 +30,13 @@ package com.ourgame.mahjong.bloodriver.view
 		{
 			super();
 		}
-	
+		
 		// -------------------------------------------------------------------------------------------------------- 方法
+		
+		public function play(notice:INotice):void
+		{
+			notice.complete();
+		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数
 	

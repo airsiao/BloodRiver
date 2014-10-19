@@ -1,15 +1,13 @@
 package com.ourgame.mahjong.bloodriver.view
 {
 	import com.ourgame.mahjong.bloodriver.BloodRiver;
-	import com.ourgame.mahjong.bloodriver.data.GameData;
 	import com.ourgame.mahjong.bloodriver.enum.Position;
 	import com.ourgame.mahjong.bloodriver.state.GameState;
 	import com.ourgame.mahjong.bloodriver.ui.TilesHand;
 	import com.ourgame.mahjong.bloodriver.ui.TilesPool;
 	import com.ourgame.mahjong.bloodriver.vo.Action;
-	import com.ourgame.mahjong.bloodriver.vo.GamePlayer;
-	import com.wecoit.mvc.State;
 	import com.wecoit.mvc.View;
+	import com.wecoit.mvc.core.INotice;
 	
 	/**
 	 * 打牌视图
@@ -41,34 +39,36 @@ package com.ourgame.mahjong.bloodriver.view
 		
 		// -------------------------------------------------------------------------------------------------------- 方法
 		
-		public function discard(action:Action):void
+		public function play(notice:INotice):void
 		{
-			var player:GamePlayer = GameData.game.playerList.element(action.seat);
+			var action:Action = notice.params;
 			var pool:TilesPool = null;
 			var hand:TilesHand = null;
 			
-			switch ((this.module as BloodRiver).info.data.table.getSeatPosition(player.user.seat))
+			switch ((this.module as BloodRiver).info.data.table.getSeatPosition(action.seat))
 			{
 				case Position.CURRENT:
-					pool = ((this.context as State).manager.getState(GameState) as GameState).view.scene.poolCurrent;
-					hand = ((this.context as State).manager.getState(GameState) as GameState).view.scene.handCurrent;
+					pool = (this.context as GameState).tiles.poolCurrent;
+					hand = (this.context as GameState).tiles.handCurrent;
 					break;
 				case Position.NEXT:
-					pool = ((this.context as State).manager.getState(GameState) as GameState).view.scene.poolNext;
-					hand = ((this.context as State).manager.getState(GameState) as GameState).view.scene.handNext;
+					pool = (this.context as GameState).tiles.poolNext;
+					hand = (this.context as GameState).tiles.handNext;
 					break;
 				case Position.OPPOSITE:
-					pool = ((this.context as State).manager.getState(GameState) as GameState).view.scene.poolOpposite;
-					hand = ((this.context as State).manager.getState(GameState) as GameState).view.scene.handOpposite;
+					pool = (this.context as GameState).tiles.poolOpposite;
+					hand = (this.context as GameState).tiles.handOpposite;
 					break;
 				case Position.PREV:
-					pool = ((this.context as State).manager.getState(GameState) as GameState).view.scene.poolPrev;
-					hand = ((this.context as State).manager.getState(GameState) as GameState).view.scene.handPrev;
+					pool = (this.context as GameState).tiles.poolPrev;
+					hand = (this.context as GameState).tiles.handPrev;
 					break;
 			}
 			
-			pool.add(action.card);
-			hand.initCards(player.handCards.cards.list);
+			pool.addCard(action.card);
+			hand.removeCard(action.card, true);
+			
+			notice.complete();
 		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数

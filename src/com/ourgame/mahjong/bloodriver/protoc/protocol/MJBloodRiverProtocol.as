@@ -60,39 +60,44 @@ package com.ourgame.mahjong.bloodriver.protoc.protocol
 		public static const OGID_SWAP:int = OGID_BASE_MESSAGE + 11;
 		
 		/**
+		 * 换三张牌结果
+		 */
+		public static const OGID_SWAP_RESULT:int = OGID_BASE_MESSAGE + 13;
+		
+		/**
 		 * 有人打牌
 		 */
-		public static const OGID_DISCARD:int = OGID_BASE_MESSAGE + 13;
+		public static const OGID_DISCARD:int = OGID_BASE_MESSAGE + 15;
 		
 		/**
 		 * 抓牌
 		 */
-		public static const OGID_DRAW:int = OGID_BASE_MESSAGE + 15;
+		public static const OGID_DRAW:int = OGID_BASE_MESSAGE + 17;
 		
 		/**
 		 * 动作请求
 		 */
-		public static const OGID_ACTION:int = OGID_BASE_MESSAGE + 17;
+		public static const OGID_ACTION:int = OGID_BASE_MESSAGE + 19;
 		
 		/**
 		 * 有玩家胡牌
 		 */
-		public static const OGID_PLAYER_WIN:int = OGID_BASE_MESSAGE + 13;
+		public static const OGID_PLAYER_WIN:int = OGID_BASE_MESSAGE + 21
 		
 		/**
 		 * 断线重连
 		 */
-		public static const OGID_GAME_STATUS:int = OGID_BASE_MESSAGE + 13;
+		public static const OGID_GAME_STATUS:int = OGID_BASE_MESSAGE + 25;
 		
 		/**
 		 * 托管
 		 */
-		public static const OGID_GAME_HOSTING:int = OGID_BASE_MESSAGE + 13;
+		public static const OGID_GAME_HOSTING:int = OGID_BASE_MESSAGE + 27;
 		
 		/**
 		 * 游戏结果
 		 */
-		public static const OGID_GAME_RESULT:int = OGID_BASE_MESSAGE + 13;
+		public static const OGID_GAME_RESULT:int = OGID_BASE_MESSAGE + 29;
 	
 	}
 }

@@ -8,6 +8,7 @@ package com.ourgame.mahjong.bloodriver.view
 	import com.ourgame.mahjong.libaray.vo.UserInfo;
 	import com.wecoit.core.AssetsManager;
 	import com.wecoit.data.ArrayList;
+	import com.wecoit.events.ValueEvent;
 	import com.wecoit.mvc.View;
 	
 	import flash.display.Bitmap;
@@ -84,7 +85,9 @@ package com.ourgame.mahjong.bloodriver.view
 			this.charPrev = new Char(Position.PREV);
 			LayerManager.instance.background.addChild(this.charPrev);
 			
-			this.update();
+			(this.module as BloodRiver).info.data.table.userList.addEventListener(ValueEvent.CHANGE, updateUsers);
+			
+			this.updateUsers();
 		}
 		
 		override public function onRemove():void
@@ -109,11 +112,13 @@ package com.ourgame.mahjong.bloodriver.view
 			
 			LayerManager.instance.background.removeChild(this.charCurrent);
 			this.charCurrent = null;
+			
+			(this.module as BloodRiver).info.data.table.userList.removeEventListener(ValueEvent.CHANGE, updateUsers);
 		}
 		
 		// -------------------------------------------------------------------------------------------------------- 函数
 		
-		public function update():void
+		public function updateUsers(event:ValueEvent=null):void
 		{
 			var userlist:ArrayList = (this.module as BloodRiver).info.data.table.userList;
 			

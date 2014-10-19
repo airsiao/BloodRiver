@@ -1,6 +1,7 @@
 package com.ourgame.mahjong.bloodriver.vo
 {
 	import com.ourgame.mahjong.bloodriver.enum.CardColor;
+	import com.ourgame.mahjong.bloodriver.enum.CardGroupType;
 	import com.ourgame.mahjong.bloodriver.utils.MahjongFactory;
 	import com.ourgame.mahjong.bloodriver.utils.compareCardByID;
 	
@@ -238,6 +239,40 @@ package com.ourgame.mahjong.bloodriver.vo
 		}
 		
 		/**
+		 * 可暗杠的牌
+		 * @return
+		 */
+		public function get gangs():Vector.<CardGroup>
+		{
+			var result:Vector.<CardGroup> = new Vector.<CardGroup>();
+			var temp:Vector.<Card> = this.list.concat();
+			temp.sort(compareCardByID);
+			
+			while (temp.length > 3)
+			{
+				var cards:CardList = new CardList(temp);
+				var card:Card = temp[0];
+				
+				var sames:Vector.<Card> = cards.getCards(card.color, card.point);
+				
+				if (sames.length == 4)
+				{
+					var group:CardGroup = new CardGroup();
+					group.type = CardGroupType.GANG_AN;
+					group.fill(sames);
+					result.push(group);
+					temp.splice(0, 4);
+				}
+				else
+				{
+					temp.splice(0, 1);
+				}
+			}
+			
+			return result;
+		}
+		
+		/**
 		 * 花色，不同花色为未知
 		 */
 		public function get color():uint
@@ -293,7 +328,6 @@ package com.ourgame.mahjong.bloodriver.vo
 		public function add(card:Card):void
 		{
 			this.list.push(card);
-			this.list.sort(compareCardByID);
 		}
 		
 		/**
@@ -302,12 +336,7 @@ package com.ourgame.mahjong.bloodriver.vo
 		 */
 		public function remove(card:Card):void
 		{
-			if (this.list.indexOf(card) < 0)
-			{
-				card = this.getCardByID(0);
-				this.list.splice(this.list.indexOf(card), 1);
-			}
-			else
+			if (this.list.indexOf(card) >= 0)
 			{
 				this.list.splice(this.list.indexOf(card), 1);
 			}
