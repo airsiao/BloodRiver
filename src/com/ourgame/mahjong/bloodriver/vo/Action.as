@@ -5,7 +5,7 @@ package com.ourgame.mahjong.bloodriver.vo
 	 * 抓牌动作
 	 * @author SiaoLeon
 	 */
-	public class Action
+	public class Action implements IAction
 	{
 		// -------------------------------------------------------------------------------------------------------- 静态常量
 		

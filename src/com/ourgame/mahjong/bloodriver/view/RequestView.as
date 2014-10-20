@@ -9,6 +9,7 @@ package com.ourgame.mahjong.bloodriver.view
 	import com.ourgame.mahjong.bloodriver.state.GameState;
 	import com.ourgame.mahjong.bloodriver.ui.ActionButton;
 	import com.ourgame.mahjong.bloodriver.ui.LayerManager;
+	import com.ourgame.mahjong.bloodriver.utils.compareActionByType;
 	import com.ourgame.mahjong.bloodriver.vo.Action;
 	import com.ourgame.mahjong.bloodriver.vo.Card;
 	import com.ourgame.mahjong.bloodriver.vo.CardGroup;
@@ -82,7 +83,8 @@ package com.ourgame.mahjong.bloodriver.view
 				for each (var gang:CardGroup in gangs)
 				{
 					var type:uint = (gang.type == CardGroupType.GANG_AN) ? ActionType.GANG_AN : ActionType.GANG_BU;
-					var anbu:ActionButton = new ActionButton("杠" + gang.cards[0], type, this.request.card);
+					var card:Card = GameData.currentPlayer.handCards.cards.getCards(gang.cards[0].color, gang.cards[0].point)[0];
+					var anbu:ActionButton = new ActionButton("杠" + gang.cards[0], type, card);
 					this.buttons.push(anbu);
 				}
 			}
@@ -141,15 +143,18 @@ package com.ourgame.mahjong.bloodriver.view
 				this.container.removeChildAt(0);
 			}
 			
-			for each (var button:ActionButton in this.buttons)
+			this.buttons.sort(compareActionByType);
+			
+			for (var i:int = 0; i < this.buttons.length; i++)
 			{
-				button.x = this.container.width;
+				var button:ActionButton = this.buttons[i];
+				button.x = (i + 1) * -100;
 				button.addEventListener(MouseEvent.CLICK, onAction);
 				this.container.addChild(button);
 			}
 			
-			this.container.x = 300;
-			this.container.y = 300;
+			this.container.x = 750;
+			this.container.y = 440;
 		}
 		
 		private function onSelect(event:TileEvent):void

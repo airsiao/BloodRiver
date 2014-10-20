@@ -97,7 +97,7 @@ package com.ourgame.mahjong.bloodriver.ui
 		 * @param card
 		 * @param sort
 		 */
-		public function removeCard(card:Card, sort:Boolean=false):void
+		public function removeCard(card:Card):void
 		{
 			for (var i:int = 0; i < this.numChildren; i++)
 			{

@@ -6,6 +6,7 @@ package com.ourgame.mahjong.bloodriver.controller
 	import com.ourgame.mahjong.bloodriver.state.TableState;
 	import com.ourgame.mahjong.libaray.DataExchange;
 	import com.ourgame.mahjong.libaray.GameLoader;
+	import com.ourgame.mahjong.libaray.enum.PlayMode;
 	import com.ourgame.mahjong.libaray.vo.GameInfo;
 	import com.wecoit.core.AssetsManager;
 	import com.wecoit.core.FlashPlayer;
@@ -86,22 +87,18 @@ package com.ourgame.mahjong.bloodriver.controller
 			{
 				var loader:BytesLoader = new BytesLoader();
 				loader.addEventListener(BytesEvent.COMPLETE, onUserLoadComplete);
+				loader.addEventListener(BytesEvent.ERROR, onUserLoadError);
 				loader.load(stampUrl(CoreData.DEBUG));
 			}
 			else
 			{
-				var data:DataExchange = ((this.context as State).manager as BloodRiver).info.data;
-				data.ourgameID = Application.stage.loaderInfo.parameters["OurGameID"];
-				data.username = Application.stage.loaderInfo.parameters["userName"];
-				data.rolename = Application.stage.loaderInfo.parameters["Rolename"];
-				data.nickname = Application.stage.loaderInfo.parameters["DisplayName"];
-				data.ticket = Application.stage.loaderInfo.parameters["IDCertificate"];
-				data.channelID = Application.stage.loaderInfo.parameters["channelID"];
-				data.playMode = Application.stage.loaderInfo.parameters["PlayMode"];
-				
-				this.notify(TableMethod.CONNECT);
-					//				(this.context as State).manager.switchState(ConnectState);
+				this.loadInfoFromFlashVars();
 			}
+		}
+		
+		private function onUserLoadError(event:BytesEvent):void
+		{
+			this.loadInfoFromFlashVars();
 		}
 		
 		private function onUserLoadComplete(event:BytesEvent):void
@@ -120,7 +117,21 @@ package com.ourgame.mahjong.bloodriver.controller
 			AssetsManager.instance.saveAsset(config.name, (event.target as BytesLoader).content);
 			
 			this.notify(TableMethod.CONNECT);
-			//			(this.context as State).manager.switchState(ConnectState);
+		}
+		
+		private function loadInfoFromFlashVars():void
+		{
+			var data:DataExchange = ((this.context as State).manager as BloodRiver).info.data;
+			
+			data.ourgameID = Application.stage.loaderInfo.parameters["OurgameID"];
+			data.username = Application.stage.loaderInfo.parameters["UserName"];
+			data.rolename = Application.stage.loaderInfo.parameters["RoleName"];
+			data.nickname = Application.stage.loaderInfo.parameters["NickName"];
+			data.ticket = Application.stage.loaderInfo.parameters["Ticket"];
+			data.channelID = Application.stage.loaderInfo.parameters["ChannelID"];
+			data.playMode = PlayMode.ONLINE;
+			
+			this.notify(TableMethod.CONNECT);
 		}
 	
 	}

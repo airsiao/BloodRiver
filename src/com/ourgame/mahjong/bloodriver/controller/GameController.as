@@ -14,7 +14,6 @@ package com.ourgame.mahjong.bloodriver.controller
 	import com.ourgame.mahjong.bloodriver.vo.GamePlayer;
 	import com.ourgame.mahjong.bloodriver.vo.Win;
 	import com.ourgame.mahjong.libaray.DataExchange;
-	import com.ourgame.mahjong.libaray.vo.UserInfo;
 	import com.wecoit.debug.Log;
 	import com.wecoit.mvc.Controller;
 	import com.wecoit.mvc.State;
@@ -282,24 +281,55 @@ package com.ourgame.mahjong.bloodriver.controller
 			
 			if (win.type == WinType.SELF)
 			{
-				var player:GamePlayer = GameData.currentGame.playerList.element(action.seat);
-				var card:Card = player.handCards.cards.getCardByID(action.card.id);
+				var winner:GamePlayer = GameData.currentGame.playerList.element(action.seat);
+				var card:Card = winner.handCards.cards.getCardByID(action.card.id);
 				
 				if (card == null)
 				{
-					card = player.handCards.cards.list.pop();
+					card = winner.handCards.cards.list.pop();
 					card.id = action.card.id;
 				}
 				else
 				{
-					player.handCards.cards.remove(card);
+					winner.handCards.cards.remove(card);
 				}
 			}
 			
-			for (var i:int = 0; i < win.fan.length; i++)
+			if (win.type == WinType.GANG || win.type == WinType.GANG_MULTI)
 			{
-				var user:UserInfo = (GameData.currentGame.playerList.element(i) as GamePlayer).user;
-				Log.debug("胡牌", user.nickname, win.fan[i]);
+				for (var i:int = 0; i < win.fan.length; i++)
+				{
+					if (win.fan[i] >= 0)
+					{
+						continue;
+					}
+					
+					var loser:GamePlayer = GameData.currentGame.playerList.element(i);
+					
+					for each (var group:CardGroup in loser.handCards.groups.list)
+					{
+						if (group.color != action.card.color || group.point != action.card.point)
+						{
+							continue;
+						}
+						
+						for each (var qiang:Card in group.cards)
+						{
+							if (qiang.id == action.card.id)
+							{
+								group.type == CardGroupType.KE;
+								group.cards.splice(group.cards.indexOf(qiang), 1);
+								break;
+							}
+						}
+					}
+				}
+			}
+			
+			for (var seat:int = 0; seat < win.fan.length; seat++)
+			{
+				var player:GamePlayer = GameData.currentGame.playerList.element(seat) as GamePlayer;
+				Log.debug("胡牌", player.user.nickname, win.fan[seat], player.handCards);
 			}
 			
 			(this.context as GameState).win.play(notice);

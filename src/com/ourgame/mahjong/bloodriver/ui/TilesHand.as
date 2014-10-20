@@ -244,7 +244,7 @@ package com.ourgame.mahjong.bloodriver.ui
 						break;
 					case Position.OPPOSITE:
 						offset = (this.status == CardStatus.STAND) ? 0 : 4.25 * this.groups.length;
-						spacing = (this.status == CardStatus.STAND) ? 31.65 : 24.65;
+						spacing = (this.status == CardStatus.STAND) ? 24.65 : 24.65;
 						tileX = (index == 13) ? 0 - (spacing * (index + 1) + 6 + offset) : 0 - (spacing * (index + 1) + offset);
 						tileY = tile.height * -1;
 						break;

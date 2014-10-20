@@ -1,6 +1,7 @@
 package com.ourgame.mahjong.bloodriver.view
 {
 	import com.ourgame.mahjong.bloodriver.BloodRiver;
+	import com.ourgame.mahjong.bloodriver.data.GameData;
 	import com.ourgame.mahjong.bloodriver.enum.Position;
 	import com.ourgame.mahjong.bloodriver.state.GameState;
 	import com.ourgame.mahjong.bloodriver.ui.TilesHand;
@@ -8,6 +9,8 @@ package com.ourgame.mahjong.bloodriver.view
 	import com.ourgame.mahjong.bloodriver.ui.TilesWin;
 	import com.ourgame.mahjong.bloodriver.vo.Action;
 	import com.ourgame.mahjong.bloodriver.vo.Card;
+	import com.ourgame.mahjong.bloodriver.vo.CardGroup;
+	import com.ourgame.mahjong.bloodriver.vo.GamePlayer;
 	import com.ourgame.mahjong.bloodriver.vo.Win;
 	import com.wecoit.mvc.View;
 	import com.wecoit.mvc.core.INotice;
@@ -69,13 +72,31 @@ package com.ourgame.mahjong.bloodriver.view
 					break;
 			}
 			
-			pool.removeCard(action.card, true);
+			pool.removeCard(action.card);
 			hand.removeCard(action.card, true);
 			
 			for (var i:int = 0; i < info.fan.length; i++)
 			{
 				if (info.fan[i] <= 0)
 				{
+					var list:Vector.<CardGroup> = (GameData.currentGame.playerList.element(i) as GamePlayer).handCards.groups.list;
+					
+					switch ((this.module as BloodRiver).info.data.table.getSeatPosition(i))
+					{
+						case Position.CURRENT:
+							(this.context as GameState).tiles.handCurrent.initGroups(list);
+							break;
+						case Position.NEXT:
+							(this.context as GameState).tiles.handNext.initGroups(list);
+							break;
+						case Position.OPPOSITE:
+							(this.context as GameState).tiles.handOpposite.initGroups(list);
+							break;
+						case Position.PREV:
+							(this.context as GameState).tiles.handPrev.initGroups(list);
+							break;
+					}
+					
 					continue;
 				}
 				

@@ -1,12 +1,13 @@
 package com.ourgame.mahjong.bloodriver.ui
 {
 	import com.ourgame.mahjong.bloodriver.vo.Card;
+	import com.ourgame.mahjong.bloodriver.vo.IAction;
 	
 	/**
 	 * 动作按钮
 	 * @author SiaoLeon
 	 */
-	public class ActionButton extends CommonButton
+	public class ActionButton extends CommonButton implements IAction
 	{
 		// -------------------------------------------------------------------------------------------------------- 静态常量
 		
