@@ -7,6 +7,7 @@ package com.ourgame.mahjong.bloodriver.state
 	import com.ourgame.mahjong.bloodriver.model.ConsoleModel;
 	import com.ourgame.mahjong.bloodriver.model.GameModel;
 	import com.ourgame.mahjong.bloodriver.model.MainSocketModel;
+	import com.ourgame.mahjong.bloodriver.view.RoleView;
 	import com.ourgame.mahjong.bloodriver.view.TableView;
 	import com.ourgame.mahjong.libaray.enum.PlayMode;
 	import com.wecoit.mvc.State;
@@ -27,7 +28,9 @@ package com.ourgame.mahjong.bloodriver.state
 		
 		// -------------------------------------------------------------------------------------------------------- 属性
 		
-		public var view:TableView;
+		public var ui:TableView;
+		
+		public var role:RoleView;
 		
 		// -------------------------------------------------------------------------------------------------------- 变量
 		
@@ -47,7 +50,8 @@ package com.ourgame.mahjong.bloodriver.state
 		
 		override public function onInit():void
 		{
-			this.view = new TableView();
+			this.ui = new TableView();
+			this.role = new RoleView();
 		}
 		
 		override public function onEnter():void
@@ -65,7 +69,8 @@ package com.ourgame.mahjong.bloodriver.state
 				this.addController(new MainSocketController());
 			}
 			
-			this.addView(this.view);
+			this.addView(this.ui);
+			this.addView(this.role);
 			
 			this.addController(new TableController());
 		}

@@ -35,15 +35,67 @@ package com.ourgame.mahjong.bloodriver.ui
 		
 		// -------------------------------------------------------------------------------------------------------- 属性
 		
+		private var _tip:DisplayObjectContainer;
+		
+		/**
+		 * 提示层
+		 * @return
+		 */
+		public function get tip():DisplayObjectContainer
+		{
+			return this._tip;
+		}
+		
+		private var _pop:DisplayObjectContainer;
+		
+		/**
+		 * 弹出层
+		 * @return
+		 */
+		public function get pop():DisplayObjectContainer
+		{
+			return this._pop;
+		}
+		
 		private var _foreground:DisplayObjectContainer;
 		
+		/**
+		 * 前景层
+		 * @return
+		 */
 		public function get foreground():DisplayObjectContainer
 		{
 			return this._foreground;
 		}
 		
+		private var _role:DisplayObjectContainer;
+		
+		/**
+		 * 角色层
+		 * @return
+		 */
+		public function get role():DisplayObjectContainer
+		{
+			return this._role;
+		}
+		
+		private var _tile:DisplayObjectContainer;
+		
+		/**
+		 * 牌层
+		 * @return
+		 */
+		public function get tile():DisplayObjectContainer
+		{
+			return this._tile;
+		}
+		
 		private var _background:DisplayObjectContainer;
 		
+		/**
+		 * 背景层
+		 * @return
+		 */
 		public function get background():DisplayObjectContainer
 		{
 			return this._background;
@@ -74,7 +126,11 @@ package com.ourgame.mahjong.bloodriver.ui
 		private function init():void
 		{
 			this._background = new Sprite();
+			this._tile = new Sprite();
+			this._role = new Sprite();
 			this._foreground = new Sprite();
+			this._pop = new Sprite();
+			this._tip = new Sprite();
 		}
 	
 	}

@@ -8,6 +8,7 @@ package com.ourgame.mahjong.bloodriver.protoc.message {
 	import flash.utils.IExternalizable;
 	import flash.errors.IOError;
 	import com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Result;
+	import com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail;
 	// @@protoc_insertion_point(imports)
 
 	// @@protoc_insertion_point(class_metadata)
@@ -37,6 +38,14 @@ package com.ourgame.mahjong.bloodriver.protoc.message {
 		/**
 		 *  @private
 		 */
+		public static const DETAILS:RepeatedFieldDescriptor$TYPE_MESSAGE = new RepeatedFieldDescriptor$TYPE_MESSAGE("com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.details", "details", (4 << 3) | com.netease.protobuf.WireType.LENGTH_DELIMITED, function():Class { return com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail; });
+
+		[ArrayElementType("com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail")]
+		public var details:Array = [];
+
+		/**
+		 *  @private
+		 */
 		override com.netease.protobuf.used_by_generated_code final function writeToBuffer(output:com.netease.protobuf.WritingBuffer):void {
 			com.netease.protobuf.WriteUtils.writeTag(output, com.netease.protobuf.WireType.VARINT, 1);
 			com.netease.protobuf.WriteUtils.write$TYPE_UINT64(output, this.gameId);
@@ -46,6 +55,10 @@ package com.ourgame.mahjong.bloodriver.protoc.message {
 			}
 			com.netease.protobuf.WriteUtils.writeTag(output, com.netease.protobuf.WireType.VARINT, 3);
 			com.netease.protobuf.WriteUtils.write$TYPE_UINT32(output, this.maxWait);
+			for (var details$index:uint = 0; details$index < this.details.length; ++details$index) {
+				com.netease.protobuf.WriteUtils.writeTag(output, com.netease.protobuf.WireType.LENGTH_DELIMITED, 4);
+				com.netease.protobuf.WriteUtils.write$TYPE_MESSAGE(output, this.details[details$index]);
+			}
 			for (var fieldKey:* in this) {
 				super.writeUnknown(output, fieldKey);
 			}
@@ -76,6 +89,9 @@ package com.ourgame.mahjong.bloodriver.protoc.message {
 					}
 					++maxWait$count;
 					this.maxWait = com.netease.protobuf.ReadUtils.read$TYPE_UINT32(input);
+					break;
+				case 4:
+					this.details.push(com.netease.protobuf.ReadUtils.read$TYPE_MESSAGE(input, new com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail()));
 					break;
 				default:
 					super.readUnknown(input, tag);

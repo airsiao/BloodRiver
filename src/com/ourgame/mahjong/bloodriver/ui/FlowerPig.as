@@ -1,13 +1,14 @@
-package com.ourgame.mahjong.bloodriver.view
+package com.ourgame.mahjong.bloodriver.ui
 {
-	import com.ourgame.mahjong.bloodriver.ui.LayerManager;
-	import com.wecoit.mvc.View;
+	import com.ourgame.mahjong.bloodriver.enum.UITableDefinition;
+	import com.wecoit.core.AssetsManager;
+	import com.wecoit.display.DisplayElement;
 	
 	/**
-	 * 主视图
+	 * 花猪提示
 	 * @author SiaoLeon
 	 */
-	public class MainView extends View
+	public class FlowerPig extends DisplayElement
 	{
 		// -------------------------------------------------------------------------------------------------------- 静态常量
 		
@@ -26,32 +27,17 @@ package com.ourgame.mahjong.bloodriver.view
 		/**
 		 * 构造函数
 		 */
-		public function MainView()
+		public function FlowerPig()
 		{
 			super();
+			
+			this.x = 143;
+			this.y = 445;
+			
+			this.addChild(AssetsManager.instance.getDefinitionMovieClip(UITableDefinition.FlowerPig));
 		}
-		
+	
 		// -------------------------------------------------------------------------------------------------------- 方法
-		
-		override public function onAdd():void
-		{
-			this.module.addChild(LayerManager.instance.background);
-			this.module.addChild(LayerManager.instance.role);
-			this.module.addChild(LayerManager.instance.tile);
-			this.module.addChild(LayerManager.instance.foreground);
-			this.module.addChild(LayerManager.instance.pop);
-			this.module.addChild(LayerManager.instance.tip);
-		}
-		
-		override public function onRemove():void
-		{
-			this.module.removeChild(LayerManager.instance.background);
-			this.module.removeChild(LayerManager.instance.role);
-			this.module.removeChild(LayerManager.instance.tile);
-			this.module.removeChild(LayerManager.instance.foreground);
-			this.module.removeChild(LayerManager.instance.pop);
-			this.module.removeChild(LayerManager.instance.tip);
-		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数
 	

@@ -1,18 +1,23 @@
 package com.ourgame.mahjong.bloodriver.view
 {
 	import com.ourgame.mahjong.bloodriver.BloodRiver;
-	import com.ourgame.mahjong.bloodriver.enum.Position;
+	import com.ourgame.mahjong.bloodriver.data.GameData;
 	import com.ourgame.mahjong.bloodriver.enum.UITableDefinition;
-	import com.ourgame.mahjong.bloodriver.ui.Char;
+	import com.ourgame.mahjong.bloodriver.method.TableMethod;
+	import com.ourgame.mahjong.bloodriver.ui.CountDown;
+	import com.ourgame.mahjong.bloodriver.ui.FlowerPig;
 	import com.ourgame.mahjong.bloodriver.ui.LayerManager;
-	import com.ourgame.mahjong.libaray.vo.UserInfo;
+	import com.ourgame.mahjong.bloodriver.ui.MenuBar;
+	import com.ourgame.mahjong.bloodriver.ui.SwapBoard;
+	import com.ourgame.mahjong.bloodriver.ui.TableBar;
+	import com.ourgame.mahjong.bloodriver.ui.TableInfoBar;
+	import com.ourgame.mahjong.bloodriver.vo.Game;
 	import com.wecoit.core.AssetsManager;
-	import com.wecoit.data.ArrayList;
-	import com.wecoit.events.ValueEvent;
 	import com.wecoit.mvc.View;
 	
 	import flash.display.Bitmap;
 	import flash.display.MovieClip;
+	import flash.events.Event;
 	
 	/**
 	 * 桌子视图
@@ -30,21 +35,25 @@ package com.ourgame.mahjong.bloodriver.view
 		
 		// -------------------------------------------------------------------------------------------------------- 属性
 		
+		public var background:Bitmap;
+		
+		public var frame:MovieClip;
+		
+		public var logo:Bitmap;
+		
+		public var infoBar:TableInfoBar;
+		
+		public var swapBoard:SwapBoard;
+		
+		public var countdown:CountDown;
+		
+		public var flowerPig:FlowerPig;
+		
+		public var tableBar:TableBar;
+		
+		public var menuBar:MenuBar;
+		
 		// -------------------------------------------------------------------------------------------------------- 变量
-		
-		private var background:Bitmap;
-		
-		private var frame:MovieClip;
-		
-		private var logo:Bitmap;
-		
-		public var charCurrent:Char;
-		
-		public var charNext:Char;
-		
-		public var charOpposite:Char;
-		
-		public var charPrev:Char;
 		
 		// -------------------------------------------------------------------------------------------------------- 构造
 		
@@ -73,25 +82,54 @@ package com.ourgame.mahjong.bloodriver.view
 			this.logo.y = 228;
 			LayerManager.instance.background.addChild(this.logo);
 			
-			this.charCurrent = new Char(Position.CURRENT);
-			LayerManager.instance.background.addChild(this.charCurrent);
+			this.infoBar = new TableInfoBar();
+			LayerManager.instance.foreground.addChild(this.infoBar);
 			
-			this.charNext = new Char(Position.NEXT);
-			LayerManager.instance.background.addChild(this.charNext);
+			this.swapBoard = new SwapBoard();
+			this.swapBoard.visible = false;
+			LayerManager.instance.foreground.addChild(this.swapBoard);
 			
-			this.charOpposite = new Char(Position.OPPOSITE);
-			LayerManager.instance.background.addChild(this.charOpposite);
+			this.countdown = new CountDown();
+			LayerManager.instance.foreground.addChild(this.countdown);
 			
-			this.charPrev = new Char(Position.PREV);
-			LayerManager.instance.background.addChild(this.charPrev);
+			this.flowerPig = new FlowerPig();
+			this.flowerPig.visible = false;
+			LayerManager.instance.foreground.addChild(this.flowerPig);
 			
-			(this.module as BloodRiver).info.data.table.userList.addEventListener(ValueEvent.CHANGE, updateUsers);
+			this.tableBar = new TableBar();
+			LayerManager.instance.foreground.addChild(this.tableBar);
 			
-			this.updateUsers();
+			this.menuBar = new MenuBar();
+			LayerManager.instance.foreground.addChild(this.menuBar);
+			
+			this.bind((this.module as BloodRiver).info.data.room, this.infoBar, {name: "roomName"});
+			this.bind((this.module as BloodRiver).info.data.table, this.infoBar, {name: "tableName"});
+			
+			this.bind((this.module as BloodRiver).info.data.user, this.tableBar, {nickname: "nickname", chips: "chips"});
+			
+			this.menuBar.addEventListener("back", onBack);
 		}
 		
 		override public function onRemove():void
 		{
+			LayerManager.instance.foreground.removeChild(this.menuBar);
+			this.menuBar = null;
+			
+			LayerManager.instance.foreground.removeChild(this.tableBar);
+			this.tableBar = null;
+			
+			LayerManager.instance.foreground.removeChild(this.flowerPig);
+			this.flowerPig = null;
+			
+			LayerManager.instance.foreground.removeChild(this.countdown);
+			this.countdown = null;
+			
+			LayerManager.instance.foreground.removeChild(this.swapBoard);
+			this.swapBoard = null;
+			
+			LayerManager.instance.foreground.removeChild(this.infoBar);
+			this.infoBar = null;
+			
 			LayerManager.instance.background.removeChild(this.logo);
 			this.logo = null;
 			
@@ -101,52 +139,29 @@ package com.ourgame.mahjong.bloodriver.view
 			LayerManager.instance.background.removeChild(this.background);
 			this.background = null;
 			
-			LayerManager.instance.background.removeChild(this.charPrev);
-			this.charPrev = null;
+			this.unBind((this.module as BloodRiver).info.data.room, this.infoBar);
+			this.unBind((this.module as BloodRiver).info.data.table, this.infoBar);
 			
-			LayerManager.instance.background.removeChild(this.charOpposite);
-			this.charOpposite = null;
+			this.unBind(GameData.currentGame, this.swapBoard);
 			
-			LayerManager.instance.background.removeChild(this.charNext);
-			this.charNext = null;
-			
-			LayerManager.instance.background.removeChild(this.charCurrent);
-			this.charCurrent = null;
-			
-			(this.module as BloodRiver).info.data.table.userList.removeEventListener(ValueEvent.CHANGE, updateUsers);
+			this.menuBar.removeEventListener("back", onBack);
+		}
+		
+		public function bindGame(game:Game):void
+		{
+			this.bind(game, this.swapBoard, {remainCards: "count"});
+		}
+		
+		public function updateFlowerPig(value:Boolean):void
+		{
+			this.flowerPig.visible = value;
 		}
 		
 		// -------------------------------------------------------------------------------------------------------- 函数
 		
-		public function updateUsers(event:ValueEvent=null):void
+		private function onBack(event:Event):void
 		{
-			var userlist:ArrayList = (this.module as BloodRiver).info.data.table.userList;
-			
-			for (var i:int = 0; i < userlist.length; i++)
-			{
-				var user:UserInfo = userlist.element(i);
-				
-				if (user.seat < 0)
-				{
-					continue;
-				}
-				
-				switch ((this.module as BloodRiver).info.data.table.getSeatPosition(user.seat))
-				{
-					case Position.CURRENT:
-						this.charCurrent.user = user;
-						break;
-					case Position.OPPOSITE:
-						this.charOpposite.user = user;
-						break;
-					case Position.PREV:
-						this.charPrev.user = user;
-						break;
-					case Position.NEXT:
-						this.charNext.user = user;
-						break;
-				}
-			}
+			this.notify(TableMethod.BACK);
 		}
 	
 	}

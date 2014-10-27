@@ -32,7 +32,8 @@ package com.ourgame.mahjong.bloodriver.method
 		
 		/**
 		 * 发牌
-		 * params Array[Vector.<Card>] 按座位号牌列表的二维数组
+		 * params uint 等待时间
+		 * params Array[Vector.<Card> 按座位号牌列表的二维数组
 		 */
 		public static const DEAL_CARDS:String = BASE + "DEAL_CARDS";
 		
@@ -71,6 +72,12 @@ package com.ourgame.mahjong.bloodriver.method
 		public static const DISCARD:String = BASE + "DISCARD";
 		
 		/**
+		 * 花猪
+		 * params Boolean 是否为花猪
+		 */
+		public static const FLOWER_PIG:String = BASE + "FLOWER_PIG";
+		
+		/**
 		 * 请求动作
 		 * params Action 动作
 		 */
@@ -90,6 +97,8 @@ package com.ourgame.mahjong.bloodriver.method
 		
 		/**
 		 * 结算
+		 * params Vector.<ResultInfo> 按座位号结算列表
+		 * params Vector.<ResultRecord> 结算记录列表
 		 */
 		public static const RESULT:String = BASE + "RESULT";
 	

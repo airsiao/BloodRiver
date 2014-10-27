@@ -5,6 +5,8 @@ package com.ourgame.mahjong.bloodriver.view
 	import com.ourgame.mahjong.bloodriver.enum.ActionType;
 	import com.ourgame.mahjong.bloodriver.enum.Position;
 	import com.ourgame.mahjong.bloodriver.state.GameState;
+	import com.ourgame.mahjong.bloodriver.ui.ActionEffect;
+	import com.ourgame.mahjong.bloodriver.ui.LayerManager;
 	import com.ourgame.mahjong.bloodriver.ui.TilesHand;
 	import com.ourgame.mahjong.bloodriver.vo.Action;
 	import com.ourgame.mahjong.bloodriver.vo.Card;
@@ -45,10 +47,10 @@ package com.ourgame.mahjong.bloodriver.view
 		public function play(notice:INotice):void
 		{
 			var action:Action = notice.params;
-			
+			var position:uint = (this.module as BloodRiver).info.data.table.getSeatPosition(action.seat);
 			var hand:TilesHand = null;
 			
-			switch ((this.module as BloodRiver).info.data.table.getSeatPosition(action.seat))
+			switch (position)
 			{
 				case Position.CURRENT:
 					hand = (this.context as GameState).tiles.handCurrent;
@@ -79,6 +81,18 @@ package com.ourgame.mahjong.bloodriver.view
 			
 			var player:GamePlayer = GameData.currentGame.playerList.element(action.seat);
 			hand.initGroups(player.handCards.groups.list);
+			
+			switch (action.type)
+			{
+				case ActionType.GANG:
+				case ActionType.GANG_AN:
+				case ActionType.GANG_BU:
+					LayerManager.instance.foreground.addChild(new ActionEffect(position, ActionEffect.GANG));
+					break;
+				case ActionType.PENG:
+					LayerManager.instance.foreground.addChild(new ActionEffect(position, ActionEffect.PENG));
+					break;
+			}
 			
 			notice.complete();
 		}

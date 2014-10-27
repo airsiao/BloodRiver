@@ -28,6 +28,11 @@ package com.ourgame.mahjong.bloodriver.method
 		 * params uint 游戏ID
 		 */
 		public static const GAME_INVITE:String = BASE + "GAME_INVITE";
+		
+		/**
+		 * 返回
+		 */
+		public static const BACK:String = BASE + "BACK";
 	
 	}
 }

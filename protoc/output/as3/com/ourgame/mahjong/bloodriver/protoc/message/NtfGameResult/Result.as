@@ -7,7 +7,6 @@ package com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult {
 	import flash.utils.IDataOutput;
 	import flash.utils.IExternalizable;
 	import flash.errors.IOError;
-	import com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail;
 	// @@protoc_insertion_point(imports)
 
 	// @@protoc_insertion_point(class_metadata)
@@ -22,9 +21,9 @@ package com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult {
 		/**
 		 *  @private
 		 */
-		public static const WINPOINTS:FieldDescriptor$TYPE_UINT32 = new FieldDescriptor$TYPE_UINT32("com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Result.winPoints", "winPoints", (2 << 3) | com.netease.protobuf.WireType.VARINT);
+		public static const WINPOINTS:FieldDescriptor$TYPE_SINT32 = new FieldDescriptor$TYPE_SINT32("com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Result.winPoints", "winPoints", (2 << 3) | com.netease.protobuf.WireType.VARINT);
 
-		public var winPoints:uint;
+		public var winPoints:int;
 
 		/**
 		 *  @private
@@ -44,29 +43,17 @@ package com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult {
 		/**
 		 *  @private
 		 */
-		public static const DETAILS:RepeatedFieldDescriptor$TYPE_MESSAGE = new RepeatedFieldDescriptor$TYPE_MESSAGE("com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Result.details", "details", (5 << 3) | com.netease.protobuf.WireType.LENGTH_DELIMITED, function():Class { return com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail; });
-
-		[ArrayElementType("com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail")]
-		public var details:Array = [];
-
-		/**
-		 *  @private
-		 */
 		override com.netease.protobuf.used_by_generated_code final function writeToBuffer(output:com.netease.protobuf.WritingBuffer):void {
 			com.netease.protobuf.WriteUtils.writeTag(output, com.netease.protobuf.WireType.VARINT, 1);
 			com.netease.protobuf.WriteUtils.write$TYPE_UINT32(output, this.seat);
 			com.netease.protobuf.WriteUtils.writeTag(output, com.netease.protobuf.WireType.VARINT, 2);
-			com.netease.protobuf.WriteUtils.write$TYPE_UINT32(output, this.winPoints);
+			com.netease.protobuf.WriteUtils.write$TYPE_SINT32(output, this.winPoints);
 			for (var tilesInHand$index:uint = 0; tilesInHand$index < this.tilesInHand.length; ++tilesInHand$index) {
 				com.netease.protobuf.WriteUtils.writeTag(output, com.netease.protobuf.WireType.VARINT, 3);
 				com.netease.protobuf.WriteUtils.write$TYPE_UINT32(output, this.tilesInHand[tilesInHand$index]);
 			}
 			com.netease.protobuf.WriteUtils.writeTag(output, com.netease.protobuf.WireType.VARINT, 4);
 			com.netease.protobuf.WriteUtils.write$TYPE_UINT32(output, this.status);
-			for (var details$index:uint = 0; details$index < this.details.length; ++details$index) {
-				com.netease.protobuf.WriteUtils.writeTag(output, com.netease.protobuf.WireType.LENGTH_DELIMITED, 5);
-				com.netease.protobuf.WriteUtils.write$TYPE_MESSAGE(output, this.details[details$index]);
-			}
 			for (var fieldKey:* in this) {
 				super.writeUnknown(output, fieldKey);
 			}
@@ -94,7 +81,7 @@ package com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult {
 						throw new flash.errors.IOError('Bad data format: Result.winPoints cannot be set twice.');
 					}
 					++winPoints$count;
-					this.winPoints = com.netease.protobuf.ReadUtils.read$TYPE_UINT32(input);
+					this.winPoints = com.netease.protobuf.ReadUtils.read$TYPE_SINT32(input);
 					break;
 				case 3:
 					if ((tag & 7) == com.netease.protobuf.WireType.LENGTH_DELIMITED) {
@@ -109,9 +96,6 @@ package com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult {
 					}
 					++status$count;
 					this.status = com.netease.protobuf.ReadUtils.read$TYPE_UINT32(input);
-					break;
-				case 5:
-					this.details.push(com.netease.protobuf.ReadUtils.read$TYPE_MESSAGE(input, new com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail()));
 					break;
 				default:
 					super.readUnknown(input, tag);

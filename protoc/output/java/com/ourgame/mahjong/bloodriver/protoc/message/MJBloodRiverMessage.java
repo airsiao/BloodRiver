@@ -11809,7 +11809,7 @@ public final class MJBloodRiverMessage {
    *========================================================================================
    * 换三张牌
    * #define OGID_SWAP							( OGID_GAME_MESSAGE + 11 )
-   *客户端发送准备交换的三张牌
+   * 客户端发送准备交换的三张牌
    * </pre>
    */
   public static final class CReqSwap extends
@@ -12067,7 +12067,7 @@ public final class MJBloodRiverMessage {
      *========================================================================================
      * 换三张牌
      * #define OGID_SWAP							( OGID_GAME_MESSAGE + 11 )
-     *客户端发送准备交换的三张牌
+     * 客户端发送准备交换的三张牌
      * </pre>
      */
     public static final class Builder extends
@@ -12268,6 +12268,659 @@ public final class MJBloodRiverMessage {
     // @@protoc_insertion_point(class_scope:com.ourgame.mahjong.bloodriver.protoc.message.CReqSwap)
   }
 
+  public interface NTFSwapPreparedOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+
+    // required uint32 seat = 1;
+    /**
+     * <code>required uint32 seat = 1;</code>
+     *
+     * <pre>
+     *座位号
+     * </pre>
+     */
+    boolean hasSeat();
+    /**
+     * <code>required uint32 seat = 1;</code>
+     *
+     * <pre>
+     *座位号
+     * </pre>
+     */
+    int getSeat();
+
+    // repeated uint32 tiles = 2;
+    /**
+     * <code>repeated uint32 tiles = 2;</code>
+     *
+     * <pre>
+     *本人发送拿出的3张牌，其他人收到3个0
+     * </pre>
+     */
+    java.util.List<java.lang.Integer> getTilesList();
+    /**
+     * <code>repeated uint32 tiles = 2;</code>
+     *
+     * <pre>
+     *本人发送拿出的3张牌，其他人收到3个0
+     * </pre>
+     */
+    int getTilesCount();
+    /**
+     * <code>repeated uint32 tiles = 2;</code>
+     *
+     * <pre>
+     *本人发送拿出的3张牌，其他人收到3个0
+     * </pre>
+     */
+    int getTiles(int index);
+  }
+  /**
+   * Protobuf type {@code com.ourgame.mahjong.bloodriver.protoc.message.NTFSwapPrepared}
+   *
+   * <pre>
+   * 有玩家准备好换牌
+   * </pre>
+   */
+  public static final class NTFSwapPrepared extends
+      com.google.protobuf.GeneratedMessage
+      implements NTFSwapPreparedOrBuilder {
+    // Use NTFSwapPrepared.newBuilder() to construct.
+    private NTFSwapPrepared(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private NTFSwapPrepared(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final NTFSwapPrepared defaultInstance;
+    public static NTFSwapPrepared getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public NTFSwapPrepared getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private NTFSwapPrepared(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+              bitField0_ |= 0x00000001;
+              seat_ = input.readUInt32();
+              break;
+            }
+            case 16: {
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                tiles_ = new java.util.ArrayList<java.lang.Integer>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              tiles_.add(input.readUInt32());
+              break;
+            }
+            case 18: {
+              int length = input.readRawVarint32();
+              int limit = input.pushLimit(length);
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002) && input.getBytesUntilLimit() > 0) {
+                tiles_ = new java.util.ArrayList<java.lang.Integer>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              while (input.getBytesUntilLimit() > 0) {
+                tiles_.add(input.readUInt32());
+              }
+              input.popLimit(limit);
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          tiles_ = java.util.Collections.unmodifiableList(tiles_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NTFSwapPrepared_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NTFSwapPrepared_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared.class, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<NTFSwapPrepared> PARSER =
+        new com.google.protobuf.AbstractParser<NTFSwapPrepared>() {
+      public NTFSwapPrepared parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new NTFSwapPrepared(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<NTFSwapPrepared> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    // required uint32 seat = 1;
+    public static final int SEAT_FIELD_NUMBER = 1;
+    private int seat_;
+    /**
+     * <code>required uint32 seat = 1;</code>
+     *
+     * <pre>
+     *座位号
+     * </pre>
+     */
+    public boolean hasSeat() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>required uint32 seat = 1;</code>
+     *
+     * <pre>
+     *座位号
+     * </pre>
+     */
+    public int getSeat() {
+      return seat_;
+    }
+
+    // repeated uint32 tiles = 2;
+    public static final int TILES_FIELD_NUMBER = 2;
+    private java.util.List<java.lang.Integer> tiles_;
+    /**
+     * <code>repeated uint32 tiles = 2;</code>
+     *
+     * <pre>
+     *本人发送拿出的3张牌，其他人收到3个0
+     * </pre>
+     */
+    public java.util.List<java.lang.Integer>
+        getTilesList() {
+      return tiles_;
+    }
+    /**
+     * <code>repeated uint32 tiles = 2;</code>
+     *
+     * <pre>
+     *本人发送拿出的3张牌，其他人收到3个0
+     * </pre>
+     */
+    public int getTilesCount() {
+      return tiles_.size();
+    }
+    /**
+     * <code>repeated uint32 tiles = 2;</code>
+     *
+     * <pre>
+     *本人发送拿出的3张牌，其他人收到3个0
+     * </pre>
+     */
+    public int getTiles(int index) {
+      return tiles_.get(index);
+    }
+
+    private void initFields() {
+      seat_ = 0;
+      tiles_ = java.util.Collections.emptyList();
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+
+      if (!hasSeat()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeUInt32(1, seat_);
+      }
+      for (int i = 0; i < tiles_.size(); i++) {
+        output.writeUInt32(2, tiles_.get(i));
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, seat_);
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < tiles_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeUInt32SizeNoTag(tiles_.get(i));
+        }
+        size += dataSize;
+        size += 1 * getTilesList().size();
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.ourgame.mahjong.bloodriver.protoc.message.NTFSwapPrepared}
+     *
+     * <pre>
+     * 有玩家准备好换牌
+     * </pre>
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPreparedOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NTFSwapPrepared_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NTFSwapPrepared_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared.class, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared.Builder.class);
+      }
+
+      // Construct using com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        seat_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        tiles_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NTFSwapPrepared_descriptor;
+      }
+
+      public com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared getDefaultInstanceForType() {
+        return com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared.getDefaultInstance();
+      }
+
+      public com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared build() {
+        com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared buildPartial() {
+        com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared result = new com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.seat_ = seat_;
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          tiles_ = java.util.Collections.unmodifiableList(tiles_);
+          bitField0_ = (bitField0_ & ~0x00000002);
+        }
+        result.tiles_ = tiles_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared) {
+          return mergeFrom((com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared other) {
+        if (other == com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared.getDefaultInstance()) return this;
+        if (other.hasSeat()) {
+          setSeat(other.getSeat());
+        }
+        if (!other.tiles_.isEmpty()) {
+          if (tiles_.isEmpty()) {
+            tiles_ = other.tiles_;
+            bitField0_ = (bitField0_ & ~0x00000002);
+          } else {
+            ensureTilesIsMutable();
+            tiles_.addAll(other.tiles_);
+          }
+          onChanged();
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        if (!hasSeat()) {
+          
+          return false;
+        }
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NTFSwapPrepared) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      // required uint32 seat = 1;
+      private int seat_ ;
+      /**
+       * <code>required uint32 seat = 1;</code>
+       *
+       * <pre>
+       *座位号
+       * </pre>
+       */
+      public boolean hasSeat() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>required uint32 seat = 1;</code>
+       *
+       * <pre>
+       *座位号
+       * </pre>
+       */
+      public int getSeat() {
+        return seat_;
+      }
+      /**
+       * <code>required uint32 seat = 1;</code>
+       *
+       * <pre>
+       *座位号
+       * </pre>
+       */
+      public Builder setSeat(int value) {
+        bitField0_ |= 0x00000001;
+        seat_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required uint32 seat = 1;</code>
+       *
+       * <pre>
+       *座位号
+       * </pre>
+       */
+      public Builder clearSeat() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        seat_ = 0;
+        onChanged();
+        return this;
+      }
+
+      // repeated uint32 tiles = 2;
+      private java.util.List<java.lang.Integer> tiles_ = java.util.Collections.emptyList();
+      private void ensureTilesIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          tiles_ = new java.util.ArrayList<java.lang.Integer>(tiles_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+      /**
+       * <code>repeated uint32 tiles = 2;</code>
+       *
+       * <pre>
+       *本人发送拿出的3张牌，其他人收到3个0
+       * </pre>
+       */
+      public java.util.List<java.lang.Integer>
+          getTilesList() {
+        return java.util.Collections.unmodifiableList(tiles_);
+      }
+      /**
+       * <code>repeated uint32 tiles = 2;</code>
+       *
+       * <pre>
+       *本人发送拿出的3张牌，其他人收到3个0
+       * </pre>
+       */
+      public int getTilesCount() {
+        return tiles_.size();
+      }
+      /**
+       * <code>repeated uint32 tiles = 2;</code>
+       *
+       * <pre>
+       *本人发送拿出的3张牌，其他人收到3个0
+       * </pre>
+       */
+      public int getTiles(int index) {
+        return tiles_.get(index);
+      }
+      /**
+       * <code>repeated uint32 tiles = 2;</code>
+       *
+       * <pre>
+       *本人发送拿出的3张牌，其他人收到3个0
+       * </pre>
+       */
+      public Builder setTiles(
+          int index, int value) {
+        ensureTilesIsMutable();
+        tiles_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated uint32 tiles = 2;</code>
+       *
+       * <pre>
+       *本人发送拿出的3张牌，其他人收到3个0
+       * </pre>
+       */
+      public Builder addTiles(int value) {
+        ensureTilesIsMutable();
+        tiles_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated uint32 tiles = 2;</code>
+       *
+       * <pre>
+       *本人发送拿出的3张牌，其他人收到3个0
+       * </pre>
+       */
+      public Builder addAllTiles(
+          java.lang.Iterable<? extends java.lang.Integer> values) {
+        ensureTilesIsMutable();
+        super.addAll(values, tiles_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated uint32 tiles = 2;</code>
+       *
+       * <pre>
+       *本人发送拿出的3张牌，其他人收到3个0
+       * </pre>
+       */
+      public Builder clearTiles() {
+        tiles_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:com.ourgame.mahjong.bloodriver.protoc.message.NTFSwapPrepared)
+    }
+
+    static {
+      defaultInstance = new NTFSwapPrepared(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:com.ourgame.mahjong.bloodriver.protoc.message.NTFSwapPrepared)
+  }
+
   public interface SAckSwapOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
 
@@ -12323,7 +12976,10 @@ public final class MJBloodRiverMessage {
    * Protobuf type {@code com.ourgame.mahjong.bloodriver.protoc.message.SAckSwap}
    *
    * <pre>
-   *服务器返回换回的三张牌
+   *========================================================================================
+   * 换三张牌
+   * #define OGID_SWAP_RESULT						( OGID_GAME_MESSAGE + 13 )
+   * 服务器返回换回的三张牌
    * </pre>
    */
   public static final class SAckSwap extends
@@ -12697,7 +13353,10 @@ public final class MJBloodRiverMessage {
      * Protobuf type {@code com.ourgame.mahjong.bloodriver.protoc.message.SAckSwap}
      *
      * <pre>
-     *服务器返回换回的三张牌
+     *========================================================================================
+     * 换三张牌
+     * #define OGID_SWAP_RESULT						( OGID_GAME_MESSAGE + 13 )
+     * 服务器返回换回的三张牌
      * </pre>
      */
     public static final class Builder extends
@@ -13116,7 +13775,7 @@ public final class MJBloodRiverMessage {
    * <pre>
    *========================================================================================
    * 有人打牌
-   * #define OGID_DISCARD							( OGID_GAME_MESSAGE + 13 )
+   * #define OGID_DISCARD							( OGID_GAME_MESSAGE + 15 )
    * </pre>
    */
   public static final class NtfDiscard extends
@@ -13438,7 +14097,7 @@ public final class MJBloodRiverMessage {
      * <pre>
      *========================================================================================
      * 有人打牌
-     * #define OGID_DISCARD							( OGID_GAME_MESSAGE + 13 )
+     * #define OGID_DISCARD							( OGID_GAME_MESSAGE + 15 )
      * </pre>
      */
     public static final class Builder extends
@@ -13817,7 +14476,7 @@ public final class MJBloodRiverMessage {
    * <pre>
    *========================================================================================
    * 抓牌
-   * #define OGID_DRAW							( OGID_GAME_MESSAGE + 15 )
+   * #define OGID_DRAW							( OGID_GAME_MESSAGE + 17 )
    * </pre>
    */
   public static final class NtfDraw extends
@@ -14192,7 +14851,7 @@ public final class MJBloodRiverMessage {
      * <pre>
      *========================================================================================
      * 抓牌
-     * #define OGID_DRAW							( OGID_GAME_MESSAGE + 15 )
+     * #define OGID_DRAW							( OGID_GAME_MESSAGE + 17 )
      * </pre>
      */
     public static final class Builder extends
@@ -14649,7 +15308,7 @@ public final class MJBloodRiverMessage {
    * <pre>
    *========================================================================================
    * 动作请求
-   * #define OGID_ACTION							( OGID_GAME_MESSAGE + 17 )
+   * #define OGID_ACTION							( OGID_GAME_MESSAGE + 19 )
    * </pre>
    */
   public static final class CReqAct extends
@@ -15045,7 +15704,7 @@ public final class MJBloodRiverMessage {
      * <pre>
      *========================================================================================
      * 动作请求
-     * #define OGID_ACTION							( OGID_GAME_MESSAGE + 17 )
+     * #define OGID_ACTION							( OGID_GAME_MESSAGE + 19 )
      * </pre>
      */
     public static final class Builder extends
@@ -21795,6 +22454,51 @@ public final class MJBloodRiverMessage {
      * </pre>
      */
     int getMaxWait();
+
+    // repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;
+    /**
+     * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+     *
+     * <pre>
+     *输赢明细
+     * </pre>
+     */
+    java.util.List<com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail> 
+        getDetailsList();
+    /**
+     * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+     *
+     * <pre>
+     *输赢明细
+     * </pre>
+     */
+    com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail getDetails(int index);
+    /**
+     * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+     *
+     * <pre>
+     *输赢明细
+     * </pre>
+     */
+    int getDetailsCount();
+    /**
+     * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+     *
+     * <pre>
+     *输赢明细
+     * </pre>
+     */
+    java.util.List<? extends com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.DetailOrBuilder> 
+        getDetailsOrBuilderList();
+    /**
+     * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+     *
+     * <pre>
+     *输赢明细
+     * </pre>
+     */
+    com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.DetailOrBuilder getDetailsOrBuilder(
+        int index);
   }
   /**
    * Protobuf type {@code com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult}
@@ -21871,6 +22575,14 @@ public final class MJBloodRiverMessage {
               maxWait_ = input.readUInt32();
               break;
             }
+            case 34: {
+              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+                details_ = new java.util.ArrayList<com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail>();
+                mutable_bitField0_ |= 0x00000008;
+              }
+              details_.add(input.readMessage(com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail.PARSER, extensionRegistry));
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -21881,6 +22593,9 @@ public final class MJBloodRiverMessage {
       } finally {
         if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
           results_ = java.util.Collections.unmodifiableList(results_);
+        }
+        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+          details_ = java.util.Collections.unmodifiableList(details_);
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -21921,7 +22636,7 @@ public final class MJBloodRiverMessage {
        * <code>required uint32 type = 1;</code>
        *
        * <pre>
-       *是和还是 1 点炮，2 和牌 3 自摸
+       *是和还是 1 点炮，2 和牌 3 自摸 4 别人自摸
        * </pre>
        */
       boolean hasType();
@@ -21929,7 +22644,7 @@ public final class MJBloodRiverMessage {
        * <code>required uint32 type = 1;</code>
        *
        * <pre>
-       *是和还是 1 点炮，2 和牌 3 自摸
+       *是和还是 1 点炮，2 和牌 3 自摸 4 别人自摸
        * </pre>
        */
       int getType();
@@ -22106,7 +22821,7 @@ public final class MJBloodRiverMessage {
        * <code>required uint32 type = 1;</code>
        *
        * <pre>
-       *是和还是 1 点炮，2 和牌 3 自摸
+       *是和还是 1 点炮，2 和牌 3 自摸 4 别人自摸
        * </pre>
        */
       public boolean hasType() {
@@ -22116,7 +22831,7 @@ public final class MJBloodRiverMessage {
        * <code>required uint32 type = 1;</code>
        *
        * <pre>
-       *是和还是 1 点炮，2 和牌 3 自摸
+       *是和还是 1 点炮，2 和牌 3 自摸 4 别人自摸
        * </pre>
        */
       public int getType() {
@@ -22511,7 +23226,7 @@ public final class MJBloodRiverMessage {
          * <code>required uint32 type = 1;</code>
          *
          * <pre>
-         *是和还是 1 点炮，2 和牌 3 自摸
+         *是和还是 1 点炮，2 和牌 3 自摸 4 别人自摸
          * </pre>
          */
         public boolean hasType() {
@@ -22521,7 +23236,7 @@ public final class MJBloodRiverMessage {
          * <code>required uint32 type = 1;</code>
          *
          * <pre>
-         *是和还是 1 点炮，2 和牌 3 自摸
+         *是和还是 1 点炮，2 和牌 3 自摸 4 别人自摸
          * </pre>
          */
         public int getType() {
@@ -22531,7 +23246,7 @@ public final class MJBloodRiverMessage {
          * <code>required uint32 type = 1;</code>
          *
          * <pre>
-         *是和还是 1 点炮，2 和牌 3 自摸
+         *是和还是 1 点炮，2 和牌 3 自摸 4 别人自摸
          * </pre>
          */
         public Builder setType(int value) {
@@ -22544,7 +23259,7 @@ public final class MJBloodRiverMessage {
          * <code>required uint32 type = 1;</code>
          *
          * <pre>
-         *是和还是 1 点炮，2 和牌 3 自摸
+         *是和还是 1 点炮，2 和牌 3 自摸 4 别人自摸
          * </pre>
          */
         public Builder clearType() {
@@ -22725,9 +23440,9 @@ public final class MJBloodRiverMessage {
        */
       int getSeat();
 
-      // required uint32 winPoints = 2;
+      // required sint32 winPoints = 2;
       /**
-       * <code>required uint32 winPoints = 2;</code>
+       * <code>required sint32 winPoints = 2;</code>
        *
        * <pre>
        *总输赢番数
@@ -22735,7 +23450,7 @@ public final class MJBloodRiverMessage {
        */
       boolean hasWinPoints();
       /**
-       * <code>required uint32 winPoints = 2;</code>
+       * <code>required sint32 winPoints = 2;</code>
        *
        * <pre>
        *总输赢番数
@@ -22786,51 +23501,6 @@ public final class MJBloodRiverMessage {
        * </pre>
        */
       int getStatus();
-
-      // repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;
-      /**
-       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-       *
-       * <pre>
-       *输赢明细
-       * </pre>
-       */
-      java.util.List<com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail> 
-          getDetailsList();
-      /**
-       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-       *
-       * <pre>
-       *输赢明细
-       * </pre>
-       */
-      com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail getDetails(int index);
-      /**
-       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-       *
-       * <pre>
-       *输赢明细
-       * </pre>
-       */
-      int getDetailsCount();
-      /**
-       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-       *
-       * <pre>
-       *输赢明细
-       * </pre>
-       */
-      java.util.List<? extends com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.DetailOrBuilder> 
-          getDetailsOrBuilderList();
-      /**
-       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-       *
-       * <pre>
-       *输赢明细
-       * </pre>
-       */
-      com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.DetailOrBuilder getDetailsOrBuilder(
-          int index);
     }
     /**
      * Protobuf type {@code com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Result}
@@ -22890,7 +23560,7 @@ public final class MJBloodRiverMessage {
               }
               case 16: {
                 bitField0_ |= 0x00000002;
-                winPoints_ = input.readUInt32();
+                winPoints_ = input.readSInt32();
                 break;
               }
               case 24: {
@@ -22919,14 +23589,6 @@ public final class MJBloodRiverMessage {
                 status_ = input.readUInt32();
                 break;
               }
-              case 42: {
-                if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
-                  details_ = new java.util.ArrayList<com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail>();
-                  mutable_bitField0_ |= 0x00000010;
-                }
-                details_.add(input.readMessage(com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail.PARSER, extensionRegistry));
-                break;
-              }
             }
           }
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -22937,9 +23599,6 @@ public final class MJBloodRiverMessage {
         } finally {
           if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
             tilesInHand_ = java.util.Collections.unmodifiableList(tilesInHand_);
-          }
-          if (((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
-            details_ = java.util.Collections.unmodifiableList(details_);
           }
           this.unknownFields = unknownFields.build();
           makeExtensionsImmutable();
@@ -22989,11 +23648,11 @@ public final class MJBloodRiverMessage {
         return seat_;
       }
 
-      // required uint32 winPoints = 2;
+      // required sint32 winPoints = 2;
       public static final int WINPOINTS_FIELD_NUMBER = 2;
       private int winPoints_;
       /**
-       * <code>required uint32 winPoints = 2;</code>
+       * <code>required sint32 winPoints = 2;</code>
        *
        * <pre>
        *总输赢番数
@@ -23003,7 +23662,7 @@ public final class MJBloodRiverMessage {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>required uint32 winPoints = 2;</code>
+       * <code>required sint32 winPoints = 2;</code>
        *
        * <pre>
        *总输赢番数
@@ -23072,68 +23731,11 @@ public final class MJBloodRiverMessage {
         return status_;
       }
 
-      // repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;
-      public static final int DETAILS_FIELD_NUMBER = 5;
-      private java.util.List<com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail> details_;
-      /**
-       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-       *
-       * <pre>
-       *输赢明细
-       * </pre>
-       */
-      public java.util.List<com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail> getDetailsList() {
-        return details_;
-      }
-      /**
-       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-       *
-       * <pre>
-       *输赢明细
-       * </pre>
-       */
-      public java.util.List<? extends com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.DetailOrBuilder> 
-          getDetailsOrBuilderList() {
-        return details_;
-      }
-      /**
-       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-       *
-       * <pre>
-       *输赢明细
-       * </pre>
-       */
-      public int getDetailsCount() {
-        return details_.size();
-      }
-      /**
-       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-       *
-       * <pre>
-       *输赢明细
-       * </pre>
-       */
-      public com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail getDetails(int index) {
-        return details_.get(index);
-      }
-      /**
-       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-       *
-       * <pre>
-       *输赢明细
-       * </pre>
-       */
-      public com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.DetailOrBuilder getDetailsOrBuilder(
-          int index) {
-        return details_.get(index);
-      }
-
       private void initFields() {
         seat_ = 0;
         winPoints_ = 0;
         tilesInHand_ = java.util.Collections.emptyList();
         status_ = 0;
-        details_ = java.util.Collections.emptyList();
       }
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
@@ -23152,12 +23754,6 @@ public final class MJBloodRiverMessage {
           memoizedIsInitialized = 0;
           return false;
         }
-        for (int i = 0; i < getDetailsCount(); i++) {
-          if (!getDetails(i).isInitialized()) {
-            memoizedIsInitialized = 0;
-            return false;
-          }
-        }
         memoizedIsInitialized = 1;
         return true;
       }
@@ -23169,16 +23765,13 @@ public final class MJBloodRiverMessage {
           output.writeUInt32(1, seat_);
         }
         if (((bitField0_ & 0x00000002) == 0x00000002)) {
-          output.writeUInt32(2, winPoints_);
+          output.writeSInt32(2, winPoints_);
         }
         for (int i = 0; i < tilesInHand_.size(); i++) {
           output.writeUInt32(3, tilesInHand_.get(i));
         }
         if (((bitField0_ & 0x00000004) == 0x00000004)) {
           output.writeUInt32(4, status_);
-        }
-        for (int i = 0; i < details_.size(); i++) {
-          output.writeMessage(5, details_.get(i));
         }
         getUnknownFields().writeTo(output);
       }
@@ -23195,7 +23788,7 @@ public final class MJBloodRiverMessage {
         }
         if (((bitField0_ & 0x00000002) == 0x00000002)) {
           size += com.google.protobuf.CodedOutputStream
-            .computeUInt32Size(2, winPoints_);
+            .computeSInt32Size(2, winPoints_);
         }
         {
           int dataSize = 0;
@@ -23209,10 +23802,6 @@ public final class MJBloodRiverMessage {
         if (((bitField0_ & 0x00000004) == 0x00000004)) {
           size += com.google.protobuf.CodedOutputStream
             .computeUInt32Size(4, status_);
-        }
-        for (int i = 0; i < details_.size(); i++) {
-          size += com.google.protobuf.CodedOutputStream
-            .computeMessageSize(5, details_.get(i));
         }
         size += getUnknownFields().getSerializedSize();
         memoizedSerializedSize = size;
@@ -23322,7 +23911,6 @@ public final class MJBloodRiverMessage {
         }
         private void maybeForceBuilderInitialization() {
           if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
-            getDetailsFieldBuilder();
           }
         }
         private static Builder create() {
@@ -23339,12 +23927,6 @@ public final class MJBloodRiverMessage {
           bitField0_ = (bitField0_ & ~0x00000004);
           status_ = 0;
           bitField0_ = (bitField0_ & ~0x00000008);
-          if (detailsBuilder_ == null) {
-            details_ = java.util.Collections.emptyList();
-            bitField0_ = (bitField0_ & ~0x00000010);
-          } else {
-            detailsBuilder_.clear();
-          }
           return this;
         }
 
@@ -23390,15 +23972,6 @@ public final class MJBloodRiverMessage {
             to_bitField0_ |= 0x00000004;
           }
           result.status_ = status_;
-          if (detailsBuilder_ == null) {
-            if (((bitField0_ & 0x00000010) == 0x00000010)) {
-              details_ = java.util.Collections.unmodifiableList(details_);
-              bitField0_ = (bitField0_ & ~0x00000010);
-            }
-            result.details_ = details_;
-          } else {
-            result.details_ = detailsBuilder_.build();
-          }
           result.bitField0_ = to_bitField0_;
           onBuilt();
           return result;
@@ -23434,32 +24007,6 @@ public final class MJBloodRiverMessage {
           if (other.hasStatus()) {
             setStatus(other.getStatus());
           }
-          if (detailsBuilder_ == null) {
-            if (!other.details_.isEmpty()) {
-              if (details_.isEmpty()) {
-                details_ = other.details_;
-                bitField0_ = (bitField0_ & ~0x00000010);
-              } else {
-                ensureDetailsIsMutable();
-                details_.addAll(other.details_);
-              }
-              onChanged();
-            }
-          } else {
-            if (!other.details_.isEmpty()) {
-              if (detailsBuilder_.isEmpty()) {
-                detailsBuilder_.dispose();
-                detailsBuilder_ = null;
-                details_ = other.details_;
-                bitField0_ = (bitField0_ & ~0x00000010);
-                detailsBuilder_ = 
-                  com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
-                     getDetailsFieldBuilder() : null;
-              } else {
-                detailsBuilder_.addAllMessages(other.details_);
-              }
-            }
-          }
           this.mergeUnknownFields(other.getUnknownFields());
           return this;
         }
@@ -23476,12 +24023,6 @@ public final class MJBloodRiverMessage {
           if (!hasStatus()) {
             
             return false;
-          }
-          for (int i = 0; i < getDetailsCount(); i++) {
-            if (!getDetails(i).isInitialized()) {
-              
-              return false;
-            }
           }
           return true;
         }
@@ -23538,10 +24079,10 @@ public final class MJBloodRiverMessage {
           return this;
         }
 
-        // required uint32 winPoints = 2;
+        // required sint32 winPoints = 2;
         private int winPoints_ ;
         /**
-         * <code>required uint32 winPoints = 2;</code>
+         * <code>required sint32 winPoints = 2;</code>
          *
          * <pre>
          *总输赢番数
@@ -23551,7 +24092,7 @@ public final class MJBloodRiverMessage {
           return ((bitField0_ & 0x00000002) == 0x00000002);
         }
         /**
-         * <code>required uint32 winPoints = 2;</code>
+         * <code>required sint32 winPoints = 2;</code>
          *
          * <pre>
          *总输赢番数
@@ -23561,7 +24102,7 @@ public final class MJBloodRiverMessage {
           return winPoints_;
         }
         /**
-         * <code>required uint32 winPoints = 2;</code>
+         * <code>required sint32 winPoints = 2;</code>
          *
          * <pre>
          *总输赢番数
@@ -23574,7 +24115,7 @@ public final class MJBloodRiverMessage {
           return this;
         }
         /**
-         * <code>required uint32 winPoints = 2;</code>
+         * <code>required sint32 winPoints = 2;</code>
          *
          * <pre>
          *总输赢番数
@@ -23730,318 +24271,6 @@ public final class MJBloodRiverMessage {
           return this;
         }
 
-        // repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;
-        private java.util.List<com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail> details_ =
-          java.util.Collections.emptyList();
-        private void ensureDetailsIsMutable() {
-          if (!((bitField0_ & 0x00000010) == 0x00000010)) {
-            details_ = new java.util.ArrayList<com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail>(details_);
-            bitField0_ |= 0x00000010;
-           }
-        }
-
-        private com.google.protobuf.RepeatedFieldBuilder<
-            com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail.Builder, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.DetailOrBuilder> detailsBuilder_;
-
-        /**
-         * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-         *
-         * <pre>
-         *输赢明细
-         * </pre>
-         */
-        public java.util.List<com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail> getDetailsList() {
-          if (detailsBuilder_ == null) {
-            return java.util.Collections.unmodifiableList(details_);
-          } else {
-            return detailsBuilder_.getMessageList();
-          }
-        }
-        /**
-         * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-         *
-         * <pre>
-         *输赢明细
-         * </pre>
-         */
-        public int getDetailsCount() {
-          if (detailsBuilder_ == null) {
-            return details_.size();
-          } else {
-            return detailsBuilder_.getCount();
-          }
-        }
-        /**
-         * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-         *
-         * <pre>
-         *输赢明细
-         * </pre>
-         */
-        public com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail getDetails(int index) {
-          if (detailsBuilder_ == null) {
-            return details_.get(index);
-          } else {
-            return detailsBuilder_.getMessage(index);
-          }
-        }
-        /**
-         * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-         *
-         * <pre>
-         *输赢明细
-         * </pre>
-         */
-        public Builder setDetails(
-            int index, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail value) {
-          if (detailsBuilder_ == null) {
-            if (value == null) {
-              throw new NullPointerException();
-            }
-            ensureDetailsIsMutable();
-            details_.set(index, value);
-            onChanged();
-          } else {
-            detailsBuilder_.setMessage(index, value);
-          }
-          return this;
-        }
-        /**
-         * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-         *
-         * <pre>
-         *输赢明细
-         * </pre>
-         */
-        public Builder setDetails(
-            int index, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail.Builder builderForValue) {
-          if (detailsBuilder_ == null) {
-            ensureDetailsIsMutable();
-            details_.set(index, builderForValue.build());
-            onChanged();
-          } else {
-            detailsBuilder_.setMessage(index, builderForValue.build());
-          }
-          return this;
-        }
-        /**
-         * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-         *
-         * <pre>
-         *输赢明细
-         * </pre>
-         */
-        public Builder addDetails(com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail value) {
-          if (detailsBuilder_ == null) {
-            if (value == null) {
-              throw new NullPointerException();
-            }
-            ensureDetailsIsMutable();
-            details_.add(value);
-            onChanged();
-          } else {
-            detailsBuilder_.addMessage(value);
-          }
-          return this;
-        }
-        /**
-         * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-         *
-         * <pre>
-         *输赢明细
-         * </pre>
-         */
-        public Builder addDetails(
-            int index, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail value) {
-          if (detailsBuilder_ == null) {
-            if (value == null) {
-              throw new NullPointerException();
-            }
-            ensureDetailsIsMutable();
-            details_.add(index, value);
-            onChanged();
-          } else {
-            detailsBuilder_.addMessage(index, value);
-          }
-          return this;
-        }
-        /**
-         * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-         *
-         * <pre>
-         *输赢明细
-         * </pre>
-         */
-        public Builder addDetails(
-            com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail.Builder builderForValue) {
-          if (detailsBuilder_ == null) {
-            ensureDetailsIsMutable();
-            details_.add(builderForValue.build());
-            onChanged();
-          } else {
-            detailsBuilder_.addMessage(builderForValue.build());
-          }
-          return this;
-        }
-        /**
-         * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-         *
-         * <pre>
-         *输赢明细
-         * </pre>
-         */
-        public Builder addDetails(
-            int index, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail.Builder builderForValue) {
-          if (detailsBuilder_ == null) {
-            ensureDetailsIsMutable();
-            details_.add(index, builderForValue.build());
-            onChanged();
-          } else {
-            detailsBuilder_.addMessage(index, builderForValue.build());
-          }
-          return this;
-        }
-        /**
-         * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-         *
-         * <pre>
-         *输赢明细
-         * </pre>
-         */
-        public Builder addAllDetails(
-            java.lang.Iterable<? extends com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail> values) {
-          if (detailsBuilder_ == null) {
-            ensureDetailsIsMutable();
-            super.addAll(values, details_);
-            onChanged();
-          } else {
-            detailsBuilder_.addAllMessages(values);
-          }
-          return this;
-        }
-        /**
-         * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-         *
-         * <pre>
-         *输赢明细
-         * </pre>
-         */
-        public Builder clearDetails() {
-          if (detailsBuilder_ == null) {
-            details_ = java.util.Collections.emptyList();
-            bitField0_ = (bitField0_ & ~0x00000010);
-            onChanged();
-          } else {
-            detailsBuilder_.clear();
-          }
-          return this;
-        }
-        /**
-         * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-         *
-         * <pre>
-         *输赢明细
-         * </pre>
-         */
-        public Builder removeDetails(int index) {
-          if (detailsBuilder_ == null) {
-            ensureDetailsIsMutable();
-            details_.remove(index);
-            onChanged();
-          } else {
-            detailsBuilder_.remove(index);
-          }
-          return this;
-        }
-        /**
-         * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-         *
-         * <pre>
-         *输赢明细
-         * </pre>
-         */
-        public com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail.Builder getDetailsBuilder(
-            int index) {
-          return getDetailsFieldBuilder().getBuilder(index);
-        }
-        /**
-         * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-         *
-         * <pre>
-         *输赢明细
-         * </pre>
-         */
-        public com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.DetailOrBuilder getDetailsOrBuilder(
-            int index) {
-          if (detailsBuilder_ == null) {
-            return details_.get(index);  } else {
-            return detailsBuilder_.getMessageOrBuilder(index);
-          }
-        }
-        /**
-         * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-         *
-         * <pre>
-         *输赢明细
-         * </pre>
-         */
-        public java.util.List<? extends com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.DetailOrBuilder> 
-             getDetailsOrBuilderList() {
-          if (detailsBuilder_ != null) {
-            return detailsBuilder_.getMessageOrBuilderList();
-          } else {
-            return java.util.Collections.unmodifiableList(details_);
-          }
-        }
-        /**
-         * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-         *
-         * <pre>
-         *输赢明细
-         * </pre>
-         */
-        public com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail.Builder addDetailsBuilder() {
-          return getDetailsFieldBuilder().addBuilder(
-              com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail.getDefaultInstance());
-        }
-        /**
-         * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-         *
-         * <pre>
-         *输赢明细
-         * </pre>
-         */
-        public com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail.Builder addDetailsBuilder(
-            int index) {
-          return getDetailsFieldBuilder().addBuilder(
-              index, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail.getDefaultInstance());
-        }
-        /**
-         * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 5;</code>
-         *
-         * <pre>
-         *输赢明细
-         * </pre>
-         */
-        public java.util.List<com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail.Builder> 
-             getDetailsBuilderList() {
-          return getDetailsFieldBuilder().getBuilderList();
-        }
-        private com.google.protobuf.RepeatedFieldBuilder<
-            com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail.Builder, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.DetailOrBuilder> 
-            getDetailsFieldBuilder() {
-          if (detailsBuilder_ == null) {
-            detailsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
-                com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail.Builder, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.DetailOrBuilder>(
-                    details_,
-                    ((bitField0_ & 0x00000010) == 0x00000010),
-                    getParentForChildren(),
-                    isClean());
-            details_ = null;
-          }
-          return detailsBuilder_;
-        }
-
         // @@protoc_insertion_point(builder_scope:com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Result)
       }
 
@@ -24130,10 +24359,67 @@ public final class MJBloodRiverMessage {
       return maxWait_;
     }
 
+    // repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;
+    public static final int DETAILS_FIELD_NUMBER = 4;
+    private java.util.List<com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail> details_;
+    /**
+     * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+     *
+     * <pre>
+     *输赢明细
+     * </pre>
+     */
+    public java.util.List<com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail> getDetailsList() {
+      return details_;
+    }
+    /**
+     * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+     *
+     * <pre>
+     *输赢明细
+     * </pre>
+     */
+    public java.util.List<? extends com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.DetailOrBuilder> 
+        getDetailsOrBuilderList() {
+      return details_;
+    }
+    /**
+     * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+     *
+     * <pre>
+     *输赢明细
+     * </pre>
+     */
+    public int getDetailsCount() {
+      return details_.size();
+    }
+    /**
+     * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+     *
+     * <pre>
+     *输赢明细
+     * </pre>
+     */
+    public com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail getDetails(int index) {
+      return details_.get(index);
+    }
+    /**
+     * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+     *
+     * <pre>
+     *输赢明细
+     * </pre>
+     */
+    public com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.DetailOrBuilder getDetailsOrBuilder(
+        int index) {
+      return details_.get(index);
+    }
+
     private void initFields() {
       gameId_ = 0L;
       results_ = java.util.Collections.emptyList();
       maxWait_ = 0;
+      details_ = java.util.Collections.emptyList();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -24154,6 +24440,12 @@ public final class MJBloodRiverMessage {
           return false;
         }
       }
+      for (int i = 0; i < getDetailsCount(); i++) {
+        if (!getDetails(i).isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -24169,6 +24461,9 @@ public final class MJBloodRiverMessage {
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeUInt32(3, maxWait_);
+      }
+      for (int i = 0; i < details_.size(); i++) {
+        output.writeMessage(4, details_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -24190,6 +24485,10 @@ public final class MJBloodRiverMessage {
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt32Size(3, maxWait_);
+      }
+      for (int i = 0; i < details_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(4, details_.get(i));
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -24306,6 +24605,7 @@ public final class MJBloodRiverMessage {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getResultsFieldBuilder();
+          getDetailsFieldBuilder();
         }
       }
       private static Builder create() {
@@ -24324,6 +24624,12 @@ public final class MJBloodRiverMessage {
         }
         maxWait_ = 0;
         bitField0_ = (bitField0_ & ~0x00000004);
+        if (detailsBuilder_ == null) {
+          details_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000008);
+        } else {
+          detailsBuilder_.clear();
+        }
         return this;
       }
 
@@ -24369,6 +24675,15 @@ public final class MJBloodRiverMessage {
           to_bitField0_ |= 0x00000002;
         }
         result.maxWait_ = maxWait_;
+        if (detailsBuilder_ == null) {
+          if (((bitField0_ & 0x00000008) == 0x00000008)) {
+            details_ = java.util.Collections.unmodifiableList(details_);
+            bitField0_ = (bitField0_ & ~0x00000008);
+          }
+          result.details_ = details_;
+        } else {
+          result.details_ = detailsBuilder_.build();
+        }
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -24417,6 +24732,32 @@ public final class MJBloodRiverMessage {
         if (other.hasMaxWait()) {
           setMaxWait(other.getMaxWait());
         }
+        if (detailsBuilder_ == null) {
+          if (!other.details_.isEmpty()) {
+            if (details_.isEmpty()) {
+              details_ = other.details_;
+              bitField0_ = (bitField0_ & ~0x00000008);
+            } else {
+              ensureDetailsIsMutable();
+              details_.addAll(other.details_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.details_.isEmpty()) {
+            if (detailsBuilder_.isEmpty()) {
+              detailsBuilder_.dispose();
+              detailsBuilder_ = null;
+              details_ = other.details_;
+              bitField0_ = (bitField0_ & ~0x00000008);
+              detailsBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getDetailsFieldBuilder() : null;
+            } else {
+              detailsBuilder_.addAllMessages(other.details_);
+            }
+          }
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -24432,6 +24773,12 @@ public final class MJBloodRiverMessage {
         }
         for (int i = 0; i < getResultsCount(); i++) {
           if (!getResults(i).isInitialized()) {
+            
+            return false;
+          }
+        }
+        for (int i = 0; i < getDetailsCount(); i++) {
+          if (!getDetails(i).isInitialized()) {
             
             return false;
           }
@@ -24780,6 +25127,318 @@ public final class MJBloodRiverMessage {
         return this;
       }
 
+      // repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;
+      private java.util.List<com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail> details_ =
+        java.util.Collections.emptyList();
+      private void ensureDetailsIsMutable() {
+        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+          details_ = new java.util.ArrayList<com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail>(details_);
+          bitField0_ |= 0x00000008;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilder<
+          com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail.Builder, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.DetailOrBuilder> detailsBuilder_;
+
+      /**
+       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+       *
+       * <pre>
+       *输赢明细
+       * </pre>
+       */
+      public java.util.List<com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail> getDetailsList() {
+        if (detailsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(details_);
+        } else {
+          return detailsBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+       *
+       * <pre>
+       *输赢明细
+       * </pre>
+       */
+      public int getDetailsCount() {
+        if (detailsBuilder_ == null) {
+          return details_.size();
+        } else {
+          return detailsBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+       *
+       * <pre>
+       *输赢明细
+       * </pre>
+       */
+      public com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail getDetails(int index) {
+        if (detailsBuilder_ == null) {
+          return details_.get(index);
+        } else {
+          return detailsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+       *
+       * <pre>
+       *输赢明细
+       * </pre>
+       */
+      public Builder setDetails(
+          int index, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail value) {
+        if (detailsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureDetailsIsMutable();
+          details_.set(index, value);
+          onChanged();
+        } else {
+          detailsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+       *
+       * <pre>
+       *输赢明细
+       * </pre>
+       */
+      public Builder setDetails(
+          int index, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail.Builder builderForValue) {
+        if (detailsBuilder_ == null) {
+          ensureDetailsIsMutable();
+          details_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          detailsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+       *
+       * <pre>
+       *输赢明细
+       * </pre>
+       */
+      public Builder addDetails(com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail value) {
+        if (detailsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureDetailsIsMutable();
+          details_.add(value);
+          onChanged();
+        } else {
+          detailsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+       *
+       * <pre>
+       *输赢明细
+       * </pre>
+       */
+      public Builder addDetails(
+          int index, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail value) {
+        if (detailsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureDetailsIsMutable();
+          details_.add(index, value);
+          onChanged();
+        } else {
+          detailsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+       *
+       * <pre>
+       *输赢明细
+       * </pre>
+       */
+      public Builder addDetails(
+          com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail.Builder builderForValue) {
+        if (detailsBuilder_ == null) {
+          ensureDetailsIsMutable();
+          details_.add(builderForValue.build());
+          onChanged();
+        } else {
+          detailsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+       *
+       * <pre>
+       *输赢明细
+       * </pre>
+       */
+      public Builder addDetails(
+          int index, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail.Builder builderForValue) {
+        if (detailsBuilder_ == null) {
+          ensureDetailsIsMutable();
+          details_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          detailsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+       *
+       * <pre>
+       *输赢明细
+       * </pre>
+       */
+      public Builder addAllDetails(
+          java.lang.Iterable<? extends com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail> values) {
+        if (detailsBuilder_ == null) {
+          ensureDetailsIsMutable();
+          super.addAll(values, details_);
+          onChanged();
+        } else {
+          detailsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+       *
+       * <pre>
+       *输赢明细
+       * </pre>
+       */
+      public Builder clearDetails() {
+        if (detailsBuilder_ == null) {
+          details_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000008);
+          onChanged();
+        } else {
+          detailsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+       *
+       * <pre>
+       *输赢明细
+       * </pre>
+       */
+      public Builder removeDetails(int index) {
+        if (detailsBuilder_ == null) {
+          ensureDetailsIsMutable();
+          details_.remove(index);
+          onChanged();
+        } else {
+          detailsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+       *
+       * <pre>
+       *输赢明细
+       * </pre>
+       */
+      public com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail.Builder getDetailsBuilder(
+          int index) {
+        return getDetailsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+       *
+       * <pre>
+       *输赢明细
+       * </pre>
+       */
+      public com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.DetailOrBuilder getDetailsOrBuilder(
+          int index) {
+        if (detailsBuilder_ == null) {
+          return details_.get(index);  } else {
+          return detailsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+       *
+       * <pre>
+       *输赢明细
+       * </pre>
+       */
+      public java.util.List<? extends com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.DetailOrBuilder> 
+           getDetailsOrBuilderList() {
+        if (detailsBuilder_ != null) {
+          return detailsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(details_);
+        }
+      }
+      /**
+       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+       *
+       * <pre>
+       *输赢明细
+       * </pre>
+       */
+      public com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail.Builder addDetailsBuilder() {
+        return getDetailsFieldBuilder().addBuilder(
+            com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+       *
+       * <pre>
+       *输赢明细
+       * </pre>
+       */
+      public com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail.Builder addDetailsBuilder(
+          int index) {
+        return getDetailsFieldBuilder().addBuilder(
+            index, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail details = 4;</code>
+       *
+       * <pre>
+       *输赢明细
+       * </pre>
+       */
+      public java.util.List<com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail.Builder> 
+           getDetailsBuilderList() {
+        return getDetailsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail.Builder, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.DetailOrBuilder> 
+          getDetailsFieldBuilder() {
+        if (detailsBuilder_ == null) {
+          detailsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.Detail.Builder, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfGameResult.DetailOrBuilder>(
+                  details_,
+                  ((bitField0_ & 0x00000008) == 0x00000008),
+                  getParentForChildren(),
+                  isClean());
+          details_ = null;
+        }
+        return detailsBuilder_;
+      }
+
       // @@protoc_insertion_point(builder_scope:com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult)
     }
 
@@ -24789,6 +25448,915 @@ public final class MJBloodRiverMessage {
     }
 
     // @@protoc_insertion_point(class_scope:com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult)
+  }
+
+  public interface CREQAbsentColorOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+
+    // required uint32 color = 1;
+    /**
+     * <code>required uint32 color = 1;</code>
+     */
+    boolean hasColor();
+    /**
+     * <code>required uint32 color = 1;</code>
+     */
+    int getColor();
+  }
+  /**
+   * Protobuf type {@code com.ourgame.mahjong.bloodriver.protoc.message.CREQAbsentColor}
+   *
+   * <pre>
+   *========================================================================================
+   * 定缺
+   * #define OGID_ABSENT_COLOR					( OGID_GAME_MESSAGE + 31 )
+   * </pre>
+   */
+  public static final class CREQAbsentColor extends
+      com.google.protobuf.GeneratedMessage
+      implements CREQAbsentColorOrBuilder {
+    // Use CREQAbsentColor.newBuilder() to construct.
+    private CREQAbsentColor(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private CREQAbsentColor(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final CREQAbsentColor defaultInstance;
+    public static CREQAbsentColor getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public CREQAbsentColor getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private CREQAbsentColor(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+              bitField0_ |= 0x00000001;
+              color_ = input.readUInt32();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.internal_static_com_ourgame_mahjong_bloodriver_protoc_message_CREQAbsentColor_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.internal_static_com_ourgame_mahjong_bloodriver_protoc_message_CREQAbsentColor_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor.class, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<CREQAbsentColor> PARSER =
+        new com.google.protobuf.AbstractParser<CREQAbsentColor>() {
+      public CREQAbsentColor parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new CREQAbsentColor(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<CREQAbsentColor> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    // required uint32 color = 1;
+    public static final int COLOR_FIELD_NUMBER = 1;
+    private int color_;
+    /**
+     * <code>required uint32 color = 1;</code>
+     */
+    public boolean hasColor() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>required uint32 color = 1;</code>
+     */
+    public int getColor() {
+      return color_;
+    }
+
+    private void initFields() {
+      color_ = 0;
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+
+      if (!hasColor()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeUInt32(1, color_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, color_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.ourgame.mahjong.bloodriver.protoc.message.CREQAbsentColor}
+     *
+     * <pre>
+     *========================================================================================
+     * 定缺
+     * #define OGID_ABSENT_COLOR					( OGID_GAME_MESSAGE + 31 )
+     * </pre>
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColorOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.internal_static_com_ourgame_mahjong_bloodriver_protoc_message_CREQAbsentColor_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.internal_static_com_ourgame_mahjong_bloodriver_protoc_message_CREQAbsentColor_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor.class, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor.Builder.class);
+      }
+
+      // Construct using com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        color_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.internal_static_com_ourgame_mahjong_bloodriver_protoc_message_CREQAbsentColor_descriptor;
+      }
+
+      public com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor getDefaultInstanceForType() {
+        return com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor.getDefaultInstance();
+      }
+
+      public com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor build() {
+        com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor buildPartial() {
+        com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor result = new com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.color_ = color_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor) {
+          return mergeFrom((com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor other) {
+        if (other == com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor.getDefaultInstance()) return this;
+        if (other.hasColor()) {
+          setColor(other.getColor());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        if (!hasColor()) {
+          
+          return false;
+        }
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.CREQAbsentColor) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      // required uint32 color = 1;
+      private int color_ ;
+      /**
+       * <code>required uint32 color = 1;</code>
+       */
+      public boolean hasColor() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>required uint32 color = 1;</code>
+       */
+      public int getColor() {
+        return color_;
+      }
+      /**
+       * <code>required uint32 color = 1;</code>
+       */
+      public Builder setColor(int value) {
+        bitField0_ |= 0x00000001;
+        color_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required uint32 color = 1;</code>
+       */
+      public Builder clearColor() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        color_ = 0;
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:com.ourgame.mahjong.bloodriver.protoc.message.CREQAbsentColor)
+    }
+
+    static {
+      defaultInstance = new CREQAbsentColor(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:com.ourgame.mahjong.bloodriver.protoc.message.CREQAbsentColor)
+  }
+
+  public interface NtfAbsentColorOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+
+    // required uint32 seat = 1;
+    /**
+     * <code>required uint32 seat = 1;</code>
+     */
+    boolean hasSeat();
+    /**
+     * <code>required uint32 seat = 1;</code>
+     */
+    int getSeat();
+
+    // required uint32 color = 2;
+    /**
+     * <code>required uint32 color = 2;</code>
+     */
+    boolean hasColor();
+    /**
+     * <code>required uint32 color = 2;</code>
+     */
+    int getColor();
+  }
+  /**
+   * Protobuf type {@code com.ourgame.mahjong.bloodriver.protoc.message.NtfAbsentColor}
+   */
+  public static final class NtfAbsentColor extends
+      com.google.protobuf.GeneratedMessage
+      implements NtfAbsentColorOrBuilder {
+    // Use NtfAbsentColor.newBuilder() to construct.
+    private NtfAbsentColor(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private NtfAbsentColor(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final NtfAbsentColor defaultInstance;
+    public static NtfAbsentColor getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public NtfAbsentColor getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private NtfAbsentColor(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+              bitField0_ |= 0x00000001;
+              seat_ = input.readUInt32();
+              break;
+            }
+            case 16: {
+              bitField0_ |= 0x00000002;
+              color_ = input.readUInt32();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfAbsentColor_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfAbsentColor_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor.class, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<NtfAbsentColor> PARSER =
+        new com.google.protobuf.AbstractParser<NtfAbsentColor>() {
+      public NtfAbsentColor parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new NtfAbsentColor(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<NtfAbsentColor> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    // required uint32 seat = 1;
+    public static final int SEAT_FIELD_NUMBER = 1;
+    private int seat_;
+    /**
+     * <code>required uint32 seat = 1;</code>
+     */
+    public boolean hasSeat() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>required uint32 seat = 1;</code>
+     */
+    public int getSeat() {
+      return seat_;
+    }
+
+    // required uint32 color = 2;
+    public static final int COLOR_FIELD_NUMBER = 2;
+    private int color_;
+    /**
+     * <code>required uint32 color = 2;</code>
+     */
+    public boolean hasColor() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>required uint32 color = 2;</code>
+     */
+    public int getColor() {
+      return color_;
+    }
+
+    private void initFields() {
+      seat_ = 0;
+      color_ = 0;
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+
+      if (!hasSeat()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasColor()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeUInt32(1, seat_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeUInt32(2, color_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, seat_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(2, color_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.ourgame.mahjong.bloodriver.protoc.message.NtfAbsentColor}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColorOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfAbsentColor_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfAbsentColor_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor.class, com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor.Builder.class);
+      }
+
+      // Construct using com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        seat_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        color_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfAbsentColor_descriptor;
+      }
+
+      public com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor getDefaultInstanceForType() {
+        return com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor.getDefaultInstance();
+      }
+
+      public com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor build() {
+        com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor buildPartial() {
+        com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor result = new com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.seat_ = seat_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.color_ = color_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor) {
+          return mergeFrom((com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor other) {
+        if (other == com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor.getDefaultInstance()) return this;
+        if (other.hasSeat()) {
+          setSeat(other.getSeat());
+        }
+        if (other.hasColor()) {
+          setColor(other.getColor());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        if (!hasSeat()) {
+          
+          return false;
+        }
+        if (!hasColor()) {
+          
+          return false;
+        }
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.ourgame.mahjong.bloodriver.protoc.message.MJBloodRiverMessage.NtfAbsentColor) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      // required uint32 seat = 1;
+      private int seat_ ;
+      /**
+       * <code>required uint32 seat = 1;</code>
+       */
+      public boolean hasSeat() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>required uint32 seat = 1;</code>
+       */
+      public int getSeat() {
+        return seat_;
+      }
+      /**
+       * <code>required uint32 seat = 1;</code>
+       */
+      public Builder setSeat(int value) {
+        bitField0_ |= 0x00000001;
+        seat_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required uint32 seat = 1;</code>
+       */
+      public Builder clearSeat() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        seat_ = 0;
+        onChanged();
+        return this;
+      }
+
+      // required uint32 color = 2;
+      private int color_ ;
+      /**
+       * <code>required uint32 color = 2;</code>
+       */
+      public boolean hasColor() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>required uint32 color = 2;</code>
+       */
+      public int getColor() {
+        return color_;
+      }
+      /**
+       * <code>required uint32 color = 2;</code>
+       */
+      public Builder setColor(int value) {
+        bitField0_ |= 0x00000002;
+        color_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required uint32 color = 2;</code>
+       */
+      public Builder clearColor() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        color_ = 0;
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:com.ourgame.mahjong.bloodriver.protoc.message.NtfAbsentColor)
+    }
+
+    static {
+      defaultInstance = new NtfAbsentColor(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:com.ourgame.mahjong.bloodriver.protoc.message.NtfAbsentColor)
   }
 
   private static com.google.protobuf.Descriptors.Descriptor
@@ -24851,6 +26419,11 @@ public final class MJBloodRiverMessage {
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_ourgame_mahjong_bloodriver_protoc_message_CReqSwap_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NTFSwapPrepared_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NTFSwapPrepared_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_ourgame_mahjong_bloodriver_protoc_message_SAckSwap_descriptor;
   private static
@@ -24916,6 +26489,16 @@ public final class MJBloodRiverMessage {
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfGameResult_Result_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_ourgame_mahjong_bloodriver_protoc_message_CREQAbsentColor_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_ourgame_mahjong_bloodriver_protoc_message_CREQAbsentColor_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfAbsentColor_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfAbsentColor_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -24957,56 +26540,59 @@ public final class MJBloodRiverMessage {
       "oodriver.protoc.message.NtfDeals.TileAmo",
       "unt\022\023\n\013waitingTime\030\005 \002(\r\032*\n\nTileAmount\022\014" +
       "\n\004seat\030\001 \002(\r\022\016\n\006amount\030\002 \002(\r\"\031\n\010CReqSwap" +
-      "\022\r\n\005tiles\030\001 \003(\r\"O\n\010SAckSwap\022\020\n\010oldTiles\030" +
-      "\001 \003(\r\022\020\n\010newTiles\030\002 \003(\r\022\016\n\006action\030\003 \001(\r\022" +
-      "\017\n\007actTime\030\004 \001(\r\"I\n\nNtfDiscard\022\014\n\004tile\030\001" +
-      " \002(\r\022\014\n\004seat\030\002 \002(\r\022\016\n\006action\030\003 \001(\r\022\017\n\007ac" +
-      "tTime\030\004 \001(\r\"]\n\007NtfDraw\022\014\n\004seat\030\001 \002(\r\022\023\n\005" +
-      "front\030\002 \002(\010:\004true\022\016\n\006tileId\030\003 \001(\r\022\016\n\006act" +
-      "ion\030\004 \001(\r\022\017\n\007actTime\030\005 \001(\r\"\230\001\n\007CReqAct\022\014" +
-      "\n\004seat\030\001 \002(\r\022F\n\003act\030\002 \002(\01629.com.ourgame.",
-      "mahjong.bloodriver.protoc.message.Action" +
-      "Type\022\020\n\010provider\030\003 \001(\r\022\022\n\ntargetTile\030\004 \001" +
-      "(\r\022\021\n\trootTiles\030\005 \003(\r\"\270\001\n\006NtfAct\022\014\n\004seat" +
-      "\030\001 \002(\r\022F\n\003act\030\002 \002(\01629.com.ourgame.mahjon" +
-      "g.bloodriver.protoc.message.ActionType\022\020" +
-      "\n\010provider\030\003 \001(\r\022\022\n\ntargetTile\030\004 \001(\r\022\021\n\t" +
-      "rootTiles\030\005 \003(\r\022\016\n\006action\030\006 \001(\r\022\017\n\007actTi" +
-      "me\030\007 \001(\r\"\272\001\n\006NtfWin\022\017\n\007winType\030\001 \002(\r\022\017\n\007" +
-      "winTile\030\002 \002(\r\022O\n\010winInfos\030\003 \003(\0132=.com.ou" +
-      "rgame.mahjong.bloodriver.protoc.message.",
-      "NtfWin.WinInfo\032=\n\007WinInfo\022\022\n\nwinnerSeat\030" +
-      "\001 \002(\r\022\021\n\tloserSeat\030\002 \002(\r\022\013\n\003fan\030\003 \002(\r\"\365\002" +
-      "\n\rNtfGameStatus\022\016\n\006gameId\030\001 \002(\r\022\020\n\010gameT" +
-      "ype\030\002 \002(\r\022F\n\007players\030\003 \003(\01325.com.ourgame" +
-      ".mahjong.bloodriver.protoc.message.Playe" +
-      "r\022\016\n\006dealer\030\004 \002(\r\022\022\n\nbasicScore\030\005 \002(\r\022\r\n" +
-      "\005stage\030\006 \002(\r\022\r\n\005round\030\007 \002(\r\022\016\n\006serial\030\010 " +
-      "\002(\r\022\021\n\tstartSeat\030\t \002(\r\022\023\n\013startFrusta\030\n " +
-      "\002(\r\022\026\n\016frontDrewTiles\030\013 \002(\r\022\025\n\rbackDrewT" +
-      "iles\030\014 \002(\r\022Q\n\ttileInfos\030\r \003(\0132>.com.ourg",
-      "ame.mahjong.bloodriver.protoc.message.Cu" +
-      "rrentTileInfo\".\n\rCReqUserTrust\022\016\n\006gameId" +
-      "\030\001 \002(\004\022\r\n\005trust\030\002 \002(\005\";\n\014NtfUserTrust\022\016\n" +
-      "\006gameId\030\001 \002(\004\022\014\n\004seat\030\002 \002(\005\022\r\n\005trust\030\003 \002" +
-      "(\005\"\364\002\n\rNtfGameResult\022\016\n\006gameId\030\001 \002(\004\022T\n\007" +
-      "results\030\002 \003(\0132C.com.ourgame.mahjong.bloo" +
-      "driver.protoc.message.NtfGameResult.Resu" +
-      "lt\022\017\n\007maxWait\030\003 \002(\r\032B\n\006Detail\022\014\n\004type\030\001 " +
-      "\002(\r\022\014\n\004seat\030\002 \002(\r\022\016\n\006points\030\003 \002(\r\022\014\n\004til" +
-      "e\030\004 \002(\r\032\247\001\n\006Result\022\014\n\004seat\030\001 \002(\r\022\021\n\twinP",
-      "oints\030\002 \002(\r\022\023\n\013tilesInHand\030\003 \003(\r\022\021\n\006stat" +
-      "us\030\004 \002(\r:\0010\022T\n\007details\030\005 \003(\0132C.com.ourga" +
-      "me.mahjong.bloodriver.protoc.message.Ntf" +
-      "GameResult.Detail*\232\001\n\010MeldType\022\r\n\tMELD_P" +
-      "AIR\020\001\022\014\n\010MELD_CHI\020\002\022\r\n\tMELD_PENG\020\003\022\022\n\016ME" +
-      "LD_MING_GANG\020\004\022\020\n\014MELD_BU_GANG\020\005\022\020\n\014MELD" +
-      "_AN_GANG\020\006\022\025\n\021MELD_IN_HAND_SHUN\020\007\022\023\n\017MEL" +
-      "D_IN_HAND_KE\020\010*\241\001\n\nActionType\022\016\n\nACT_GIV" +
-      "EUP\020\000\022\017\n\013ACT_DISCARD\020\001\022\013\n\007ACT_CHI\020\002\022\014\n\010A" +
-      "CT_PENG\020\004\022\014\n\010ACT_GANG\020\010\022\016\n\nACT_BUGANG\020\020\022",
-      "\016\n\nACT_ANGANG\020 \022\013\n\007ACT_WIN\020@\022\r\n\010ACT_TING" +
-      "\020\200\001\022\r\n\010ACT_SHOW\020\200\002"
+      "\022\r\n\005tiles\030\001 \003(\r\".\n\017NTFSwapPrepared\022\014\n\004se" +
+      "at\030\001 \002(\r\022\r\n\005tiles\030\002 \003(\r\"O\n\010SAckSwap\022\020\n\010o" +
+      "ldTiles\030\001 \003(\r\022\020\n\010newTiles\030\002 \003(\r\022\016\n\006actio" +
+      "n\030\003 \001(\r\022\017\n\007actTime\030\004 \001(\r\"I\n\nNtfDiscard\022\014" +
+      "\n\004tile\030\001 \002(\r\022\014\n\004seat\030\002 \002(\r\022\016\n\006action\030\003 \001" +
+      "(\r\022\017\n\007actTime\030\004 \001(\r\"]\n\007NtfDraw\022\014\n\004seat\030\001" +
+      " \002(\r\022\023\n\005front\030\002 \002(\010:\004true\022\016\n\006tileId\030\003 \001(" +
+      "\r\022\016\n\006action\030\004 \001(\r\022\017\n\007actTime\030\005 \001(\r\"\230\001\n\007C",
+      "ReqAct\022\014\n\004seat\030\001 \002(\r\022F\n\003act\030\002 \002(\01629.com." +
+      "ourgame.mahjong.bloodriver.protoc.messag" +
+      "e.ActionType\022\020\n\010provider\030\003 \001(\r\022\022\n\ntarget" +
+      "Tile\030\004 \001(\r\022\021\n\trootTiles\030\005 \003(\r\"\270\001\n\006NtfAct" +
+      "\022\014\n\004seat\030\001 \002(\r\022F\n\003act\030\002 \002(\01629.com.ourgam" +
+      "e.mahjong.bloodriver.protoc.message.Acti" +
+      "onType\022\020\n\010provider\030\003 \001(\r\022\022\n\ntargetTile\030\004" +
+      " \001(\r\022\021\n\trootTiles\030\005 \003(\r\022\016\n\006action\030\006 \001(\r\022" +
+      "\017\n\007actTime\030\007 \001(\r\"\272\001\n\006NtfWin\022\017\n\007winType\030\001" +
+      " \002(\r\022\017\n\007winTile\030\002 \002(\r\022O\n\010winInfos\030\003 \003(\0132",
+      "=.com.ourgame.mahjong.bloodriver.protoc." +
+      "message.NtfWin.WinInfo\032=\n\007WinInfo\022\022\n\nwin" +
+      "nerSeat\030\001 \002(\r\022\021\n\tloserSeat\030\002 \002(\r\022\013\n\003fan\030" +
+      "\003 \002(\r\"\365\002\n\rNtfGameStatus\022\016\n\006gameId\030\001 \002(\r\022" +
+      "\020\n\010gameType\030\002 \002(\r\022F\n\007players\030\003 \003(\01325.com" +
+      ".ourgame.mahjong.bloodriver.protoc.messa" +
+      "ge.Player\022\016\n\006dealer\030\004 \002(\r\022\022\n\nbasicScore\030" +
+      "\005 \002(\r\022\r\n\005stage\030\006 \002(\r\022\r\n\005round\030\007 \002(\r\022\016\n\006s" +
+      "erial\030\010 \002(\r\022\021\n\tstartSeat\030\t \002(\r\022\023\n\013startF" +
+      "rusta\030\n \002(\r\022\026\n\016frontDrewTiles\030\013 \002(\r\022\025\n\rb",
+      "ackDrewTiles\030\014 \002(\r\022Q\n\ttileInfos\030\r \003(\0132>." +
+      "com.ourgame.mahjong.bloodriver.protoc.me" +
+      "ssage.CurrentTileInfo\".\n\rCReqUserTrust\022\016" +
+      "\n\006gameId\030\001 \002(\004\022\r\n\005trust\030\002 \002(\005\";\n\014NtfUser" +
+      "Trust\022\016\n\006gameId\030\001 \002(\004\022\014\n\004seat\030\002 \002(\005\022\r\n\005t" +
+      "rust\030\003 \002(\005\"\363\002\n\rNtfGameResult\022\016\n\006gameId\030\001" +
+      " \002(\004\022T\n\007results\030\002 \003(\0132C.com.ourgame.mahj" +
+      "ong.bloodriver.protoc.message.NtfGameRes" +
+      "ult.Result\022\017\n\007maxWait\030\003 \002(\r\022T\n\007details\030\004" +
+      " \003(\0132C.com.ourgame.mahjong.bloodriver.pr",
+      "otoc.message.NtfGameResult.Detail\032B\n\006Det" +
+      "ail\022\014\n\004type\030\001 \002(\r\022\014\n\004seat\030\002 \002(\r\022\016\n\006point" +
+      "s\030\003 \002(\r\022\014\n\004tile\030\004 \002(\r\032Q\n\006Result\022\014\n\004seat\030" +
+      "\001 \002(\r\022\021\n\twinPoints\030\002 \002(\021\022\023\n\013tilesInHand\030" +
+      "\003 \003(\r\022\021\n\006status\030\004 \002(\r:\0010\" \n\017CREQAbsentCo" +
+      "lor\022\r\n\005color\030\001 \002(\r\"-\n\016NtfAbsentColor\022\014\n\004" +
+      "seat\030\001 \002(\r\022\r\n\005color\030\002 \002(\r*\232\001\n\010MeldType\022\r" +
+      "\n\tMELD_PAIR\020\001\022\014\n\010MELD_CHI\020\002\022\r\n\tMELD_PENG" +
+      "\020\003\022\022\n\016MELD_MING_GANG\020\004\022\020\n\014MELD_BU_GANG\020\005" +
+      "\022\020\n\014MELD_AN_GANG\020\006\022\025\n\021MELD_IN_HAND_SHUN\020",
+      "\007\022\023\n\017MELD_IN_HAND_KE\020\010*\241\001\n\nActionType\022\016\n" +
+      "\nACT_GIVEUP\020\000\022\017\n\013ACT_DISCARD\020\001\022\013\n\007ACT_CH" +
+      "I\020\002\022\014\n\010ACT_PENG\020\004\022\014\n\010ACT_GANG\020\010\022\016\n\nACT_B" +
+      "UGANG\020\020\022\016\n\nACT_ANGANG\020 \022\013\n\007ACT_WIN\020@\022\r\n\010" +
+      "ACT_TING\020\200\001\022\r\n\010ACT_SHOW\020\200\002"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -25085,38 +26671,44 @@ public final class MJBloodRiverMessage {
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_ourgame_mahjong_bloodriver_protoc_message_CReqSwap_descriptor,
               new java.lang.String[] { "Tiles", });
-          internal_static_com_ourgame_mahjong_bloodriver_protoc_message_SAckSwap_descriptor =
+          internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NTFSwapPrepared_descriptor =
             getDescriptor().getMessageTypes().get(11);
+          internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NTFSwapPrepared_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NTFSwapPrepared_descriptor,
+              new java.lang.String[] { "Seat", "Tiles", });
+          internal_static_com_ourgame_mahjong_bloodriver_protoc_message_SAckSwap_descriptor =
+            getDescriptor().getMessageTypes().get(12);
           internal_static_com_ourgame_mahjong_bloodriver_protoc_message_SAckSwap_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_ourgame_mahjong_bloodriver_protoc_message_SAckSwap_descriptor,
               new java.lang.String[] { "OldTiles", "NewTiles", "Action", "ActTime", });
           internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfDiscard_descriptor =
-            getDescriptor().getMessageTypes().get(12);
+            getDescriptor().getMessageTypes().get(13);
           internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfDiscard_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfDiscard_descriptor,
               new java.lang.String[] { "Tile", "Seat", "Action", "ActTime", });
           internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfDraw_descriptor =
-            getDescriptor().getMessageTypes().get(13);
+            getDescriptor().getMessageTypes().get(14);
           internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfDraw_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfDraw_descriptor,
               new java.lang.String[] { "Seat", "Front", "TileId", "Action", "ActTime", });
           internal_static_com_ourgame_mahjong_bloodriver_protoc_message_CReqAct_descriptor =
-            getDescriptor().getMessageTypes().get(14);
+            getDescriptor().getMessageTypes().get(15);
           internal_static_com_ourgame_mahjong_bloodriver_protoc_message_CReqAct_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_ourgame_mahjong_bloodriver_protoc_message_CReqAct_descriptor,
               new java.lang.String[] { "Seat", "Act", "Provider", "TargetTile", "RootTiles", });
           internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfAct_descriptor =
-            getDescriptor().getMessageTypes().get(15);
+            getDescriptor().getMessageTypes().get(16);
           internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfAct_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfAct_descriptor,
               new java.lang.String[] { "Seat", "Act", "Provider", "TargetTile", "RootTiles", "Action", "ActTime", });
           internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfWin_descriptor =
-            getDescriptor().getMessageTypes().get(16);
+            getDescriptor().getMessageTypes().get(17);
           internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfWin_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfWin_descriptor,
@@ -25128,29 +26720,29 @@ public final class MJBloodRiverMessage {
               internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfWin_WinInfo_descriptor,
               new java.lang.String[] { "WinnerSeat", "LoserSeat", "Fan", });
           internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfGameStatus_descriptor =
-            getDescriptor().getMessageTypes().get(17);
+            getDescriptor().getMessageTypes().get(18);
           internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfGameStatus_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfGameStatus_descriptor,
               new java.lang.String[] { "GameId", "GameType", "Players", "Dealer", "BasicScore", "Stage", "Round", "Serial", "StartSeat", "StartFrusta", "FrontDrewTiles", "BackDrewTiles", "TileInfos", });
           internal_static_com_ourgame_mahjong_bloodriver_protoc_message_CReqUserTrust_descriptor =
-            getDescriptor().getMessageTypes().get(18);
+            getDescriptor().getMessageTypes().get(19);
           internal_static_com_ourgame_mahjong_bloodriver_protoc_message_CReqUserTrust_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_ourgame_mahjong_bloodriver_protoc_message_CReqUserTrust_descriptor,
               new java.lang.String[] { "GameId", "Trust", });
           internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfUserTrust_descriptor =
-            getDescriptor().getMessageTypes().get(19);
+            getDescriptor().getMessageTypes().get(20);
           internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfUserTrust_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfUserTrust_descriptor,
               new java.lang.String[] { "GameId", "Seat", "Trust", });
           internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfGameResult_descriptor =
-            getDescriptor().getMessageTypes().get(20);
+            getDescriptor().getMessageTypes().get(21);
           internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfGameResult_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfGameResult_descriptor,
-              new java.lang.String[] { "GameId", "Results", "MaxWait", });
+              new java.lang.String[] { "GameId", "Results", "MaxWait", "Details", });
           internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfGameResult_Detail_descriptor =
             internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfGameResult_descriptor.getNestedTypes().get(0);
           internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfGameResult_Detail_fieldAccessorTable = new
@@ -25162,7 +26754,19 @@ public final class MJBloodRiverMessage {
           internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfGameResult_Result_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfGameResult_Result_descriptor,
-              new java.lang.String[] { "Seat", "WinPoints", "TilesInHand", "Status", "Details", });
+              new java.lang.String[] { "Seat", "WinPoints", "TilesInHand", "Status", });
+          internal_static_com_ourgame_mahjong_bloodriver_protoc_message_CREQAbsentColor_descriptor =
+            getDescriptor().getMessageTypes().get(22);
+          internal_static_com_ourgame_mahjong_bloodriver_protoc_message_CREQAbsentColor_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_ourgame_mahjong_bloodriver_protoc_message_CREQAbsentColor_descriptor,
+              new java.lang.String[] { "Color", });
+          internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfAbsentColor_descriptor =
+            getDescriptor().getMessageTypes().get(23);
+          internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfAbsentColor_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_ourgame_mahjong_bloodriver_protoc_message_NtfAbsentColor_descriptor,
+              new java.lang.String[] { "Seat", "Color", });
           return null;
         }
       };

@@ -1,13 +1,16 @@
-package com.ourgame.mahjong.bloodriver.view
+package com.ourgame.mahjong.bloodriver.ui
 {
-	import com.ourgame.mahjong.bloodriver.ui.LayerManager;
-	import com.wecoit.mvc.View;
+	import com.ourgame.mahjong.bloodriver.enum.UITableDefinition;
+	import com.wecoit.core.AssetsManager;
+	
+	import flash.display.MovieClip;
+	import flash.display.Sprite;
 	
 	/**
-	 * 主视图
+	 * 胡牌番数数字
 	 * @author SiaoLeon
 	 */
-	public class MainView extends View
+	public class WinFanNumber extends Sprite
 	{
 		// -------------------------------------------------------------------------------------------------------- 静态常量
 		
@@ -26,32 +29,23 @@ package com.ourgame.mahjong.bloodriver.view
 		/**
 		 * 构造函数
 		 */
-		public function MainView()
+		public function WinFanNumber(value:uint)
 		{
 			super();
+			
+			var string:String = value.toString();
+			
+			for (var i:int = 0; i < string.length; i++)
+			{
+				var count:uint = uint(string.charAt(i));
+				var mc:MovieClip = AssetsManager.instance.getDefinitionMovieClip(UITableDefinition.WinFanNumber);
+				mc.x = i * 28;
+				mc.gotoAndStop(count + 1);
+				this.addChild(mc);
+			}
 		}
-		
+	
 		// -------------------------------------------------------------------------------------------------------- 方法
-		
-		override public function onAdd():void
-		{
-			this.module.addChild(LayerManager.instance.background);
-			this.module.addChild(LayerManager.instance.role);
-			this.module.addChild(LayerManager.instance.tile);
-			this.module.addChild(LayerManager.instance.foreground);
-			this.module.addChild(LayerManager.instance.pop);
-			this.module.addChild(LayerManager.instance.tip);
-		}
-		
-		override public function onRemove():void
-		{
-			this.module.removeChild(LayerManager.instance.background);
-			this.module.removeChild(LayerManager.instance.role);
-			this.module.removeChild(LayerManager.instance.tile);
-			this.module.removeChild(LayerManager.instance.foreground);
-			this.module.removeChild(LayerManager.instance.pop);
-			this.module.removeChild(LayerManager.instance.tip);
-		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数
 	

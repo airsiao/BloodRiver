@@ -7,7 +7,7 @@
 	<option name="TableID">1</option>
 	
 	<!-- 联众ID -->
-	<option name="ourgameID">lx0012</option>
+	<option name="ourgameID">lx0001</option>
 	<!-- 用户名 -->
 	<option name="username">lx0017</option>
 	<!-- 角色名 -->
@@ -25,7 +25,7 @@
 	<option name="PlayMode">0</option>
 	
 	<!-- 服务器地址 -->
-	<option name="ServerHost">172.28.14.82</option> 
+	<option name="ServerHost">172.28.14.82</option>
 	<!-- 服务器端口 -->
 	<option name="ServerPort">22411</option>
 	

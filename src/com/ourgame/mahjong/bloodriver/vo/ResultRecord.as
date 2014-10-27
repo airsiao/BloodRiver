@@ -2,10 +2,10 @@ package com.ourgame.mahjong.bloodriver.vo
 {
 	
 	/**
-	 * 抓牌动作
+	 * 结算输赢记录
 	 * @author SiaoLeon
 	 */
-	public class Action implements IAction
+	public class ResultRecord
 	{
 		// -------------------------------------------------------------------------------------------------------- 静态常量
 		
@@ -17,10 +17,6 @@ package com.ourgame.mahjong.bloodriver.vo
 		
 		// -------------------------------------------------------------------------------------------------------- 属性
 		
-		// -------------------------------------------------------------------------------------------------------- 变量
-		
-		// -------------------------------------------------------------------------------------------------------- 构造
-		
 		private var _type:uint;
 		
 		public function get type():uint
@@ -28,16 +24,18 @@ package com.ourgame.mahjong.bloodriver.vo
 			return this._type;
 		}
 		
-		public function set type(value:uint):void
-		{
-			this._type = value;
-		}
-		
-		private var _seat:uint;
+		private var _seat:uint
 		
 		public function get seat():uint
 		{
 			return this._seat;
+		}
+		
+		private var _fan:int;
+		
+		public function get fan():int
+		{
+			return this._fan;
 		}
 		
 		private var _card:Card;
@@ -47,35 +45,19 @@ package com.ourgame.mahjong.bloodriver.vo
 			return this._card;
 		}
 		
-		private var _time:uint;
+		// -------------------------------------------------------------------------------------------------------- 变量
 		
-		public function get time():uint
-		{
-			return this._time;
-		}
-		
-		private var _params:*;
-		
-		public function get params():*
-		{
-			return this._params;
-		}
-		
-		public function set params(value:*):void
-		{
-			this._params = value;
-		}
+		// -------------------------------------------------------------------------------------------------------- 构造
 		
 		/**
 		 * 构造函数
 		 */
-		public function Action(type:uint, seat:uint, card:Card, time:uint=0, params:*=null)
+		public function ResultRecord(type:uint, seat:uint, fan:int, card:Card)
 		{
 			this._type = type;
 			this._seat = seat;
+			this._fan = fan;
 			this._card = card;
-			this._time = time;
-			this._params = params;
 		}
 	
 		// -------------------------------------------------------------------------------------------------------- 方法

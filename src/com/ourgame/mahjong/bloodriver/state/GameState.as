@@ -8,6 +8,7 @@ package com.ourgame.mahjong.bloodriver.state
 	import com.ourgame.mahjong.bloodriver.view.DiscardView;
 	import com.ourgame.mahjong.bloodriver.view.DrawView;
 	import com.ourgame.mahjong.bloodriver.view.RequestView;
+	import com.ourgame.mahjong.bloodriver.view.ResultView;
 	import com.ourgame.mahjong.bloodriver.view.ShuffleView;
 	import com.ourgame.mahjong.bloodriver.view.SwapCardsView;
 	import com.ourgame.mahjong.bloodriver.view.SwapDiceView;
@@ -54,6 +55,8 @@ package com.ourgame.mahjong.bloodriver.state
 		
 		public var win:WinView;
 		
+		public var result:ResultView;
+		
 		// -------------------------------------------------------------------------------------------------------- 变量
 		
 		// -------------------------------------------------------------------------------------------------------- 构造
@@ -83,6 +86,7 @@ package com.ourgame.mahjong.bloodriver.state
 			this.request = new RequestView();
 			this.action = new ActionView();
 			this.win = new WinView();
+			this.result = new ResultView();
 		}
 		
 		override public function onEnter():void
@@ -100,6 +104,7 @@ package com.ourgame.mahjong.bloodriver.state
 			this.addView(this.request);
 			this.addView(this.action);
 			this.addView(this.win);
+			this.addView(this.result);
 			
 			this.addController(new GameSocketController());
 			this.addController(new GameController());

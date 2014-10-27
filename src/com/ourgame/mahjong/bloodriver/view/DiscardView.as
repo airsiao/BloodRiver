@@ -3,6 +3,8 @@ package com.ourgame.mahjong.bloodriver.view
 	import com.ourgame.mahjong.bloodriver.BloodRiver;
 	import com.ourgame.mahjong.bloodriver.enum.Position;
 	import com.ourgame.mahjong.bloodriver.state.GameState;
+	import com.ourgame.mahjong.bloodriver.ui.DiscardBoard;
+	import com.ourgame.mahjong.bloodriver.ui.LayerManager;
 	import com.ourgame.mahjong.bloodriver.ui.TilesHand;
 	import com.ourgame.mahjong.bloodriver.ui.TilesPool;
 	import com.ourgame.mahjong.bloodriver.vo.Action;
@@ -44,8 +46,9 @@ package com.ourgame.mahjong.bloodriver.view
 			var action:Action = notice.params;
 			var pool:TilesPool = null;
 			var hand:TilesHand = null;
+			var position:uint = (this.module as BloodRiver).info.data.table.getSeatPosition(action.seat);
 			
-			switch ((this.module as BloodRiver).info.data.table.getSeatPosition(action.seat))
+			switch (position)
 			{
 				case Position.CURRENT:
 					pool = (this.context as GameState).tiles.poolCurrent;
@@ -67,6 +70,8 @@ package com.ourgame.mahjong.bloodriver.view
 			
 			pool.addCard(action.card);
 			hand.removeCard(action.card, true);
+			
+			LayerManager.instance.tile.addChild(new DiscardBoard(position, action.card));
 			
 			notice.complete();
 		}

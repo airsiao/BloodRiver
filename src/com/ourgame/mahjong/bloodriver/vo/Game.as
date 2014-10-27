@@ -72,6 +72,20 @@ package com.ourgame.mahjong.bloodriver.vo
 		}
 		
 		/**
+		 * 换牌时间
+		 * @return
+		 */
+		public function get swapTime():uint
+		{
+			return this.getProperty("swapTime", 0);
+		}
+		
+		public function set swapTime(value:uint):void
+		{
+			this.setProperty("swapTime", value);
+		}
+		
+		/**
 		 * 换出的牌
 		 * @return
 		 */
@@ -128,17 +142,17 @@ package com.ourgame.mahjong.bloodriver.vo
 		}
 		
 		/**
-		 * 牌池
+		 * 牌墙剩余张数
 		 * @return
 		 */
-		public function get poolCards():Vector.<Card>
+		public function get remainCards():uint
 		{
-			return this.getProperty("poolCards", new Vector.<Card>());
+			return this.getProperty("remainCards", 0);
 		}
 		
-		public function set poolCards(value:Vector.<Card>):void
+		public function set remainCards(value:uint):void
 		{
-			this.setProperty("poolCards", value);
+			this.setProperty("remainCards", value);
 		}
 		
 		// -------------------------------------------------------------------------------------------------------- 变量

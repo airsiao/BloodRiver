@@ -115,7 +115,6 @@ package com.ourgame.mahjong.bloodriver.controller
 		
 		private function onError(event:SocketEvent):void
 		{
-			(this.context as State).manager.switchState(TableState);
 		}
 		
 		private function onRecive(event:SocketEvent):void

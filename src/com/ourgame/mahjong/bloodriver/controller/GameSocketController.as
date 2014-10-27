@@ -20,12 +20,16 @@ package com.ourgame.mahjong.bloodriver.controller
 	import com.ourgame.mahjong.bloodriver.protoc.message.Player;
 	import com.ourgame.mahjong.bloodriver.protoc.message.SAckSwap;
 	import com.ourgame.mahjong.bloodriver.protoc.message.NtfDeals.TileAmount;
+	import com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail;
+	import com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Result;
 	import com.ourgame.mahjong.bloodriver.protoc.message.NtfWin.WinInfo;
 	import com.ourgame.mahjong.bloodriver.protoc.protocol.MJBloodRiverProtocol;
 	import com.ourgame.mahjong.bloodriver.vo.Action;
 	import com.ourgame.mahjong.bloodriver.vo.Card;
 	import com.ourgame.mahjong.bloodriver.vo.Game;
 	import com.ourgame.mahjong.bloodriver.vo.GamePlayer;
+	import com.ourgame.mahjong.bloodriver.vo.ResultInfo;
+	import com.ourgame.mahjong.bloodriver.vo.ResultRecord;
 	import com.ourgame.mahjong.bloodriver.vo.Win;
 	import com.ourgame.mahjong.libaray.DataExchange;
 	import com.ourgame.mahjong.libaray.vo.UserInfo;
@@ -194,6 +198,7 @@ package com.ourgame.mahjong.bloodriver.controller
 			var game:Game  = new Game(body.gameId);
 			game.dealer = body.dealer;
 			game.score = body.basicScore;
+			game.remainCards = 108;
 			
 			for each (var info:Player in body.players)
 			{
@@ -256,7 +261,7 @@ package com.ourgame.mahjong.bloodriver.controller
 			
 			cards[this.data.user.seat] = self;
 			
-			this.notify(GameMethod.DEAL_CARDS, cards, this);
+			this.notify(GameMethod.DEAL_CARDS, [body.waitingTime, cards], this);
 		}
 		
 		private function ON_SWAP_RESULT(data:MJDataPack):void
@@ -311,7 +316,7 @@ package com.ourgame.mahjong.bloodriver.controller
 			Log.debug("收到有人抓牌消息", body);
 			
 			var card:Card = new Card(body.tileId)
-			var draw:Action = new Action(ActionType.GIVEUP, body.seat, card, !body.front);
+			var draw:Action = new Action(ActionType.GIVEUP, body.seat, card, body.actTime, !body.front);
 			this.notify(GameMethod.DRAW, draw, this);
 			
 			if (body.action > 0)
@@ -345,7 +350,7 @@ package com.ourgame.mahjong.bloodriver.controller
 				cards.push(new Card(id));
 			}
 			
-			var action:Action = new Action(body.act, body.seat, new Card(body.targetTile), cards);
+			var action:Action = new Action(body.act, body.seat, new Card(body.targetTile), body.actTime, cards);
 			this.notify(GameMethod.ACTION, action, this);
 			
 			if (body.action > 0)
@@ -382,7 +387,7 @@ package com.ourgame.mahjong.bloodriver.controller
 				}
 			}
 			
-			var action:Action = new Action(ActionType.WIN, seat, new Card(body.winTile), win);
+			var action:Action = new Action(ActionType.WIN, seat, new Card(body.winTile), body.actTime, win);
 			this.notify(GameMethod.WIN, action, this);
 		}
 		
@@ -393,7 +398,29 @@ package com.ourgame.mahjong.bloodriver.controller
 			
 			Log.debug("收到游戏结算消息", body);
 			
-			this.notify(GameMethod.RESULT);
+			var results:Vector.<ResultInfo> = new Vector.<ResultInfo>();
+			
+			for each (var result:Result in body.results)
+			{
+				var info:ResultInfo = new ResultInfo(result.status, result.winPoints);
+				
+				for each (var id:uint in result.tilesInHand)
+				{
+					info.hands.push(new Card(id));
+				}
+				
+				results[result.seat] = info;
+			}
+			
+			var records:Vector.<ResultRecord> = new Vector.<ResultRecord>();
+			
+			for each (var detail:Detail in body.details)
+			{
+				var record:ResultRecord = new ResultRecord(detail.type, detail.seat, detail.points, new Card(detail.tile));
+				records.push(record);
+			}
+			
+			this.notify(GameMethod.RESULT, [results, records]);
 		}
 	
 	}

@@ -83,48 +83,48 @@ package com.ourgame.mahjong.bloodriver.view
 			this.handOpposite = new TilesHand(Position.OPPOSITE);
 			this.handPrev = new TilesHand(Position.PREV);
 			
-			LayerManager.instance.foreground.addChild(this.handOpposite);
-			LayerManager.instance.foreground.addChild(this.handPrev);
+			LayerManager.instance.tile.addChild(this.handOpposite);
+			LayerManager.instance.tile.addChild(this.handPrev);
 			
-			LayerManager.instance.foreground.addChild(this.winOpposite);
-			LayerManager.instance.foreground.addChild(this.winPrev);
+			LayerManager.instance.tile.addChild(this.winOpposite);
+			LayerManager.instance.tile.addChild(this.winPrev);
 			
-			LayerManager.instance.foreground.addChild(this.poolNext);
-			LayerManager.instance.foreground.addChild(this.poolCurrent);
+			LayerManager.instance.tile.addChild(this.poolNext);
+			LayerManager.instance.tile.addChild(this.poolCurrent);
 			
-			LayerManager.instance.foreground.addChild(this.wall);
+			LayerManager.instance.tile.addChild(this.wall);
 			
-			LayerManager.instance.foreground.addChild(this.poolOpposite);
-			LayerManager.instance.foreground.addChild(this.poolPrev);
+			LayerManager.instance.tile.addChild(this.poolOpposite);
+			LayerManager.instance.tile.addChild(this.poolPrev);
 			
-			LayerManager.instance.foreground.addChild(this.winNext);
-			LayerManager.instance.foreground.addChild(this.winCurrent);
+			LayerManager.instance.tile.addChild(this.winNext);
+			LayerManager.instance.tile.addChild(this.winCurrent);
 			
-			LayerManager.instance.foreground.addChild(this.handNext);
-			LayerManager.instance.foreground.addChild(this.handCurrent);
+			LayerManager.instance.tile.addChild(this.handNext);
+			LayerManager.instance.tile.addChild(this.handCurrent);
 		}
 		
 		override public function onRemove():void
 		{
-			LayerManager.instance.foreground.removeChild(this.handCurrent);
-			LayerManager.instance.foreground.removeChild(this.handNext);
+			LayerManager.instance.tile.removeChild(this.handCurrent);
+			LayerManager.instance.tile.removeChild(this.handNext);
 			
-			LayerManager.instance.foreground.removeChild(this.winCurrent);
-			LayerManager.instance.foreground.removeChild(this.winNext);
+			LayerManager.instance.tile.removeChild(this.winCurrent);
+			LayerManager.instance.tile.removeChild(this.winNext);
 			
-			LayerManager.instance.foreground.removeChild(this.poolOpposite);
-			LayerManager.instance.foreground.removeChild(this.poolPrev);
+			LayerManager.instance.tile.removeChild(this.poolOpposite);
+			LayerManager.instance.tile.removeChild(this.poolPrev);
 			
-			LayerManager.instance.foreground.removeChild(this.wall);
+			LayerManager.instance.tile.removeChild(this.wall);
 			
-			LayerManager.instance.foreground.removeChild(this.poolCurrent);
-			LayerManager.instance.foreground.removeChild(this.poolNext);
+			LayerManager.instance.tile.removeChild(this.poolCurrent);
+			LayerManager.instance.tile.removeChild(this.poolNext);
 			
-			LayerManager.instance.foreground.removeChild(this.winOpposite);
-			LayerManager.instance.foreground.removeChild(this.winPrev);
+			LayerManager.instance.tile.removeChild(this.winOpposite);
+			LayerManager.instance.tile.removeChild(this.winPrev);
 			
-			LayerManager.instance.foreground.removeChild(this.handPrev);
-			LayerManager.instance.foreground.removeChild(this.handOpposite);
+			LayerManager.instance.tile.removeChild(this.handPrev);
+			LayerManager.instance.tile.removeChild(this.handOpposite);
 			
 			this.handPrev = null;
 			this.handOpposite = null;

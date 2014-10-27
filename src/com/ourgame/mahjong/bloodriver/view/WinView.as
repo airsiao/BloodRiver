@@ -3,10 +3,14 @@ package com.ourgame.mahjong.bloodriver.view
 	import com.ourgame.mahjong.bloodriver.BloodRiver;
 	import com.ourgame.mahjong.bloodriver.data.GameData;
 	import com.ourgame.mahjong.bloodriver.enum.Position;
+	import com.ourgame.mahjong.bloodriver.enum.WinType;
 	import com.ourgame.mahjong.bloodriver.state.GameState;
+	import com.ourgame.mahjong.bloodriver.ui.ActionEffect;
+	import com.ourgame.mahjong.bloodriver.ui.LayerManager;
 	import com.ourgame.mahjong.bloodriver.ui.TilesHand;
 	import com.ourgame.mahjong.bloodriver.ui.TilesPool;
 	import com.ourgame.mahjong.bloodriver.ui.TilesWin;
+	import com.ourgame.mahjong.bloodriver.ui.WinFan;
 	import com.ourgame.mahjong.bloodriver.vo.Action;
 	import com.ourgame.mahjong.bloodriver.vo.Card;
 	import com.ourgame.mahjong.bloodriver.vo.CardGroup;
@@ -77,11 +81,23 @@ package com.ourgame.mahjong.bloodriver.view
 			
 			for (var i:int = 0; i < info.fan.length; i++)
 			{
+				var position:uint = (this.module as BloodRiver).info.data.table.getSeatPosition(i);
+				
+				if (info.fan[i] != 0)
+				{
+					LayerManager.instance.tile.addChild(new WinFan(position, info.fan[i]));
+				}
+				
+				if (info.fan[i] > 0)
+				{
+					LayerManager.instance.foreground.addChild(new ActionEffect(position, (info.type == WinType.SELF) ? ActionEffect.ZIMO : ActionEffect.HU));
+				}
+				
 				if (info.fan[i] <= 0)
 				{
 					var list:Vector.<CardGroup> = (GameData.currentGame.playerList.element(i) as GamePlayer).handCards.groups.list;
 					
-					switch ((this.module as BloodRiver).info.data.table.getSeatPosition(i))
+					switch (position)
 					{
 						case Position.CURRENT:
 							(this.context as GameState).tiles.handCurrent.initGroups(list);
@@ -102,7 +118,7 @@ package com.ourgame.mahjong.bloodriver.view
 				
 				var win:TilesWin = null;
 				
-				switch ((this.module as BloodRiver).info.data.table.getSeatPosition(i))
+				switch (position)
 				{
 					case Position.CURRENT:
 						win = (this.context as GameState).tiles.winCurrent;

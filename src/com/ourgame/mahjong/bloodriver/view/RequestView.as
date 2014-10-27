@@ -101,9 +101,9 @@ package com.ourgame.mahjong.bloodriver.view
 				this.buttons.push(giveup);
 			}
 			
-			if (this.request.type <= 1 && (this.request.type & ActionType.DISCARD) == ActionType.DISCARD)
+			if ((this.request.type & ActionType.DISCARD) == ActionType.DISCARD)
 			{
-				(this.context as GameState).tiles.handCurrent.enable = true;
+				(this.context as GameState).tiles.handCurrent.enable = ((this.context as GameState).tiles.winCurrent.numChildren == 0);
 				(this.context as GameState).tiles.handCurrent.addEventListener(TileEvent.CONFIRM, onSelect);
 			}
 			
@@ -205,7 +205,7 @@ package com.ourgame.mahjong.bloodriver.view
 			
 			this.hide();
 			
-			var action:Action = new Action(button.type, this.request.seat, button.card, params);
+			var action:Action = new Action(button.type, this.request.seat, button.card, 0, params);
 			this.notify(OperateMethod.ACTION, action);
 			
 			if (action.type == ActionType.GIVEUP && (this.request.type & ActionType.DISCARD) == ActionType.DISCARD)
