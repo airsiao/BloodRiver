@@ -41,16 +41,27 @@ package com.ourgame.mahjong.bloodriver.ui
 			
 			this.x = 925;
 			this.y = 3;
-			
-			this.btnBack = new ButtonClip(AssetsManager.instance.getDefinitionMovieClip(UITableDefinition.ButtonBack));
-			this.addChild(this.btnBack);
-			
-			this.btnBack.addEventListener(MouseEvent.CLICK, onBack, false, 0, true);
 		}
 		
 		// -------------------------------------------------------------------------------------------------------- 方法
 		
 		// -------------------------------------------------------------------------------------------------------- 函数
+		
+		override protected function onAddedToStage():void
+		{
+			this.btnBack = new ButtonClip(AssetsManager.instance.getDefinitionMovieClip(UITableDefinition.ButtonBack));
+			this.addChild(this.btnBack);
+			
+			this.btnBack.addEventListener(MouseEvent.CLICK, onBack);
+		}
+		
+		override protected function onRemovedFromStage():void
+		{
+			this.clear();
+			
+			this.btnBack.removeEventListener(MouseEvent.CLICK, onBack);
+			this.btnBack = null;
+		}
 		
 		private function onBack(event:MouseEvent):void
 		{

@@ -37,7 +37,27 @@ package com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult {
 		 */
 		public static const TILE:FieldDescriptor$TYPE_UINT32 = new FieldDescriptor$TYPE_UINT32("com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail.tile", "tile", (4 << 3) | com.netease.protobuf.WireType.VARINT);
 
-		public var tile:uint;
+		private var tile$field:uint;
+
+		private var hasField$0:uint = 0;
+
+		public function clearTile():void {
+			hasField$0 &= 0xfffffffe;
+			tile$field = new uint();
+		}
+
+		public function get hasTile():Boolean {
+			return (hasField$0 & 0x1) != 0;
+		}
+
+		public function set tile(value:uint):void {
+			hasField$0 |= 0x1;
+			tile$field = value;
+		}
+
+		public function get tile():uint {
+			return tile$field;
+		}
 
 		/**
 		 *  @private
@@ -49,8 +69,10 @@ package com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult {
 			com.netease.protobuf.WriteUtils.write$TYPE_UINT32(output, this.seat);
 			com.netease.protobuf.WriteUtils.writeTag(output, com.netease.protobuf.WireType.VARINT, 3);
 			com.netease.protobuf.WriteUtils.write$TYPE_UINT32(output, this.points);
-			com.netease.protobuf.WriteUtils.writeTag(output, com.netease.protobuf.WireType.VARINT, 4);
-			com.netease.protobuf.WriteUtils.write$TYPE_UINT32(output, this.tile);
+			if (hasTile) {
+				com.netease.protobuf.WriteUtils.writeTag(output, com.netease.protobuf.WireType.VARINT, 4);
+				com.netease.protobuf.WriteUtils.write$TYPE_UINT32(output, tile$field);
+			}
 			for (var fieldKey:* in this) {
 				super.writeUnknown(output, fieldKey);
 			}

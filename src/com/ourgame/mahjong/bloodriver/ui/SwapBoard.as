@@ -41,6 +41,11 @@ package com.ourgame.mahjong.bloodriver.ui
 				this.tiles.splice(this.tiles.indexOf(t), 1);
 			}
 			
+			if (value == null)
+			{
+				return;
+			}
+			
 			for (var i:int = 0; i < value.length; i++)
 			{
 				var tile:Tile = new Tile(value[i]);

@@ -155,6 +155,20 @@ package com.ourgame.mahjong.bloodriver.vo
 			this.setProperty("remainCards", value);
 		}
 		
+		/**
+		 * 麻将信息
+		 * @return
+		 */
+		public function get mahjong():Mahjong
+		{
+			return this.getProperty("mahjong", new Mahjong());
+		}
+		
+		public function set mahjong(value:Mahjong):void
+		{
+			this.setProperty("mahjong", value);
+		}
+		
 		// -------------------------------------------------------------------------------------------------------- 变量
 		
 		// -------------------------------------------------------------------------------------------------------- 构造

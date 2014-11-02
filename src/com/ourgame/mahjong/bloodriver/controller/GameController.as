@@ -9,6 +9,7 @@ package com.ourgame.mahjong.bloodriver.controller
 	import com.ourgame.mahjong.bloodriver.method.OperateMethod;
 	import com.ourgame.mahjong.bloodriver.state.GameState;
 	import com.ourgame.mahjong.bloodriver.state.SelectSwapState;
+	import com.ourgame.mahjong.bloodriver.utils.compareCardByID;
 	import com.ourgame.mahjong.bloodriver.vo.Action;
 	import com.ourgame.mahjong.bloodriver.vo.Card;
 	import com.ourgame.mahjong.bloodriver.vo.CardGroup;
@@ -56,8 +57,7 @@ package com.ourgame.mahjong.bloodriver.controller
 		
 		override public function onAdd():void
 		{
-			this.register(OperateMethod.SWAP, ON_SWAP);
-			this.register(OperateMethod.DISCARD, ON_DISCARD);
+			this.register(OperateMethod.SWAP, SWAP);
 			
 			this.register(GameMethod.GAME_START, GAME_START);
 			this.register(GameMethod.DEAL_DICE, DEAL_DICE);
@@ -72,6 +72,7 @@ package com.ourgame.mahjong.bloodriver.controller
 			this.register(GameMethod.REQUEST, REQUEST);
 			this.register(GameMethod.ACTION, ACTION);
 			this.register(GameMethod.WIN, WIN);
+			this.register(GameMethod.OVER, OVER);
 			this.register(GameMethod.RESULT, RESULT);
 			
 			this.data = ((this.context as State).manager as BloodRiver).info.data;
@@ -79,17 +80,9 @@ package com.ourgame.mahjong.bloodriver.controller
 		
 		// -------------------------------------------------------------------------------------------------------- 函数
 		
-		private function ON_SWAP(notice:INotice):void
+		private function SWAP(notice:INotice):void
 		{
 			(this.context as GameState).manager.switchState(GameState);
-			
-			notice.complete();
-		}
-		
-		private function ON_DISCARD(notice:INotice):void
-		{
-			var discard:Action = new Action(ActionType.DISCARD, GameData.currentPlayer.user.seat, notice.params);
-			this.notify(GameMethod.DISCARD, discard, this);
 			
 			notice.complete();
 		}
@@ -107,19 +100,18 @@ package com.ourgame.mahjong.bloodriver.controller
 		{
 			GameData.currentGame.dealDice = notice.params;
 			
-			(this.context as GameState).dealDice.play(notice);
+			(this.context as GameState).dice.deal(notice);
 		}
 		
 		private function SWAP_DICE(notice:INotice):void
 		{
 			GameData.currentGame.swapDice = notice.params;
 			
-			(this.context as GameState).swapDice.play(notice);
+			(this.context as GameState).dice.swap(notice);
 		}
 		
 		private function DEAL_CARDS(notice:INotice):void
 		{
-			GameData.currentGame.remainCards = 108 - 13 * 4;
 			GameData.currentGame.swapTime = notice.params[0];
 			
 			var cards:Array = notice.params[1];
@@ -132,6 +124,7 @@ package com.ourgame.mahjong.bloodriver.controller
 				for each (var card:Card in list)
 				{
 					player.handCards.cards.add(card);
+					GameData.currentGame.mahjong.remove(card);
 				}
 				
 				Log.debug("手牌", player.user.seat, player.user.nickname, player.handCards);
@@ -149,16 +142,37 @@ package com.ourgame.mahjong.bloodriver.controller
 		
 		private function SWAP_CARDS_OUT(notice:INotice):void
 		{
-			(this.context as GameState).manager.switchState(GameState);
+			var seat:uint = notice.params[0];
+			var cards:Vector.<Card> = notice.params[1];
+			var player:GamePlayer = GameData.currentGame.playerList.element(seat);
 			
-			for each (var info:Card in notice.params)
+			for each (var info:Card in cards)
 			{
-				var card:Card = GameData.currentPlayer.handCards.cards.getCardByID(info.id);
-				GameData.currentPlayer.handCards.cards.remove(card);
-				GameData.currentGame.swapOut.push(card);
+				var card:Card = player.handCards.cards.getCardByID(info.id);
+				
+				if (card == null)
+				{
+					card = player.handCards.cards.list.pop();
+					card.id = info.id;
+				}
+				else
+				{
+					player.handCards.cards.remove(card);
+					
+					if (player == GameData.currentPlayer)
+					{
+						GameData.currentGame.swapOut.push(card);
+						GameData.currentGame.mahjong.add(card);
+					}
+				}
 			}
 			
-			Log.debug("换出三张牌", GameData.currentGame.swapOut);
+			if (player == GameData.currentPlayer)
+			{
+				(this.context as GameState).manager.switchState(GameState);
+			}
+			
+			Log.debug("换出三张牌", player.user.nickname, cards);
 			
 			(this.context as GameState).swapCards.outCards(notice);
 		}
@@ -167,15 +181,30 @@ package com.ourgame.mahjong.bloodriver.controller
 		{
 			(this.context as GameState).manager.switchState(GameState);
 			
-			for each (var info:Card in notice.params)
+			for (var i:int = 0; i < GameData.currentGame.playerList.length; i++)
 			{
-				GameData.currentPlayer.handCards.cards.add(info);
-				GameData.currentGame.swapIn.push(info);
+				var player:GamePlayer = GameData.currentGame.playerList.element(i);
+				player.handCards.cards.list.sort(compareCardByID);
+				
+				for each (var info:Card in notice.params)
+				{
+					if (player == GameData.currentPlayer)
+					{
+						GameData.currentPlayer.handCards.cards.add(info);
+						GameData.currentGame.swapIn.push(info);
+						GameData.currentGame.mahjong.remove(info);
+					}
+					else
+					{
+						player.handCards.cards.add(new Card());
+					}
+				}
 			}
 			
 			Log.debug("换入三张牌", GameData.currentGame.swapIn);
 			
 			(this.context as GameState).swapCards.inCards(notice);
+			(this.context as GameState).dice.hide();
 			
 			this.notify(GameMethod.FLOWER_PIG, !GameData.currentPlayer.handCards.isLack);
 		}
@@ -190,6 +219,7 @@ package com.ourgame.mahjong.bloodriver.controller
 			Log.debug("手牌", player.handCards);
 			
 			GameData.currentGame.remainCards--;
+			GameData.currentGame.mahjong.remove(action.card);
 			
 			(this.context as GameState).request.hide();
 			(this.context as GameState).draw.play(notice);
@@ -203,12 +233,6 @@ package com.ourgame.mahjong.bloodriver.controller
 			var player:GamePlayer = GameData.currentGame.playerList.element(action.seat);
 			var card:Card = player.handCards.cards.getCardByID(action.card.id);
 			
-			if (card == null && player == GameData.currentPlayer)
-			{
-				notice.complete();
-				return;
-			}
-			
 			if (card == null)
 			{
 				card = player.handCards.cards.list.pop();
@@ -218,6 +242,8 @@ package com.ourgame.mahjong.bloodriver.controller
 			{
 				player.handCards.cards.remove(card);
 			}
+			
+			GameData.currentGame.mahjong.remove(action.card);
 			
 			Log.debug("打牌", player.user.nickname, card);
 			Log.debug("手牌", player.handCards);
@@ -335,6 +361,8 @@ package com.ourgame.mahjong.bloodriver.controller
 				{
 					winner.handCards.cards.remove(card);
 				}
+				
+				GameData.currentGame.mahjong.remove(action.card);
 			}
 			
 			if (win.type == WinType.GANG || win.type == WinType.GANG_MULTI)
@@ -377,9 +405,9 @@ package com.ourgame.mahjong.bloodriver.controller
 			(this.context as GameState).win.play(notice);
 		}
 		
-		private function RESULT(notice:INotice):void
+		private function OVER(notice:INotice):void
 		{
-			var results:Vector.<ResultInfo> = notice.params[0];
+			var results:Vector.<ResultInfo> = notice.params;
 			
 			for (var i:int = 0; i < results.length; i++)
 			{
@@ -393,6 +421,11 @@ package com.ourgame.mahjong.bloodriver.controller
 				}
 			}
 			
+			(this.context as GameState).show.play(notice);
+		}
+		
+		private function RESULT(notice:INotice):void
+		{
 			(this.context as GameState).result.play(notice);
 		}
 	}

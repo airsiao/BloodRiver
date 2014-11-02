@@ -45,25 +45,25 @@ package com.ourgame.mahjong.bloodriver.ui
 				switch (position)
 				{
 					case Position.CURRENT:
-						tile.x = (i < 3) ? 52 * i : 52;
-						tile.y = (i < 3) ? 0 : -18;
+						tile.x = (i < 3) ? 56 * i : 56;
+						tile.y = (i < 3) ? 0 : -22;
 						break;
 					case Position.OPPOSITE:
-						tile.x = (i < 3) ? 24.65 * i : 24.65;
-						tile.y = (i < 3) ? 0 : -6;
+						tile.x = (i < 3) ? 30 * i : 30;
+						tile.y = (i < 3) ? 0 : -11;
 						break;
 					case Position.PREV:
 						tile.x = 0;
-						tile.y = (i < 3) ? 18.95 * i : 11.15;
+						tile.y = (i < 3) ? 22 * i : 14;
 						break;
 					case Position.NEXT:
 						tile.x = 0;
-						tile.y = (i < 3) ? 18.95 * (2 - i) : 11.15;
+						tile.y = (i < 3) ? 22 * (2 - i) : 14;
 						index = (i < 3) ? 0 : i;
 						break;
 				}
 				
-				this.addChildAt(tile, index);
+				this.addChildAt(tile, (index < 3) ? index : 2);
 			}
 		}
 	

@@ -66,6 +66,16 @@ package com.ourgame.mahjong.bloodriver.view
 					break;
 			}
 			
+			(this.context as GameState).tiles.poolCurrent.removeCard(action.card);
+			(this.context as GameState).tiles.poolNext.removeCard(action.card);
+			(this.context as GameState).tiles.poolOpposite.removeCard(action.card);
+			(this.context as GameState).tiles.poolPrev.removeCard(action.card);
+			
+			if ((this.context as GameState).tiles.current == null || (this.context as GameState).tiles.current == action.card || (this.context as GameState).tiles.current.id == action.card.id)
+			{
+				(this.context as GameState).tiles.current = null;
+			}
+			
 			var cards:Vector.<Card> = action.params;
 			
 			if (action.type == ActionType.GANG_BU)
@@ -78,6 +88,8 @@ package com.ourgame.mahjong.bloodriver.view
 			{
 				hand.removeCard(card);
 			}
+			
+			hand.layout();
 			
 			var player:GamePlayer = GameData.currentGame.playerList.element(action.seat);
 			hand.initGroups(player.handCards.groups.list);

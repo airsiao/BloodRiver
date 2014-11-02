@@ -101,7 +101,22 @@ package com.ourgame.mahjong.bloodriver.ui
 			
 			this.x = 438;
 			this.y = 224;
-			
+		}
+		
+		// -------------------------------------------------------------------------------------------------------- 方法
+		
+		public function show():void
+		{
+			this.visible = true;
+			this.scaleX = 0.8;
+			this.scaleY = 0.8;
+			TweenMax.to(this, 0.1, {scaleX: 1.1, scaleY: 1.1, onComplete: onShowComplete});
+		}
+		
+		// -------------------------------------------------------------------------------------------------------- 函数
+		
+		override protected function onAddedToStage():void
+		{
 			this.content = AssetsManager.instance.getDefinitionMovieClip(UITableDefinition.CountDown);
 			this.content.gotoAndStop(1);
 			this.addChild(this.content);
@@ -109,13 +124,28 @@ package com.ourgame.mahjong.bloodriver.ui
 			this.current = 0;
 			
 			this.timer = new Timer(1000);
-			this.timer.addEventListener(TimerEvent.TIMER, onTimer, false, 0, true);
-			this.timer.addEventListener(TimerEvent.TIMER_COMPLETE, onTimerComplete, false, 0, true);
+			this.timer.addEventListener(TimerEvent.TIMER, onTimer);
+			this.timer.addEventListener(TimerEvent.TIMER_COMPLETE, onTimerComplete);
 		}
 		
-		// -------------------------------------------------------------------------------------------------------- 方法
+		override protected function onRemovedFromStage():void
+		{
+			this.clear();
+			
+			TweenMax.killTweensOf(this);
+			TweenMax.killTweensOf(this.content["Count"]);
+			
+			this.timer.removeEventListener(TimerEvent.TIMER, onTimer);
+			this.timer.removeEventListener(TimerEvent.TIMER_COMPLETE, onTimerComplete);
+			
+			this.content = null;
+			this.timer = null;
+		}
 		
-		// -------------------------------------------------------------------------------------------------------- 函数
+		private function onShowComplete():void
+		{
+			TweenMax.to(this, 0.13, {scaleX: 1, scaleY: 1});
+		}
 		
 		private function zoomIn():void
 		{

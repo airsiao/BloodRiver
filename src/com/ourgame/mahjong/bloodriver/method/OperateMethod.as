@@ -30,6 +30,12 @@ package com.ourgame.mahjong.bloodriver.method
 		 * params Action 动作
 		 */
 		public static const ACTION:String = BASE + "ACTION";
+		
+		/**
+		 * 显示听牌
+		 * params TingInfo 听牌信息
+		 */
+		public static const SHOWTING:String = BASE + "SHOWTING";
 	
 	}
 }

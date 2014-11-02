@@ -11,7 +11,9 @@ package com.ourgame.mahjong.bloodriver.view
 	import com.ourgame.mahjong.bloodriver.ui.SwapBoard;
 	import com.ourgame.mahjong.bloodriver.ui.TableBar;
 	import com.ourgame.mahjong.bloodriver.ui.TableInfoBar;
+	import com.ourgame.mahjong.bloodriver.ui.TingBoard;
 	import com.ourgame.mahjong.bloodriver.vo.Game;
+	import com.ourgame.mahjong.bloodriver.vo.TingInfo;
 	import com.wecoit.core.AssetsManager;
 	import com.wecoit.mvc.View;
 	
@@ -41,13 +43,15 @@ package com.ourgame.mahjong.bloodriver.view
 		
 		public var logo:Bitmap;
 		
+		public var countdown:CountDown;
+		
 		public var infoBar:TableInfoBar;
 		
 		public var swapBoard:SwapBoard;
 		
-		public var countdown:CountDown;
-		
 		public var flowerPig:FlowerPig;
+		
+		public var tingBoard:TingBoard;
 		
 		public var tableBar:TableBar;
 		
@@ -82,6 +86,10 @@ package com.ourgame.mahjong.bloodriver.view
 			this.logo.y = 228;
 			LayerManager.instance.background.addChild(this.logo);
 			
+			this.countdown = new CountDown();
+			this.countdown.visible = false;
+			LayerManager.instance.background.addChild(this.countdown);
+			
 			this.infoBar = new TableInfoBar();
 			LayerManager.instance.foreground.addChild(this.infoBar);
 			
@@ -89,12 +97,13 @@ package com.ourgame.mahjong.bloodriver.view
 			this.swapBoard.visible = false;
 			LayerManager.instance.foreground.addChild(this.swapBoard);
 			
-			this.countdown = new CountDown();
-			LayerManager.instance.foreground.addChild(this.countdown);
-			
 			this.flowerPig = new FlowerPig();
 			this.flowerPig.visible = false;
 			LayerManager.instance.foreground.addChild(this.flowerPig);
+			
+			this.tingBoard = new TingBoard();
+			this.tingBoard.visible = false;
+			LayerManager.instance.foreground.addChild(this.tingBoard);
 			
 			this.tableBar = new TableBar();
 			LayerManager.instance.foreground.addChild(this.tableBar);
@@ -102,33 +111,38 @@ package com.ourgame.mahjong.bloodriver.view
 			this.menuBar = new MenuBar();
 			LayerManager.instance.foreground.addChild(this.menuBar);
 			
+			this.menuBar.addEventListener("back", onBack, false, 0, true);
+			
 			this.bind((this.module as BloodRiver).info.data.room, this.infoBar, {name: "roomName"});
 			this.bind((this.module as BloodRiver).info.data.table, this.infoBar, {name: "tableName"});
 			
 			this.bind((this.module as BloodRiver).info.data.user, this.tableBar, {nickname: "nickname", chips: "chips"});
-			
-			this.menuBar.addEventListener("back", onBack);
 		}
 		
 		override public function onRemove():void
 		{
+			this.menuBar.removeEventListener("back", onBack);
+			
 			LayerManager.instance.foreground.removeChild(this.menuBar);
 			this.menuBar = null;
 			
 			LayerManager.instance.foreground.removeChild(this.tableBar);
 			this.tableBar = null;
 			
+			LayerManager.instance.foreground.removeChild(this.tingBoard);
+			this.tingBoard = null;
+			
 			LayerManager.instance.foreground.removeChild(this.flowerPig);
 			this.flowerPig = null;
-			
-			LayerManager.instance.foreground.removeChild(this.countdown);
-			this.countdown = null;
 			
 			LayerManager.instance.foreground.removeChild(this.swapBoard);
 			this.swapBoard = null;
 			
 			LayerManager.instance.foreground.removeChild(this.infoBar);
 			this.infoBar = null;
+			
+			LayerManager.instance.background.removeChild(this.countdown);
+			this.countdown = null;
 			
 			LayerManager.instance.background.removeChild(this.logo);
 			this.logo = null;
@@ -143,8 +157,6 @@ package com.ourgame.mahjong.bloodriver.view
 			this.unBind((this.module as BloodRiver).info.data.table, this.infoBar);
 			
 			this.unBind(GameData.currentGame, this.swapBoard);
-			
-			this.menuBar.removeEventListener("back", onBack);
 		}
 		
 		public function bindGame(game:Game):void
@@ -155,6 +167,11 @@ package com.ourgame.mahjong.bloodriver.view
 		public function updateFlowerPig(value:Boolean):void
 		{
 			this.flowerPig.visible = value;
+		}
+		
+		public function showTing(info:TingInfo):void
+		{
+			this.tingBoard.show(info);
 		}
 		
 		// -------------------------------------------------------------------------------------------------------- 函数

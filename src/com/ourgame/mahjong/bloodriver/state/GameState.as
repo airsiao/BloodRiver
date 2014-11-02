@@ -4,14 +4,14 @@ package com.ourgame.mahjong.bloodriver.state
 	import com.ourgame.mahjong.bloodriver.controller.GameSocketController;
 	import com.ourgame.mahjong.bloodriver.view.ActionView;
 	import com.ourgame.mahjong.bloodriver.view.DealCardsView;
-	import com.ourgame.mahjong.bloodriver.view.DealDiceView;
+	import com.ourgame.mahjong.bloodriver.view.DiceView;
 	import com.ourgame.mahjong.bloodriver.view.DiscardView;
 	import com.ourgame.mahjong.bloodriver.view.DrawView;
 	import com.ourgame.mahjong.bloodriver.view.RequestView;
 	import com.ourgame.mahjong.bloodriver.view.ResultView;
+	import com.ourgame.mahjong.bloodriver.view.ShowCardView;
 	import com.ourgame.mahjong.bloodriver.view.ShuffleView;
 	import com.ourgame.mahjong.bloodriver.view.SwapCardsView;
-	import com.ourgame.mahjong.bloodriver.view.SwapDiceView;
 	import com.ourgame.mahjong.bloodriver.view.TilesView;
 	import com.ourgame.mahjong.bloodriver.view.WinView;
 	import com.wecoit.debug.Log;
@@ -37,11 +37,9 @@ package com.ourgame.mahjong.bloodriver.state
 		
 		public var shuffle:ShuffleView;
 		
-		public var dealDice:DealDiceView;
+		public var dice:DiceView;
 		
 		public var dealCards:DealCardsView;
-		
-		public var swapDice:SwapDiceView;
 		
 		public var swapCards:SwapCardsView;
 		
@@ -54,6 +52,8 @@ package com.ourgame.mahjong.bloodriver.state
 		public var action:ActionView;
 		
 		public var win:WinView;
+		
+		public var show:ShowCardView;
 		
 		public var result:ResultView;
 		
@@ -77,15 +77,15 @@ package com.ourgame.mahjong.bloodriver.state
 		{
 			this.tiles = new TilesView();
 			this.shuffle = new ShuffleView();
-			this.dealDice = new DealDiceView();
+			this.dice = new DiceView();
 			this.dealCards = new DealCardsView();
-			this.swapDice = new SwapDiceView();
 			this.swapCards = new SwapCardsView();
 			this.draw = new DrawView();
 			this.discard = new DiscardView();
 			this.request = new RequestView();
 			this.action = new ActionView();
 			this.win = new WinView();
+			this.show = new ShowCardView();
 			this.result = new ResultView();
 		}
 		
@@ -95,15 +95,15 @@ package com.ourgame.mahjong.bloodriver.state
 			
 			this.addView(this.tiles);
 			this.addView(this.shuffle);
-			this.addView(this.dealDice);
+			this.addView(this.dice);
 			this.addView(this.dealCards);
-			this.addView(this.swapDice);
 			this.addView(this.swapCards);
 			this.addView(this.draw);
 			this.addView(this.discard);
 			this.addView(this.request);
 			this.addView(this.action);
 			this.addView(this.win);
+			this.addView(this.show);
 			this.addView(this.result);
 			
 			this.addController(new GameSocketController());

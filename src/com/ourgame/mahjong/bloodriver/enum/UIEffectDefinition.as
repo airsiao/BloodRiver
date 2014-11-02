@@ -32,6 +32,36 @@ package com.ourgame.mahjong.bloodriver.enum
 		 * 自摸
 		 */
 		public static const Zimo:String = BASE + "Zimo";
+		
+		/**
+		 * 牌墙线
+		 */
+		public static const WallFrame:String = BASE + "WallFrame";
+		
+		/**
+		 * 牌墙底
+		 */
+		public static const WallBackground:String = BASE + "WallBackground";
+		
+		/**
+		 * 牌墙开门
+		 */
+		public static const WallOpen:String = BASE + "WallOpen";
+		
+		/**
+		 * 牌墙遮罩
+		 */
+		public static const WallMask:String = BASE + "WallMask";
+		
+		/**
+		 * 发牌骰子旋转
+		 */
+		public static const DealDiceMotion:String = BASE + "DealDiceMotion";
+		
+		/**
+		 * 换牌骰子旋转
+		 */
+		public static const SwapDiceMotion:String = BASE + "SwapDiceMotion";
 	
 	}
 }

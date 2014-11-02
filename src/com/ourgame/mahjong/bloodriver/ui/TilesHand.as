@@ -1,5 +1,6 @@
 package com.ourgame.mahjong.bloodriver.ui
 {
+	import com.greensock.TweenMax;
 	import com.ourgame.mahjong.bloodriver.enum.CardStatus;
 	import com.ourgame.mahjong.bloodriver.enum.Position;
 	import com.ourgame.mahjong.bloodriver.events.TileEvent;
@@ -7,9 +8,13 @@ package com.ourgame.mahjong.bloodriver.ui
 	import com.ourgame.mahjong.bloodriver.vo.Card;
 	import com.ourgame.mahjong.bloodriver.vo.CardGroup;
 	import com.ourgame.mahjong.bloodriver.vo.HandCards;
+	import com.wecoit.display.Align;
 	import com.wecoit.display.DisplayElement;
 	
+	import flash.display.DisplayObject;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	
 	[Event(name="select", type="com.ourgame.mahjong.bloodriver.events.TileEvent")]
 	
@@ -89,6 +94,8 @@ package com.ourgame.mahjong.bloodriver.ui
 		
 		private var cards:Vector.<Tile>;
 		
+		private var cardPositions:Vector.<Point>;
+		
 		// -------------------------------------------------------------------------------------------------------- 构造
 		
 		/**
@@ -108,26 +115,23 @@ package com.ourgame.mahjong.bloodriver.ui
 			{
 				case Position.CURRENT:
 					this.x = 136;
-					this.y = 570;
+					this.y = 485;
 					break;
 				case Position.OPPOSITE:
-					this.x = 655;
-					this.y = 50;
+					this.x = 650;
+					this.y = 12;
 					break;
 				case Position.PREV:
-					this.x = 144;
-					this.y = 118;
+					this.x = 154;
+					this.y = 110;
 					break;
 				case Position.NEXT:
-					this.x = 815;
-					this.y = 412;
+					this.x = 785;
+					this.y = 398;
 					break;
 			}
 			
-			if (this.position == Position.CURRENT)
-			{
-				this.addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
-			}
+			this.initPositions();
 		}
 		
 		// -------------------------------------------------------------------------------------------------------- 方法
@@ -162,29 +166,44 @@ package com.ourgame.mahjong.bloodriver.ui
 			{
 				var group:CardGroup = list[i];
 				var tile:TilesGroup = new TilesGroup(this.position, group);
+				var offset:Number = 0;
 				
 				switch (position)
 				{
 					case Position.CURRENT:
-						tile.x = 167 * i;
-						tile.y = -77.65;
+						offset = 3 * list.length;
+						tile.x = (168 + 3) * i - offset;
+						tile.y = 3.75;
 						break;
 					case Position.OPPOSITE:
-						tile.x = (i == 0) ? -73.75 : 78 * i * -1 - 73.75;
-						tile.y = -37.1;
+						offset = 3 * list.length;
+						tile.x = (i == 0) ? -90.3 + offset : ((90.3 + 3) * i + 90.3) * -1 + offset;
+						tile.y = 3.2;
 						break;
 					case Position.PREV:
-						tile.x = 0;
-						tile.y = 66.65 * i;
+						offset = 5 * list.length;
+						tile.x = -14.15;
+						tile.y = (66 + 5) * i - offset;
 						break;
 					case Position.NEXT:
-						tile.x = -32.2;
-						tile.y = (i == 0) ? -63.7 + 7 : 66.65 * i * -1 - 63.7 + 7;
+						offset = 5 * list.length + 11;
+						tile.x = 0;
+						tile.y = (i == 0) ? -66 + offset : ((66 + 5) * i + 66) * -1 + offset;
 						break;
 				}
 				
 				this.groups.push(tile);
 				this.addChild(tile);
+				
+				if (this.position == Position.PREV)
+				{
+					this.setChildIndex(tile, i);
+				}
+				
+				if (this.position == Position.NEXT)
+				{
+					this.setChildIndex(tile, this.numChildren - i - 1);
+				}
 			}
 			
 			this.layout();
@@ -196,7 +215,7 @@ package com.ourgame.mahjong.bloodriver.ui
 		 */
 		public function initCards(list:Vector.<Card>):void
 		{
-			while (this.cards.length > 0)
+			while (this.cards.length > list.length)
 			{
 				var remove:Tile = this.cards.pop();
 				
@@ -209,9 +228,17 @@ package com.ourgame.mahjong.bloodriver.ui
 			for (var i:int = 0; i < list.length; i++)
 			{
 				var card:Card = list[i];
-				var tile:Tile = new Tile(card, this.position);
-				this.cards.push(tile);
-				this.addChild(tile);
+				
+				if (i < this.cards.length)
+				{
+					this.cards[i].card = card;
+				}
+				else
+				{
+					var tile:Tile = new Tile(card, this.position);
+					this.cards.push(tile);
+					this.addChild(tile);
+				}
 			}
 			
 			this.layout();
@@ -220,54 +247,57 @@ package com.ourgame.mahjong.bloodriver.ui
 		/**
 		 * 布局
 		 */
-		public function layout():void
+		public function layout(align:uint=Align.RIGHT):void
 		{
+			var start:uint = (align == Align.LEFT) ? 0 : (this.cards.length % 3 == 2) ? 14 - this.cards.length : 13 - this.cards.length;
+			
 			for (var i:int = 0; i < this.cards.length; i++)
 			{
-				var index:uint = (this.cards.length % 3 == 2) ? 14 - this.cards.length + i : 13 - this.cards.length + i;
-				var offset:Number;
-				var spacing:Number;
-				
+				var point:Point = this.cardPositions[i + start];
 				var tile:Tile = this.cards[i];
 				tile.status = this.status;
 				
-				var tileX:Number = 0;
-				var tileY:Number = 0;
+				var pointX:Number = point.x;
+				var pointY:Number = point.y;
 				
-				switch (position)
+				if (this.status == CardStatus.HIDE || this.status == CardStatus.SHOW)
 				{
-					case Position.CURRENT:
-						offset = (this.status == CardStatus.STAND) ? 0 : 12 * this.groups.length;
-						spacing = (this.status == CardStatus.STAND) ? 56.2 : 52;
-						tileX = (index == 13) ? spacing * index + 10 + offset : spacing * index + offset;
-						tileY = tile.height * -1;
-						break;
-					case Position.OPPOSITE:
-						offset = (this.status == CardStatus.STAND) ? 0 : 4.25 * this.groups.length;
-						spacing = (this.status == CardStatus.STAND) ? 24.65 : 24.65;
-						tileX = (index == 13) ? 0 - (spacing * (index + 1) + 6 + offset) : 0 - (spacing * (index + 1) + offset);
-						tileY = tile.height * -1;
-						break;
-					case Position.PREV:
-						offset = (this.status == CardStatus.STAND) ? 0 : 10 * this.groups.length;
-						spacing = (this.status == CardStatus.STAND) ? 22.05 : 18.95;
-						tileX = 0;
-						tileY = (index == 13) ? spacing * index + 15 + offset : spacing * index + offset;
-						this.setChildIndex(tile, this.groups.length + this.cards.length - 1);
-						break;
-					case Position.NEXT:
-						offset = (this.status == CardStatus.STAND) ? 7 : 10 * this.groups.length + 7;
-						spacing = (this.status == CardStatus.STAND) ? 22.05 : 18.95;
-						tileX = tile.width * -1;
-						tileY = (index == 13) ? 0 - (spacing * (index + 1) + 15 + offset) : 0 - (spacing * (index + 1) + offset);
-						this.setChildIndex(tile, 0);
-						break;
+					switch (this.position)
+					{
+						case Position.CURRENT:
+							pointY = point.y + 3.75;
+							break;
+						case Position.OPPOSITE:
+							pointY = point.y + 3.2;
+							break;
+						case Position.PREV:
+							pointX = point.x - 14.15;
+							pointY = point.y + 3.3;
+							break;
+						case Position.PREV:
+							pointY = point.y + 3.3;
+							break;
+					}
 				}
 				
-				if (tile.x != tileX || tile.y != tileY)
+				if (tile.x != pointX)
 				{
-					tile.x = tileX;
-					tile.y = tileY;
+					tile.x = pointX;
+				}
+				
+				if (tile.y != pointY)
+				{
+					tile.y = pointY;
+				}
+				
+				if (this.position == Position.PREV)
+				{
+					this.setChildIndex(tile, this.numChildren - 1);
+				}
+				
+				if (this.position == Position.NEXT)
+				{
+					this.setChildIndex(tile, 0);
 				}
 			}
 		}
@@ -286,20 +316,29 @@ package com.ourgame.mahjong.bloodriver.ui
 		 * @param card
 		 * @param sort
 		 */
-		public function addCard(card:Card, sort:Boolean=false):void
+		public function addCard(card:Card, align:uint=Align.RIGHT):void
 		{
+			var start:uint = (align == Align.LEFT) ? 0 : (this.cards.length % 3 == 2) ? 14 - this.cards.length : 13 - this.cards.length;
+			var point:Point = (this.cards.length + start >= this.cardPositions.length) ? this.cardPositions[start] : this.cardPositions[this.cards.length + start];
+			
 			var tile:Tile = new Tile(card, this.position);
+			tile.x = point.x;
+			tile.y = point.y - 15;
+			
 			this.cards.push(tile);
 			this.addChild(tile);
 			
-			if (sort)
+			if (this.position == Position.PREV)
 			{
-				this.sort();
+				this.setChildIndex(tile, this.numChildren - 1);
 			}
-			else
+			
+			if (this.position == Position.NEXT)
 			{
-				this.layout();
+				this.setChildIndex(tile, 0);
 			}
+			
+			TweenMax.to(tile, 0.2, {y: point.y});
 		}
 		
 		/**
@@ -307,7 +346,7 @@ package com.ourgame.mahjong.bloodriver.ui
 		 * @param card
 		 * @param sort
 		 */
-		public function removeCard(card:Card, sort:Boolean=false):void
+		public function removeCard(card:Card):void
 		{
 			for each (var tile:Tile in this.cards)
 			{
@@ -318,17 +357,9 @@ package com.ourgame.mahjong.bloodriver.ui
 					if (this.contains(tile))
 					{
 						this.removeChild(tile);
+						break;
 					}
 				}
-			}
-			
-			if (sort)
-			{
-				this.sort();
-			}
-			else
-			{
-				this.layout();
 			}
 		}
 		
@@ -341,7 +372,7 @@ package com.ourgame.mahjong.bloodriver.ui
 		{
 			for each (var tile:Tile in this.cards)
 			{
-				if (tile.card == card)
+				if (tile.card == card || tile.card.id == card.id)
 				{
 					return tile;
 				}
@@ -357,6 +388,7 @@ package com.ourgame.mahjong.bloodriver.ui
 		{
 			for each (var tile:Tile in this.cards)
 			{
+				tile.tingInfo = null;
 				tile.confirm = false;
 				tile.select = (tile == this.selected && this.enable);
 			}
@@ -364,27 +396,84 @@ package com.ourgame.mahjong.bloodriver.ui
 		
 		// -------------------------------------------------------------------------------------------------------- 函数
 		
-		private function onMouseOver(event:MouseEvent):void
+		override protected function onAddedToStage():void
 		{
-			var target:Tile = event.target as Tile;
-			
-			if (target == null)
+			if (this.position == Position.CURRENT)
 			{
-				return;
+				this.addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
+			}
+		}
+		
+		override protected function onRemovedFromStage():void
+		{
+			for (var i:int = 0; i < this.numChildren; i++)
+			{
+				var child:DisplayObject = this.getChildAt(i);
+				TweenMax.killTweensOf(child);
+				this.removeChildAt(i);
 			}
 			
+			if (this.position == Position.CURRENT)
+			{
+				this.removeEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
+			}
+		}
+		
+		private function initPositions():void
+		{
+			this.cardPositions = new Vector.<Point>();
+			
+			for (var i:int = 0; i < 14; i++)
+			{
+				var spacing:Number;
+				var pointX:Number;
+				var pointY:Number;
+				
+				switch (position)
+				{
+					case Position.CURRENT:
+						spacing = 56;
+						pointX = (i == 13) ? spacing * i + 10 : spacing * i;
+						pointY = 0;
+						break;
+					case Position.OPPOSITE:
+						spacing = 30;
+						pointX = (i == 13) ? 0 - spacing * (i + 1) - 6 : 0 - spacing * (i + 1);
+						pointY = 0;
+						break;
+					case Position.PREV:
+						spacing = 22;
+						pointX = 0;
+						pointY = (i == 13) ? spacing * i + 15 : spacing * i;
+						break;
+					case Position.NEXT:
+						spacing = 22;
+						pointX = 0;
+						pointY = (i == 13) ? 0 - spacing * (i + 1) - 15 : 0 - spacing * (i + 1);
+						break;
+				}
+				
+				this.cardPositions.push(new Point(pointX, pointY));
+			}
+		}
+		
+		private function onMouseOver(event:MouseEvent):void
+		{
+			this.addEventListener(MouseEvent.MOUSE_OUT, onMouseOut, false, 0, true);
+			this.addEventListener(MouseEvent.CLICK, onMouseClick, false, 0, true);
+			this.stage.addEventListener(Event.MOUSE_LEAVE, onMouseOut, false, 0, true);
+			
+			var target:Tile = event.target as Tile;
 			this._selected = target;
 			
 			this.update();
-			
-			this.addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
-			this.addEventListener(MouseEvent.CLICK, onMouseClick);
 		}
 		
-		private function onMouseOut(event:MouseEvent):void
+		private function onMouseOut(event:Event):void
 		{
 			this.removeEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
 			this.removeEventListener(MouseEvent.CLICK, onMouseClick);
+			this.stage.removeEventListener(Event.MOUSE_LEAVE, onMouseOut);
 			
 			this._selected = null;
 			

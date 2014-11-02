@@ -4,6 +4,7 @@ package com.ourgame.mahjong.bloodriver.controller
 	import com.ourgame.mahjong.bloodriver.data.GameData;
 	import com.ourgame.mahjong.bloodriver.enum.Position;
 	import com.ourgame.mahjong.bloodriver.method.GameMethod;
+	import com.ourgame.mahjong.bloodriver.method.OperateMethod;
 	import com.ourgame.mahjong.bloodriver.method.TableMethod;
 	import com.ourgame.mahjong.bloodriver.model.GameModel;
 	import com.ourgame.mahjong.bloodriver.state.TableState;
@@ -52,16 +53,18 @@ package com.ourgame.mahjong.bloodriver.controller
 			this.register(TableMethod.GAME_INVITE, GAME_INVITE);
 			this.register(TableMethod.BACK, BACK);
 			
+			this.register(OperateMethod.SHOWTING, SHOWTING);
+			
 			this.register(GameMethod.GAME_START, GAME_START);
 			this.register(GameMethod.DEAL_CARDS, DEAL_CARDS);
 			this.register(GameMethod.SWAP_DICE, SWAP_DICE);
 			this.register(GameMethod.SELECT_SWAP, SELECT_SWAP);
-			this.register(GameMethod.SWAP_CARDS_OUT, SWAP_CARDS_OUT);
-			this.register(GameMethod.SWAP_CARDS_IN, SWAP_CARDS_IN);
+			this.register(GameMethod.GAME_PLAY, GAME_PLAY);
 			this.register(GameMethod.FLOWER_PIG, FLOWER_PIG);
 			this.register(GameMethod.DRAW, DRAW);
 			this.register(GameMethod.DISCARD, DISCARD);
 			this.register(GameMethod.ACTION, ACTION);
+			this.register(GameMethod.RESULT, RESULT);
 		}
 		
 		// -------------------------------------------------------------------------------------------------------- 函数
@@ -69,6 +72,10 @@ package com.ourgame.mahjong.bloodriver.controller
 		private function READY(notice:INotice):void
 		{
 			((this.context as State).manager as BloodRiver).info.data.tableProxy.ready();
+			
+			(this.context as TableState).ui.swapBoard.swap = null;
+			(this.context as TableState).ui.swapBoard.visible = false;
+			(this.context as State).manager.switchState(TableState);
 		}
 		
 		private function GAME_INVITE(notice:INotice):void
@@ -78,7 +85,15 @@ package com.ourgame.mahjong.bloodriver.controller
 		
 		private function BACK(notice:INotice):void
 		{
-			((this.context as State).manager as BloodRiver).info.data.tableProxy.leave();
+			if (((this.context as State).manager as BloodRiver).info.data.tableProxy != null)
+			{
+				((this.context as State).manager as BloodRiver).info.data.tableProxy.leave();
+			}
+		}
+		
+		private function SHOWTING(notice:INotice):void
+		{
+			(this.context as TableState).ui.showTing(notice.params);
 		}
 		
 		private function GAME_START(notice:INotice):void
@@ -117,16 +132,12 @@ package com.ourgame.mahjong.bloodriver.controller
 			notice.complete();
 		}
 		
-		private function SWAP_CARDS_OUT(notice:INotice):void
+		private function GAME_PLAY(notice:INotice):void
 		{
-			(this.context as TableState).ui.swapBoard.swap = notice.params;
+			(this.context as TableState).ui.swapBoard.swap = GameData.currentGame.swapOut;
 			(this.context as TableState).ui.swapBoard.visible = true;
 			
-			notice.complete();
-		}
-		
-		private function SWAP_CARDS_IN(notice:INotice):void
-		{
+			(this.context as TableState).ui.countdown.show();
 			(this.context as TableState).ui.countdown.timeout = 0;
 			
 			notice.complete();
@@ -156,6 +167,14 @@ package com.ourgame.mahjong.bloodriver.controller
 			
 			(this.context as TableState).ui.countdown.timeout = action.time;
 			(this.context as TableState).ui.countdown.position = ((this.context as State).manager as BloodRiver).info.data.table.getSeatPosition(action.seat);
+			
+			notice.complete();
+		}
+		
+		private function RESULT(notice:INotice):void
+		{
+			(this.context as TableState).ui.countdown.timeout = 0;
+			(this.context as TableState).ui.countdown.position = Position.UNKOWN;
 			
 			notice.complete();
 		}

@@ -2,6 +2,7 @@ package com.ourgame.mahjong.bloodriver.model
 {
 	import com.ourgame.mahjong.bloodriver.BloodRiver;
 	import com.ourgame.mahjong.bloodriver.method.GameMethod;
+	import com.ourgame.mahjong.libaray.DataExchange;
 	import com.ourgame.mahjong.libaray.IGameProxy;
 	import com.wecoit.mvc.Model;
 	import com.wecoit.mvc.State;
@@ -24,6 +25,8 @@ package com.ourgame.mahjong.bloodriver.model
 		
 		// -------------------------------------------------------------------------------------------------------- 变量
 		
+		private var data:DataExchange;
+		
 		// -------------------------------------------------------------------------------------------------------- 构造
 		
 		/**
@@ -38,12 +41,14 @@ package com.ourgame.mahjong.bloodriver.model
 		
 		override public function onAdd():void
 		{
-			((this.context as State).manager as BloodRiver).info.data.gameProxy = this;
+			this.data = ((this.context as State).manager as BloodRiver).info.data;
+			this.data.gameProxy = this;
 		}
 		
 		override public function onRemove():void
 		{
-			((this.context as State).manager as BloodRiver).info.data.gameProxy = null;
+			this.data.gameProxy = null;
+			this.data = null;
 		}
 		
 		public function start():void

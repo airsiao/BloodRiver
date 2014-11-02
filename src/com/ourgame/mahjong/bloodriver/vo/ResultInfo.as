@@ -24,9 +24,9 @@ package com.ourgame.mahjong.bloodriver.vo
 			return this._status;
 		}
 		
-		private var _fan:uint;
+		private var _fan:int;
 		
-		public function get fan():uint
+		public function get fan():int
 		{
 			return this._fan;
 		}

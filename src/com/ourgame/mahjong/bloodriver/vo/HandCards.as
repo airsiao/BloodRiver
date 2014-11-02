@@ -33,6 +33,8 @@ package com.ourgame.mahjong.bloodriver.vo
 				return result;
 			}
 			
+			result.push(FanType.PING);
+			
 			if (this.cards.isPeng && this.groups.isPeng)
 			{
 				result.push(FanType.PENGPENG);
@@ -43,7 +45,68 @@ package com.ourgame.mahjong.bloodriver.vo
 				result.push(FanType.QINGYISE);
 			}
 			
+			if (result.indexOf(FanType.PENGPENG) >= 0 && result.indexOf(FanType.QINGYISE) >= 0)
+			{
+				result.push(FanType.QINGPENG);
+			}
+			
 			return result;
+		}
+		
+		/**
+		 * 胡牌番值
+		 * @return
+		 */
+		public function get fanValue():uint
+		{
+			var types:Vector.<uint> = this.fanTypes;
+			
+			if (types.length <= 0)
+			{
+				//没胡
+				return 0;
+			}
+			
+			//算番
+			var fan:uint = 0;
+			
+			if (types.indexOf(FanType.PING) >= 0)
+			{
+				fan = 3;
+			}
+			
+			if (types.indexOf(FanType.PENGPENG) >= 0)
+			{
+				fan = 6;
+			}
+			
+			if (types.indexOf(FanType.QINGYISE) >= 0)
+			{
+				fan = 8;
+			}
+			
+			if (types.indexOf(FanType.QINGPENG) >= 0)
+			{
+				fan = 14;
+			}
+			
+			//算杠
+			var gang:uint = 0;
+			
+			for each (var group:CardGroup in this.groups.list)
+			{
+				if (group.type == CardGroupType.GANG_MING || group.type == CardGroupType.GANG_BU)
+				{
+					gang += 1;
+				}
+				
+				if (group.type == CardGroupType.GANG_AN)
+				{
+					gang += 2;
+				}
+			}
+			
+			return fan + gang;
 		}
 		
 		/**
@@ -72,9 +135,46 @@ package com.ourgame.mahjong.bloodriver.vo
 		 * 可听的牌
 		 * @return
 		 */
-		public function get tings():Vector.<Card>
+		public function get tings():Vector.<TingInfo>
 		{
-			return (this.isLack) ? this.cards.tings : new Vector.<Card>();
+			var result:Vector.<TingInfo> = new Vector.<TingInfo>();
+			
+			if (!this.isLack)
+			{
+				return result;
+			}
+			
+			var last:Card = null;
+			
+			for each (var card:Card in this.cards.list)
+			{
+				if (last != null && card.color == last.color && card.point == last.point)
+				{
+					continue;
+				}
+				
+				var cards:CardList = new CardList(this.cards.list.concat());
+				var hands:HandCards = new HandCards(cards, this.groups);
+				cards.remove(card);
+				
+				if (cards.tings.length > 0)
+				{
+					var tings:TingInfo = new TingInfo(card);
+					
+					for each (var ting:Card in cards.tings)
+					{
+						cards.add(ting);
+						tings.tings.put(ting, hands.fanValue);
+						cards.remove(ting);
+					}
+					
+					result.push(tings);
+				}
+				
+				last = card;
+			}
+			
+			return result;
 		}
 		
 		/**

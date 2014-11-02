@@ -77,7 +77,8 @@ package com.ourgame.mahjong.bloodriver.view
 			}
 			
 			pool.removeCard(action.card);
-			hand.removeCard(action.card, true);
+			hand.removeCard(action.card);
+			hand.sort();
 			
 			for (var i:int = 0; i < info.fan.length; i++)
 			{

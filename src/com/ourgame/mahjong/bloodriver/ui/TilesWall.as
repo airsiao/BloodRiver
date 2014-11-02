@@ -1,5 +1,6 @@
 package com.ourgame.mahjong.bloodriver.ui
 {
+	import com.greensock.TweenMax;
 	import com.ourgame.mahjong.bloodriver.enum.Position;
 	import com.wecoit.display.DisplayElement;
 	
@@ -13,9 +14,9 @@ package com.ourgame.mahjong.bloodriver.ui
 		
 		// -------------------------------------------------------------------------------------------------------- 静态变量
 		
-		private static const WidthH:Number = 25.4;
+		private static const WidthH:Number = 25;
 		
-		private static const WidthV:Number = 18.3;
+		private static const WidthV:Number = 18;
 		
 		// -------------------------------------------------------------------------------------------------------- 静态方法
 		
@@ -103,25 +104,25 @@ package com.ourgame.mahjong.bloodriver.ui
 				
 				switch (position)
 				{
-					case Position.OPPOSITE:
-						pair.x = 86 + i * WidthH;
-						pair.y = 0;
-						this.addChild(pair);
-						break;
-					case Position.NEXT:
-						pair.x = 493;
-						pair.y = 44 + (i - 14) * WidthV;
-						this.addChild(pair);
-						break;
 					case Position.CURRENT:
-						pair.x = 86 + (13 - (i - 14 - 13)) * WidthH;
-						pair.y = 293;
+						pair.x = 88 + (13 - (i - 14 - 13)) * WidthH;
+						pair.y = 292;
+						this.addChild(pair);
+						break;
+					case Position.OPPOSITE:
+						pair.x = 88 + i * WidthH;
+						pair.y = 0;
 						this.addChild(pair);
 						break;
 					case Position.PREV:
 						pair.x = 0;
-						pair.y = 44 + (12 - (i - 14 - 13 - 14)) * WidthV;
+						pair.y = 40 + (12 - (i - 14 - 13 - 14)) * WidthV;
 						this.addChildAt(pair, 0);
+						break;
+					case Position.NEXT:
+						pair.x = 493;
+						pair.y = 40 + (i - 14) * WidthV;
+						this.addChild(pair);
 						break;
 				}
 			}
@@ -149,13 +150,23 @@ package com.ourgame.mahjong.bloodriver.ui
 		
 		public function deal():void
 		{
-			for (var i:int = 0; i < 13 * 4; i++)
+			if (this.list.length <= 0)
 			{
-				this.draw();
+				return;
 			}
+			
+			var pairA:TilesWallPair = this.list.shift();
+			var pairB:TilesWallPair = this.list.shift();
+			TweenMax.to(pairA, 0.2, {y: pairA.y - 7, alpha: 0, onComplete: onDealComplete, onCompleteParams: [pairA]});
+			TweenMax.to(pairB, 0.2, {y: pairB.y - 7, alpha: 0, onComplete: onDealComplete, onCompleteParams: [pairB]});
 		}
-	
+		
 		// -------------------------------------------------------------------------------------------------------- 函数
+		
+		private function onDealComplete(pair:TilesWallPair):void
+		{
+			pair.remove();
+		}
 	
 	}
 }

@@ -95,9 +95,14 @@ package com.ourgame.mahjong.bloodriver.protoc.protocol
 		public static const OGID_GAME_HOSTING:int = OGID_BASE_MESSAGE + 27;
 		
 		/**
-		 * 游戏结果
+		 * 游戏结束
 		 */
-		public static const OGID_GAME_RESULT:int = OGID_BASE_MESSAGE + 29;
+		public static const OGID_GAME_OVER:int = OGID_BASE_MESSAGE + 29;
+		
+		/**
+		 * 游戏结算
+		 */
+		public static const OGID_GAME_RESULT:int = OGID_BASE_MESSAGE + 31;
 	
 	}
 }

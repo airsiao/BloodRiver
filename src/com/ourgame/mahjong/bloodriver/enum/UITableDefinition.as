@@ -14,6 +14,11 @@ package com.ourgame.mahjong.bloodriver.enum
 		private static const BASE:String = "com.ourgame.mahjong.bloodriver.resource.";
 		
 		/**
+		 * 牌
+		 */
+		public static const Card:String = BASE + "card.";
+		
+		/**
 		 * 桌子背景
 		 */
 		public static const TableBackground:String = BASE + "TableBackground";
@@ -42,11 +47,6 @@ package com.ourgame.mahjong.bloodriver.enum
 		 * 筹码条
 		 */
 		public static const ChipBar:String = BASE + "ChipBar";
-		
-		/**
-		 * 牌
-		 */
-		public static const Card:String = BASE + "Card";
 		
 		/**
 		 * 打牌面板
@@ -147,6 +147,46 @@ package com.ourgame.mahjong.bloodriver.enum
 		 * 结算
 		 */
 		public static const Result:String = BASE + "Result";
+		
+		/**
+		 * 骰子
+		 */
+		public static const Dice:String = BASE + "Dice";
+		
+		/**
+		 * 当前牌指示
+		 */
+		public static const CurrentArrow:String = BASE + "CurrentArrow";
+		
+		/**
+		 * 听牌
+		 */
+		public static const Ting:String = BASE + "Ting";
+		
+		/**
+		 * 听牌背景
+		 */
+		public static const TingBackground:String = BASE + "TingBackground";
+		
+		/**
+		 * 听牌番
+		 */
+		public static const TingFan:String = BASE + "TingFan";
+		
+		/**
+		 * 听牌番数背景
+		 */
+		public static const TingFanBackground:String = BASE + "TingFanBackground";
+		
+		/**
+		 * 听牌数字
+		 */
+		public static const TingNumber:String = BASE + "TingNumber";
+		
+		/**
+		 * 听牌发光遮罩
+		 */
+		public static const TileTingMask:String = BASE + "TileTingMask";
 	
 	}
 }

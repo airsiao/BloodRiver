@@ -82,6 +82,8 @@ package com.ourgame.mahjong.bloodriver.controller
 		
 		override public function onRemove():void
 		{
+			this.data = null;
+			
 			this.socket = null;
 		}
 		

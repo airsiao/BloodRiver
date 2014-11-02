@@ -5,8 +5,10 @@ package com.ourgame.mahjong.bloodriver.ui
 	import com.ourgame.mahjong.bloodriver.enum.Position;
 	import com.ourgame.mahjong.bloodriver.enum.UITableDefinition;
 	import com.ourgame.mahjong.bloodriver.vo.Card;
+	import com.ourgame.mahjong.bloodriver.vo.TingInfo;
 	import com.wecoit.core.AssetsManager;
 	
+	import flash.display.Bitmap;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	
@@ -25,6 +27,16 @@ package com.ourgame.mahjong.bloodriver.ui
 		// -------------------------------------------------------------------------------------------------------- 静态函数
 		
 		// -------------------------------------------------------------------------------------------------------- 属性
+		
+		override public function get width():Number
+		{
+			return this.display.width;
+		}
+		
+		override public function get height():Number
+		{
+			return this.display.height;
+		}
 		
 		private var _card:Card;
 		
@@ -71,7 +83,10 @@ package com.ourgame.mahjong.bloodriver.ui
 		public function set select(value:Boolean):void
 		{
 			this.buttonMode = value;
-			this.display.y = (value || this.confirm) ? -20 : 0;
+			
+			this.display.y = (value || this.confirm) ? -7 : 0;
+			this.light.y = (value || this.confirm) ? 4 - 7 : 4;
+			this.ting.y = (value || this.confirm) ? 6 - 7 : 6;
 		}
 		
 		private var _confirm:Boolean;
@@ -85,12 +100,31 @@ package com.ourgame.mahjong.bloodriver.ui
 		{
 			this._confirm = value;
 			
-			this.alpha = (value) ? 0.4 : 1;
+			this.alpha = (value) ? 0.8 : 1;
+		}
+		
+		private var _tingInfo:TingInfo;
+		
+		public function get tingInfo():TingInfo
+		{
+			return this._tingInfo;
+		}
+		
+		public function set tingInfo(value:TingInfo):void
+		{
+			this._tingInfo = value;
+			
+			this.ting.visible = (value != null);
+			this.light.visible = (value != null);
 		}
 		
 		// -------------------------------------------------------------------------------------------------------- 变量
 		
 		private var display:MovieClip;
+		
+		private var light:MovieClip;
+		
+		private var ting:Bitmap;
 		
 		private var hotArea:Sprite;
 		
@@ -109,6 +143,18 @@ package com.ourgame.mahjong.bloodriver.ui
 			this._position = position;
 			this._status = status;
 			
+			this.light = AssetsManager.instance.getDefinitionMovieClip(UITableDefinition.TileTingMask);
+			this.light.x = 2;
+			this.light.y = 4;
+			this.light.visible = false;
+			this.addChild(this.light);
+			
+			this.ting = AssetsManager.instance.getDefinitionBitmap(UITableDefinition.Ting);
+			this.ting.x = 32;
+			this.ting.y = 6;
+			this.ting.visible = false;
+			this.addChild(this.ting);
+			
 			this.hotArea = new Sprite();
 			this.hotArea.graphics.beginFill(0XFFFFFF, 0);
 			this.hotArea.graphics.drawRect(0, 0, 1, 1);
@@ -120,25 +166,17 @@ package com.ourgame.mahjong.bloodriver.ui
 		
 		// -------------------------------------------------------------------------------------------------------- 方法
 		
+		override public function toString():String
+		{
+			return (this.card == null) ? "未知" : this.card.toString();
+		}
+		
 		public function draw():void
 		{
 			if (this.display != null && this.contains(this.display))
 			{
 				this.removeChild(this.display);
 				this.display = null;
-			}
-			
-			if (this.position == Position.NEXT || this.position == Position.PREV)
-			{
-				if (this.status == CardStatus.POOL)
-				{
-					this._status = CardStatus.SHOW;
-				}
-				
-				if (this.status == CardStatus.HIDE || this.status == CardStatus.WALL)
-				{
-					this._status = CardStatus.HIDE;
-				}
 			}
 			
 			var instance:String = UITableDefinition.Card;
@@ -152,14 +190,12 @@ package com.ourgame.mahjong.bloodriver.ui
 					instance += "Opposite";
 					break;
 				case Position.PREV:
-					instance += (this.status == CardStatus.HIDE) ? "Horizontal" : "Prev";
+					instance += "Prev";
 					break;
 				case Position.NEXT:
-					instance += (this.status == CardStatus.HIDE) ? "Horizontal" : "Next";
+					instance += "Next";
 					break;
 			}
-			
-			this.display = AssetsManager.instance.getDefinitionMovieClip(instance + this.status);
 			
 			var frame:uint = 1;
 			
@@ -181,13 +217,9 @@ package com.ourgame.mahjong.bloodriver.ui
 				frame += this.card.point;
 			}
 			
-			if (this.display == null)
-			{
-				return;
-			}
-			
+			this.display = AssetsManager.instance.getDefinitionMovieClip(instance + this.status);
 			this.display.gotoAndStop(frame);
-			this.addChild(this.display);
+			this.addChildAt(this.display, 0);
 			
 			this.hotArea.width = this.display.width;
 			this.hotArea.height = this.display.height;

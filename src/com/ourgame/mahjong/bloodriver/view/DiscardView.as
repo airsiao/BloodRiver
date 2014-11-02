@@ -69,7 +69,11 @@ package com.ourgame.mahjong.bloodriver.view
 			}
 			
 			pool.addCard(action.card);
-			hand.removeCard(action.card, true);
+			hand.removeCard(action.card);
+			hand.sort();
+			hand.resetTiles();
+			
+			(this.context as GameState).tiles.current = action.card;
 			
 			LayerManager.instance.tile.addChild(new DiscardBoard(position, action.card));
 			

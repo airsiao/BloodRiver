@@ -84,7 +84,6 @@ package com.ourgame.mahjong.bloodriver.ui
 			}
 			
 			this.motion.gotoAndStop(1);
-			this.addChild(this.motion);
 		}
 		
 		// -------------------------------------------------------------------------------------------------------- 方法
@@ -92,11 +91,14 @@ package com.ourgame.mahjong.bloodriver.ui
 		override protected function onAddedToStage():void
 		{
 			this.motion.gotoAndPlay(1);
+			this.addChild(this.motion);
 			this.motion.addEventListener(Event.ENTER_FRAME, onEnterFrame);
 		}
 		
 		override protected function onRemovedFromStage():void
 		{
+			this.clear();
+			
 			this.motion.stop();
 			this.motion.removeEventListener(Event.ENTER_FRAME, onEnterFrame);
 		}

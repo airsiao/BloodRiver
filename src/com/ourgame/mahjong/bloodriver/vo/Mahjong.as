@@ -71,6 +71,70 @@ package com.ourgame.mahjong.bloodriver.vo
 			
 			return card;
 		}
+		
+		/**
+		 * 添加一张牌
+		 * @param card
+		 */
+		public function add(card:Card):void
+		{
+			if (card == null)
+			{
+				return;
+			}
+			
+			for each (var info:Card in this.cards)
+			{
+				if (info == card || info.id == card.id)
+				{
+					return;
+				}
+			}
+			
+			this.cards.push(card);
+		}
+		
+		/**
+		 * 移除一张牌
+		 * @param card
+		 */
+		public function remove(card:Card):void
+		{
+			if (card == null)
+			{
+				return;
+			}
+			
+			for each (var info:Card in this.cards)
+			{
+				if (info == card || info.id == card.id)
+				{
+					this.cards.splice(this.cards.indexOf(info), 1);
+					break;
+				}
+			}
+		}
+		
+		/**
+		 * 获取一种牌
+		 * @param color
+		 * @param point
+		 * @return
+		 */
+		public function getCards(color:uint, point:uint):Vector.<Card>
+		{
+			var result:Vector.<Card> = new Vector.<Card>();
+			
+			for each (var info:Card in this.cards)
+			{
+				if (info.color == color && info.point == point)
+				{
+					result.push(info);
+				}
+			}
+			
+			return result;
+		}
 	
 		// -------------------------------------------------------------------------------------------------------- 函数
 	

@@ -1,5 +1,6 @@
 package com.ourgame.mahjong.bloodriver.ui
 {
+	import com.greensock.TweenMax;
 	import com.ourgame.mahjong.bloodriver.enum.CardStatus;
 	import com.ourgame.mahjong.bloodriver.enum.Position;
 	import com.wecoit.display.DisplayElement;
@@ -58,7 +59,7 @@ package com.ourgame.mahjong.bloodriver.ui
 			{
 				this._down = new Tile(null, position, CardStatus.WALL);
 				this._down.x = 0;
-				this._down.y = 10;
+				this._down.y = 11;
 				this.addChild(this._down);
 				return;
 			}
@@ -79,24 +80,29 @@ package com.ourgame.mahjong.bloodriver.ui
 			
 			if (this._up != null)
 			{
-				this.removeChild(this.up);
 				tile = this.up;
 				this._up = null;
+				TweenMax.to(tile, 0.2, {y: tile.y - 7, alpha: 0, onComplete: onPopComplete, onCompleteParams: [tile]});
 				return tile;
 			}
 			
 			if (this.down != null)
 			{
-				this.removeChild(this.down);
 				tile = this.down;
 				this._down = null;
+				TweenMax.to(tile, 0.2, {y: tile.y - 7, alpha: 0, onComplete: onPopComplete, onCompleteParams: [tile]});
 				return tile;
 			}
 			
 			return null;
 		}
-	
+		
 		// -------------------------------------------------------------------------------------------------------- 函数
+		
+		private function onPopComplete(tile:Tile):void
+		{
+			this.removeChild(tile);
+		}
 	
 	}
 }

@@ -9,17 +9,21 @@ package com.ourgame.mahjong.bloodriver.controller
 	import com.ourgame.mahjong.bloodriver.model.MainSocketModel;
 	import com.ourgame.mahjong.bloodriver.protoc.message.CReqAct;
 	import com.ourgame.mahjong.bloodriver.protoc.message.CReqSwap;
+	import com.ourgame.mahjong.bloodriver.protoc.message.NTFSwapPrepared;
 	import com.ourgame.mahjong.bloodriver.protoc.message.NtfAct;
 	import com.ourgame.mahjong.bloodriver.protoc.message.NtfCastDice;
 	import com.ourgame.mahjong.bloodriver.protoc.message.NtfDeals;
 	import com.ourgame.mahjong.bloodriver.protoc.message.NtfDiscard;
 	import com.ourgame.mahjong.bloodriver.protoc.message.NtfDraw;
+	import com.ourgame.mahjong.bloodriver.protoc.message.NtfGameOver;
 	import com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult;
 	import com.ourgame.mahjong.bloodriver.protoc.message.NtfStartGame;
 	import com.ourgame.mahjong.bloodriver.protoc.message.NtfWin;
 	import com.ourgame.mahjong.bloodriver.protoc.message.Player;
 	import com.ourgame.mahjong.bloodriver.protoc.message.SAckSwap;
 	import com.ourgame.mahjong.bloodriver.protoc.message.NtfDeals.TileAmount;
+	import com.ourgame.mahjong.bloodriver.protoc.message.NtfGameOver.FinalStatus;
+	import com.ourgame.mahjong.bloodriver.protoc.message.NtfGameOver.FinalWinInfo;
 	import com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Detail;
 	import com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Result;
 	import com.ourgame.mahjong.bloodriver.protoc.message.NtfWin.WinInfo;
@@ -162,6 +166,10 @@ package com.ourgame.mahjong.bloodriver.controller
 					this.ON_DEAL(data);
 					break;
 				
+				case MJBloodRiverProtocol.SERVER + MJBloodRiverProtocol.OGID_SWAP:
+					this.ON_SWAP(data);
+					break;
+				
 				case MJBloodRiverProtocol.SERVER + MJBloodRiverProtocol.OGID_SWAP_RESULT:
 					this.ON_SWAP_RESULT(data);
 					break;
@@ -182,6 +190,10 @@ package com.ourgame.mahjong.bloodriver.controller
 					this.ON_PLAYER_WIN(data);
 					break;
 				
+				case MJBloodRiverProtocol.SERVER + MJBloodRiverProtocol.OGID_GAME_OVER:
+					this.ON_GAME_OVER(data);
+					break;
+				
 				case MJBloodRiverProtocol.SERVER + MJBloodRiverProtocol.OGID_GAME_RESULT:
 					this.ON_GAME_RESULT(data);
 					break;
@@ -199,6 +211,7 @@ package com.ourgame.mahjong.bloodriver.controller
 			game.dealer = body.dealer;
 			game.score = body.basicScore;
 			game.remainCards = 108;
+			game.mahjong.shuffle();
 			
 			for each (var info:Player in body.players)
 			{
@@ -264,30 +277,39 @@ package com.ourgame.mahjong.bloodriver.controller
 			this.notify(GameMethod.DEAL_CARDS, [body.waitingTime, cards], this);
 		}
 		
+		private function ON_SWAP(data:MJDataPack):void
+		{
+			var body:NTFSwapPrepared = new NTFSwapPrepared();
+			body.mergeFrom(data.body);
+			
+			Log.debug("收到换出三张牌消息", body);
+			
+			var cards:Vector.<Card> = new Vector.<Card>();
+			
+			for each (var card:uint in body.tiles)
+			{
+				cards.push(new Card(card));
+			}
+			
+			this.notify(GameMethod.SWAP_CARDS_OUT, [body.seat, cards], this);
+		}
+		
 		private function ON_SWAP_RESULT(data:MJDataPack):void
 		{
 			var body:SAckSwap = new SAckSwap();
 			body.mergeFrom(data.body);
 			
-			Log.debug("收到换三张牌消息", body);
+			Log.debug("收到换入三张牌消息", body);
 			
-			var outCards:Vector.<Card> = new Vector.<Card>();
+			var cards:Vector.<Card> = new Vector.<Card>();
 			
-			for each (var outCard:uint in body.oldTiles)
+			for each (var card:uint in body.newTiles)
 			{
-				outCards.push(new Card(outCard));
+				cards.push(new Card(card));
 			}
 			
-			this.notify(GameMethod.SWAP_CARDS_OUT, outCards, this);
-			
-			var inCards:Vector.<Card> = new Vector.<Card>();
-			
-			for each (var inCard:uint in body.newTiles)
-			{
-				inCards.push(new Card(inCard));
-			}
-			
-			this.notify(GameMethod.SWAP_CARDS_IN, inCards, this);
+			this.notify(GameMethod.SWAP_CARDS_IN, cards, this);
+			this.notify(GameMethod.GAME_PLAY, null, this);
 		}
 		
 		private function ON_DISCARD(data:MJDataPack):void
@@ -391,6 +413,39 @@ package com.ourgame.mahjong.bloodriver.controller
 			this.notify(GameMethod.WIN, action, this);
 		}
 		
+		private function ON_GAME_OVER(data:MJDataPack):void
+		{
+			var body:NtfGameOver = new NtfGameOver();
+			body.mergeFrom(data.body);
+			
+			Log.debug("收到游戏结束消息", body);
+			
+			var results:Vector.<ResultInfo> = new Vector.<ResultInfo>();
+			
+			for each (var status:FinalStatus in body.finalStatus)
+			{
+				var info:ResultInfo;
+				
+				for each (var win:FinalWinInfo in body.finalWinInfos)
+				{
+					if (win.seat == status.seat)
+					{
+						info = new ResultInfo(status.status, win.points)
+						break;
+					}
+				}
+				
+				for each (var id:uint in status.tilesInHand)
+				{
+					info.hands.push(new Card(id));
+				}
+				
+				results[status.seat] = info;
+			}
+			
+			this.notify(GameMethod.OVER, results, this);
+		}
+		
 		private function ON_GAME_RESULT(data:MJDataPack):void
 		{
 			var body:NtfGameResult = new NtfGameResult();
@@ -398,18 +453,11 @@ package com.ourgame.mahjong.bloodriver.controller
 			
 			Log.debug("收到游戏结算消息", body);
 			
-			var results:Vector.<ResultInfo> = new Vector.<ResultInfo>();
+			var results:Vector.<int> = new Vector.<int>();
 			
 			for each (var result:Result in body.results)
 			{
-				var info:ResultInfo = new ResultInfo(result.status, result.winPoints);
-				
-				for each (var id:uint in result.tilesInHand)
-				{
-					info.hands.push(new Card(id));
-				}
-				
-				results[result.seat] = info;
+				results[result.seat] = result.winPoints;
 			}
 			
 			var records:Vector.<ResultRecord> = new Vector.<ResultRecord>();
@@ -420,7 +468,7 @@ package com.ourgame.mahjong.bloodriver.controller
 				records.push(record);
 			}
 			
-			this.notify(GameMethod.RESULT, [results, records]);
+			this.notify(GameMethod.RESULT, [results, records], this);
 		}
 	
 	}

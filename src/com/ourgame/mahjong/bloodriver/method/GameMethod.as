@@ -49,6 +49,7 @@ package com.ourgame.mahjong.bloodriver.method
 		
 		/**
 		 * 换出牌
+		 * params uint 座位号
 		 * params Vector.<Card> 换出的三张牌列表
 		 */
 		public static const SWAP_CARDS_OUT:String = BASE + "SWAP_CARDS_OUT";
@@ -58,6 +59,11 @@ package com.ourgame.mahjong.bloodriver.method
 		 * params Vector.<Card> 换入的三张牌列表
 		 */
 		public static const SWAP_CARDS_IN:String = BASE + "SWAP_CARDS_IN";
+		
+		/**
+		 * 开始行牌
+		 */
+		public static const GAME_PLAY:String = BASE + "GAME_PLAY";
 		
 		/**
 		 * 抓牌
@@ -96,8 +102,14 @@ package com.ourgame.mahjong.bloodriver.method
 		public static const WIN:String = BASE + "WIN";
 		
 		/**
+		 * 结束
+		 * params Vector.<OverInfo> 按座位号结束信息列表
+		 */
+		public static const OVER:String = BASE + "OVER";
+		
+		/**
 		 * 结算
-		 * params Vector.<ResultInfo> 按座位号结算列表
+		 * params Vector.<int> 按座位号总输赢列表
 		 * params Vector.<ResultRecord> 结算记录列表
 		 */
 		public static const RESULT:String = BASE + "RESULT";

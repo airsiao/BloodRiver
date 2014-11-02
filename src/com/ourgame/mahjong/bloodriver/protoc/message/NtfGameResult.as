@@ -16,13 +16,6 @@ package com.ourgame.mahjong.bloodriver.protoc.message {
 		/**
 		 *  @private
 		 */
-		public static const GAMEID:FieldDescriptor$TYPE_UINT64 = new FieldDescriptor$TYPE_UINT64("com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.gameId", "gameId", (1 << 3) | com.netease.protobuf.WireType.VARINT);
-
-		public var gameId:UInt64;
-
-		/**
-		 *  @private
-		 */
 		public static const RESULTS:RepeatedFieldDescriptor$TYPE_MESSAGE = new RepeatedFieldDescriptor$TYPE_MESSAGE("com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.results", "results", (2 << 3) | com.netease.protobuf.WireType.LENGTH_DELIMITED, function():Class { return com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Result; });
 
 		[ArrayElementType("com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Result")]
@@ -47,8 +40,6 @@ package com.ourgame.mahjong.bloodriver.protoc.message {
 		 *  @private
 		 */
 		override com.netease.protobuf.used_by_generated_code final function writeToBuffer(output:com.netease.protobuf.WritingBuffer):void {
-			com.netease.protobuf.WriteUtils.writeTag(output, com.netease.protobuf.WireType.VARINT, 1);
-			com.netease.protobuf.WriteUtils.write$TYPE_UINT64(output, this.gameId);
 			for (var results$index:uint = 0; results$index < this.results.length; ++results$index) {
 				com.netease.protobuf.WriteUtils.writeTag(output, com.netease.protobuf.WireType.LENGTH_DELIMITED, 2);
 				com.netease.protobuf.WriteUtils.write$TYPE_MESSAGE(output, this.results[results$index]);
@@ -68,18 +59,10 @@ package com.ourgame.mahjong.bloodriver.protoc.message {
 		 *  @private
 		 */
 		override com.netease.protobuf.used_by_generated_code final function readFromSlice(input:flash.utils.IDataInput, bytesAfterSlice:uint):void {
-			var gameId$count:uint = 0;
 			var maxWait$count:uint = 0;
 			while (input.bytesAvailable > bytesAfterSlice) {
 				var tag:uint = com.netease.protobuf.ReadUtils.read$TYPE_UINT32(input);
 				switch (tag >> 3) {
-				case 1:
-					if (gameId$count != 0) {
-						throw new flash.errors.IOError('Bad data format: NtfGameResult.gameId cannot be set twice.');
-					}
-					++gameId$count;
-					this.gameId = com.netease.protobuf.ReadUtils.read$TYPE_UINT64(input);
-					break;
 				case 2:
 					this.results.push(com.netease.protobuf.ReadUtils.read$TYPE_MESSAGE(input, new com.ourgame.mahjong.bloodriver.protoc.message.NtfGameResult.Result()));
 					break;

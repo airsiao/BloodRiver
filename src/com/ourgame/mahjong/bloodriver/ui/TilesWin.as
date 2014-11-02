@@ -17,9 +17,9 @@ package com.ourgame.mahjong.bloodriver.ui
 		
 		// -------------------------------------------------------------------------------------------------------- 静态变量
 		
-		private static const WidthV:Number = 24.65;
+		private static const WidthV:Number = 25;
 		
-		private static const WidthH:Number = 18.95;
+		private static const WidthH:Number = 20;
 		
 		// -------------------------------------------------------------------------------------------------------- 静态方法
 		
@@ -50,20 +50,20 @@ package com.ourgame.mahjong.bloodriver.ui
 			switch (this.position)
 			{
 				case Position.CURRENT:
-					this.x = 282;
-					this.y = 436;
+					this.x = 305;
+					this.y = 440;
 					break;
 				case Position.OPPOSITE:
-					this.x = 676;
-					this.y = 55;
+					this.x = 654;
+					this.y = 58;
 					break;
 				case Position.PREV:
-					this.x = 181;
+					this.x = 180;
 					this.y = 110;
 					break;
 				case Position.NEXT:
-					this.x = 746;
-					this.y = 422;
+					this.x = 748;
+					this.y = 394;
 					break;
 			}
 			
@@ -89,20 +89,20 @@ package com.ourgame.mahjong.bloodriver.ui
 			switch (this.position)
 			{
 				case Position.CURRENT:
-					tile.x = (index % 16) * WidthV;
+					tile.x = (index % 14) * WidthV;
 					tile.y = 0 - offset;
 					break;
 				case Position.OPPOSITE:
-					tile.x = (index % 16 + 1) * WidthV * -1;
+					tile.x = (index % 14 + 1) * WidthV * -1;
 					tile.y = 0 - offset;
 					break;
 				case Position.PREV:
 					tile.x = 0;
-					tile.y = (index % 16) * WidthH - offset;
+					tile.y = (index % 14) * WidthH - offset;
 					break;
 				case Position.NEXT:
 					tile.x = 0;
-					tile.y = (index % 16 + 1) * WidthH * -1 - offset;
+					tile.y = (index % 14 + 1) * WidthH * -1 - offset;
 					break;
 			}
 			

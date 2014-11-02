@@ -9,10 +9,13 @@ package com.ourgame.mahjong.bloodriver.view
 	import com.ourgame.mahjong.bloodriver.state.GameState;
 	import com.ourgame.mahjong.bloodriver.ui.ActionButton;
 	import com.ourgame.mahjong.bloodriver.ui.LayerManager;
+	import com.ourgame.mahjong.bloodriver.ui.Tile;
 	import com.ourgame.mahjong.bloodriver.utils.compareActionByType;
 	import com.ourgame.mahjong.bloodriver.vo.Action;
 	import com.ourgame.mahjong.bloodriver.vo.Card;
 	import com.ourgame.mahjong.bloodriver.vo.CardGroup;
+	import com.ourgame.mahjong.bloodriver.vo.TingInfo;
+	import com.wecoit.debug.Log;
 	import com.wecoit.mvc.View;
 	import com.wecoit.mvc.core.INotice;
 	
@@ -103,8 +106,21 @@ package com.ourgame.mahjong.bloodriver.view
 			
 			if ((this.request.type & ActionType.DISCARD) == ActionType.DISCARD)
 			{
+				Log.debug("可听", GameData.currentPlayer.handCards.tings);
+				
+				for each (var ting:TingInfo in GameData.currentPlayer.handCards.tings)
+				{
+					var drop:Tile = (this.context as GameState).tiles.handCurrent.getTileByCard(ting.drop);
+					
+					if (drop != null)
+					{
+						drop.tingInfo = ting;
+					}
+				}
+				
 				(this.context as GameState).tiles.handCurrent.enable = ((this.context as GameState).tiles.winCurrent.numChildren == 0);
-				(this.context as GameState).tiles.handCurrent.addEventListener(TileEvent.CONFIRM, onSelect);
+				(this.context as GameState).tiles.handCurrent.addEventListener(TileEvent.SELECT, onSelect, false, 0, true);
+				(this.context as GameState).tiles.handCurrent.addEventListener(TileEvent.CONFIRM, onConfirm, false, 0, true);
 			}
 			
 			if (this.request.type > 1)
@@ -118,7 +134,8 @@ package com.ourgame.mahjong.bloodriver.view
 		
 		public function hide():void
 		{
-			(this.context as GameState).tiles.handCurrent.removeEventListener(TileEvent.CONFIRM, onSelect);
+			(this.context as GameState).tiles.handCurrent.removeEventListener(TileEvent.SELECT, onSelect);
+			(this.context as GameState).tiles.handCurrent.removeEventListener(TileEvent.CONFIRM, onConfirm);
 			(this.context as GameState).tiles.handCurrent.enable = false;
 			
 			while (this.buttons.length > 0)
@@ -126,11 +143,6 @@ package com.ourgame.mahjong.bloodriver.view
 				var button:ActionButton = this.buttons.shift();
 				button.remove();
 				button.removeEventListener(MouseEvent.CLICK, onAction);
-			}
-			
-			while (this.container.numChildren > 0)
-			{
-				this.container.removeChildAt(0);
 			}
 		}
 		
@@ -149,7 +161,7 @@ package com.ourgame.mahjong.bloodriver.view
 			{
 				var button:ActionButton = this.buttons[i];
 				button.x = (i + 1) * -100;
-				button.addEventListener(MouseEvent.CLICK, onAction);
+				button.addEventListener(MouseEvent.CLICK, onAction, false, 0, true);
 				this.container.addChild(button);
 			}
 			
@@ -159,8 +171,14 @@ package com.ourgame.mahjong.bloodriver.view
 		
 		private function onSelect(event:TileEvent):void
 		{
+			this.notify(OperateMethod.SHOWTING, (event.tile == null) ? null : event.tile.tingInfo);
+		}
+		
+		private function onConfirm(event:TileEvent):void
+		{
 			this.hide();
 			
+			this.notify(OperateMethod.SHOWTING, null);
 			this.notify(OperateMethod.DISCARD, event.tile.card);
 		}
 		

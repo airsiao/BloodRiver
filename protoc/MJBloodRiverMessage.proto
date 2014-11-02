@@ -248,22 +248,39 @@ message NtfUserTrust{
 }
 
 //========================================================================================
+// 游戏结束
+// #define OGID_GAME_OVER						( OGID_GAME_MESSAGE + 29 )
+message NtfGameOver{
+	//用户最终状态
+	message FinalStatus{
+		required uint32 seat = 1;				//座位号
+		repeated uint32 tilesInHand = 2;		//手牌
+		required uint32 status = 3[default=0]; 	//0:正常  1：无听  2： 花猪
+	}
+	//最终无听，花猪赔付信息
+	message FinalWinInfo{
+		required uint32 seat = 1;				//座位号
+		required sint32 points = 2; 			//番数
+	}
+	required uint64 gameId = 1;
+	repeated FinalStatus finalStatus = 2;
+	repeated FinalWinInfo finalWinInfos = 3;
+}
+
+//========================================================================================
 // 游戏结果
-// #define OGID_GAME_RESULT						( OGID_GAME_MESSAGE + 29 )
+// #define OGID_GAME_RESULT						( OGID_GAME_MESSAGE + 31 )
 message NtfGameResult{
 	message Detail{
-		required uint32 type = 1;				//是和还是 1 点炮，2 和牌 3 自摸 4 别人自摸
+		required uint32 type = 1;				//是和还是 1和牌，2点炮 3 自摸 4 别人自摸,5 别人无听，6，自己无听，7，别人花猪，8，自己花猪
 		required uint32 seat = 2;				//如果是和牌，这是点炮者座位号，如果是点炮，这是和牌者座位号
 		required uint32 points = 3; 			//番数
-		required uint32 tile = 4;  				//点炮的牌
+		optional uint32 tile = 4;  				//点炮的牌
 	}
 	message Result{
 		required uint32 seat = 1;
-		required sint32 winPoints = 2;			//总输赢番数
-		repeated uint32 tilesInHand = 3;  		//用户手牌
-		required uint32 status = 4 [default=0]; //0:正常  1：无听  2： 花猪
+		required sint32 winPoints = 2;							//总输赢番数
 	}
-	required uint64 gameId = 1;
 	repeated Result results = 2;
 	required uint32 maxWait = 3;				//最长等待时间，自动配桌散桌，这个值是0
 	repeated Detail details = 4;				//输赢明细
@@ -271,7 +288,7 @@ message NtfGameResult{
 
 //========================================================================================
 // 定缺
-// #define OGID_ABSENT_COLOR					( OGID_GAME_MESSAGE + 31 )
+// #define OGID_ABSENT_COLOR					( OGID_GAME_MESSAGE + 33 )
 message CREQAbsentColor{
 	required uint32 color = 1;
 }
