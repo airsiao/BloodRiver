@@ -1,12 +1,12 @@
 package com.ourgame.mahjong.bloodriver.view
 {
 	import com.greensock.TweenMax;
-	import com.ourgame.mahjong.bloodriver.BloodRiver;
 	import com.ourgame.mahjong.bloodriver.data.GameData;
 	import com.ourgame.mahjong.bloodriver.enum.UIEffectDefinition;
 	import com.ourgame.mahjong.bloodriver.enum.UITableDefinition;
 	import com.ourgame.mahjong.bloodriver.state.GameState;
 	import com.ourgame.mahjong.bloodriver.ui.LayerManager;
+	import com.ourgame.mahjong.libaray.data.CommonData;
 	import com.wecoit.core.AssetsManager;
 	import com.wecoit.mvc.View;
 	import com.wecoit.mvc.core.INotice;
@@ -91,7 +91,7 @@ package com.ourgame.mahjong.bloodriver.view
 		{
 			this.notice = notice;
 			
-			var dealer:uint = (this.module as BloodRiver).info.data.table.getSeatPosition(GameData.currentGame.dealer);
+			var dealer:uint = CommonData.table.getSeatPosition(GameData.currentGame.dealer);
 			var dice:uint = 0;
 			
 			for each (var point:uint in GameData.currentGame.dealDice)

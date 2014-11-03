@@ -4,10 +4,11 @@ package com.ourgame.mahjong.bloodriver.controller
 	import com.ourgame.mahjong.bloodriver.data.CoreData;
 	import com.ourgame.mahjong.bloodriver.method.TableMethod;
 	import com.ourgame.mahjong.bloodriver.state.TableState;
-	import com.ourgame.mahjong.libaray.DataExchange;
 	import com.ourgame.mahjong.libaray.GameLoader;
+	import com.ourgame.mahjong.libaray.data.CommonData;
 	import com.ourgame.mahjong.libaray.enum.PlayMode;
 	import com.ourgame.mahjong.libaray.vo.GameInfo;
+	import com.ourgame.mahjong.libaray.vo.UserInfo;
 	import com.wecoit.core.AssetsManager;
 	import com.wecoit.core.FlashPlayer;
 	import com.wecoit.data.Config;
@@ -65,15 +66,13 @@ package com.ourgame.mahjong.bloodriver.controller
 			
 			if (((this.context as State).manager as BloodRiver).info == null)
 			{
-				var game:GameInfo = new GameInfo(new XmlValue(<game name="BloodRiver">BloodRiver.xml</game>), new DataExchange());
+				var game:GameInfo = new GameInfo(new XmlValue(<game name="BloodRiver">BloodRiver.xml</game>));
 				game.domain = ApplicationDomain.currentDomain;
 				((this.context as State).manager as BloodRiver).info = game;
 				
 				var loader:GameLoader = new GameLoader();
 				loader.addEventListener(BytesEvent.COMPLETE, onGameLoadComplete);
 				loader.load(game);
-				
-				this.context.addController(new ConnectController());
 			}
 			else
 			{
@@ -104,15 +103,15 @@ package com.ourgame.mahjong.bloodriver.controller
 		private function onUserLoadComplete(event:BytesEvent):void
 		{
 			var config:Config = new Config((event.target as BytesLoader).content);
-			var data:DataExchange = ((this.context as State).manager as BloodRiver).info.data;
 			
-			data.ourgameID = config.getValue("ourgameID");
-			data.username = config.getValue("ourgameID"); //config.getValue("username");
-			data.rolename = config.getValue("ourgameID"); // config.getValue("rolename");
-			data.nickname = config.getValue("ourgameID"); // config.getValue("nickname");
-			data.ticket = config.getValue("ticket");
-			data.channelID = config.getValue("channelID");
-			data.playMode = config.getValue("PlayMode");
+			CommonData.user = new UserInfo();
+			CommonData.ourgameID = config.getValue("ourgameID");
+			CommonData.username = config.getValue("ourgameID"); //config.getValue("username");
+			CommonData.rolename = config.getValue("ourgameID"); // config.getValue("rolename");
+			CommonData.nickname = config.getValue("ourgameID"); // config.getValue("nickname");
+			CommonData.ticket = config.getValue("ticket");
+			CommonData.channelID = config.getValue("channelID");
+			CommonData.playMode = config.getValue("PlayMode");
 			
 			AssetsManager.instance.saveAsset(config.name, (event.target as BytesLoader).content);
 			
@@ -121,15 +120,14 @@ package com.ourgame.mahjong.bloodriver.controller
 		
 		private function loadInfoFromFlashVars():void
 		{
-			var data:DataExchange = ((this.context as State).manager as BloodRiver).info.data;
-			
-			data.ourgameID = Application.stage.loaderInfo.parameters["OurgameID"];
-			data.username = Application.stage.loaderInfo.parameters["UserName"];
-			data.rolename = Application.stage.loaderInfo.parameters["RoleName"];
-			data.nickname = Application.stage.loaderInfo.parameters["NickName"];
-			data.ticket = Application.stage.loaderInfo.parameters["Ticket"];
-			data.channelID = Application.stage.loaderInfo.parameters["ChannelID"];
-			data.playMode = PlayMode.ONLINE;
+			CommonData.user = new UserInfo();
+			CommonData.ourgameID = Application.stage.loaderInfo.parameters["OurgameID"];
+			CommonData.username = Application.stage.loaderInfo.parameters["UserName"];
+			CommonData.rolename = Application.stage.loaderInfo.parameters["RoleName"];
+			CommonData.nickname = Application.stage.loaderInfo.parameters["NickName"];
+			CommonData.ticket = Application.stage.loaderInfo.parameters["Ticket"];
+			CommonData.channelID = Application.stage.loaderInfo.parameters["ChannelID"];
+			CommonData.playMode = PlayMode.ONLINE;
 			
 			this.notify(TableMethod.CONNECT);
 		}

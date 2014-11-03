@@ -1,6 +1,5 @@
 package com.ourgame.mahjong.bloodriver.controller
 {
-	import com.ourgame.mahjong.bloodriver.BloodRiver;
 	import com.ourgame.mahjong.bloodriver.data.GameData;
 	import com.ourgame.mahjong.bloodriver.enum.Position;
 	import com.ourgame.mahjong.bloodriver.method.GameMethod;
@@ -9,6 +8,7 @@ package com.ourgame.mahjong.bloodriver.controller
 	import com.ourgame.mahjong.bloodriver.model.GameModel;
 	import com.ourgame.mahjong.bloodriver.state.TableState;
 	import com.ourgame.mahjong.bloodriver.vo.Action;
+	import com.ourgame.mahjong.libaray.data.CommonData;
 	import com.wecoit.mvc.Controller;
 	import com.wecoit.mvc.State;
 	import com.wecoit.mvc.core.INotice;
@@ -71,7 +71,7 @@ package com.ourgame.mahjong.bloodriver.controller
 		
 		private function READY(notice:INotice):void
 		{
-			((this.context as State).manager as BloodRiver).info.data.tableProxy.ready();
+			CommonData.tableProxy.ready();
 			
 			(this.context as TableState).ui.swapBoard.swap = null;
 			(this.context as TableState).ui.swapBoard.visible = false;
@@ -85,9 +85,9 @@ package com.ourgame.mahjong.bloodriver.controller
 		
 		private function BACK(notice:INotice):void
 		{
-			if (((this.context as State).manager as BloodRiver).info.data.tableProxy != null)
+			if (CommonData.tableProxy != null)
 			{
-				((this.context as State).manager as BloodRiver).info.data.tableProxy.leave();
+				CommonData.tableProxy.leave();
 			}
 		}
 		
@@ -148,7 +148,7 @@ package com.ourgame.mahjong.bloodriver.controller
 			var action:Action = notice.params;
 			
 			(this.context as TableState).ui.countdown.timeout = action.time;
-			(this.context as TableState).ui.countdown.position = ((this.context as State).manager as BloodRiver).info.data.table.getSeatPosition(action.seat);
+			(this.context as TableState).ui.countdown.position = CommonData.table.getSeatPosition(action.seat);
 			
 			notice.complete();
 		}
@@ -166,7 +166,7 @@ package com.ourgame.mahjong.bloodriver.controller
 			var action:Action = notice.params;
 			
 			(this.context as TableState).ui.countdown.timeout = action.time;
-			(this.context as TableState).ui.countdown.position = ((this.context as State).manager as BloodRiver).info.data.table.getSeatPosition(action.seat);
+			(this.context as TableState).ui.countdown.position = CommonData.table.getSeatPosition(action.seat);
 			
 			notice.complete();
 		}

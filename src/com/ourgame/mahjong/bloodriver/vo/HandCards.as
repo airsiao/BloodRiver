@@ -139,11 +139,6 @@ package com.ourgame.mahjong.bloodriver.vo
 		{
 			var result:Vector.<TingInfo> = new Vector.<TingInfo>();
 			
-			if (!this.isLack)
-			{
-				return result;
-			}
-			
 			var last:Card = null;
 			
 			for each (var card:Card in this.cards.list)
@@ -154,8 +149,14 @@ package com.ourgame.mahjong.bloodriver.vo
 				}
 				
 				var cards:CardList = new CardList(this.cards.list.concat());
-				var hands:HandCards = new HandCards(cards, this.groups);
 				cards.remove(card);
+				
+				var hands:HandCards = new HandCards(cards, this.groups);
+				
+				if (!hands.isLack)
+				{
+					continue;
+				}
 				
 				if (cards.tings.length > 0)
 				{

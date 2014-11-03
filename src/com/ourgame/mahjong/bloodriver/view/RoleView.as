@@ -1,9 +1,9 @@
 package com.ourgame.mahjong.bloodriver.view
 {
-	import com.ourgame.mahjong.bloodriver.BloodRiver;
 	import com.ourgame.mahjong.bloodriver.enum.Position;
 	import com.ourgame.mahjong.bloodriver.ui.Char;
 	import com.ourgame.mahjong.bloodriver.ui.LayerManager;
+	import com.ourgame.mahjong.libaray.data.CommonData;
 	import com.ourgame.mahjong.libaray.vo.UserInfo;
 	import com.wecoit.data.ArrayList;
 	import com.wecoit.events.ValueEvent;
@@ -61,7 +61,7 @@ package com.ourgame.mahjong.bloodriver.view
 			this.charPrev = new Char(Position.PREV);
 			LayerManager.instance.role.addChild(this.charPrev);
 			
-			(this.module as BloodRiver).info.data.table.userList.addEventListener(ValueEvent.CHANGE, updateUsers);
+			CommonData.table.userList.addEventListener(ValueEvent.CHANGE, updateUsers);
 			
 			this.updateUsers();
 		}
@@ -80,7 +80,7 @@ package com.ourgame.mahjong.bloodriver.view
 			LayerManager.instance.role.removeChild(this.charCurrent);
 			this.charCurrent = null;
 			
-			(this.module as BloodRiver).info.data.table.userList.removeEventListener(ValueEvent.CHANGE, updateUsers);
+			CommonData.table.userList.removeEventListener(ValueEvent.CHANGE, updateUsers);
 		}
 		
 		public function updateUsers(event:ValueEvent=null):void
@@ -92,7 +92,7 @@ package com.ourgame.mahjong.bloodriver.view
 			this.charPrev.visible = false;
 			this.charNext.visible = false;
 			
-			var userlist:ArrayList = (this.module as BloodRiver).info.data.table.userList;
+			var userlist:ArrayList = CommonData.table.userList;
 			
 			for (var i:int = 0; i < userlist.length; i++)
 			{
@@ -103,7 +103,7 @@ package com.ourgame.mahjong.bloodriver.view
 					continue;
 				}
 				
-				switch ((this.module as BloodRiver).info.data.table.getSeatPosition(user.seat))
+				switch (CommonData.table.getSeatPosition(user.seat))
 				{
 					case Position.CURRENT:
 						this.charCurrent.visible = true;

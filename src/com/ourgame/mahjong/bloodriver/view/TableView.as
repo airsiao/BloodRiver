@@ -1,6 +1,5 @@
 package com.ourgame.mahjong.bloodriver.view
 {
-	import com.ourgame.mahjong.bloodriver.BloodRiver;
 	import com.ourgame.mahjong.bloodriver.data.GameData;
 	import com.ourgame.mahjong.bloodriver.enum.UITableDefinition;
 	import com.ourgame.mahjong.bloodriver.method.TableMethod;
@@ -14,6 +13,7 @@ package com.ourgame.mahjong.bloodriver.view
 	import com.ourgame.mahjong.bloodriver.ui.TingBoard;
 	import com.ourgame.mahjong.bloodriver.vo.Game;
 	import com.ourgame.mahjong.bloodriver.vo.TingInfo;
+	import com.ourgame.mahjong.libaray.data.CommonData;
 	import com.wecoit.core.AssetsManager;
 	import com.wecoit.mvc.View;
 	
@@ -113,10 +113,10 @@ package com.ourgame.mahjong.bloodriver.view
 			
 			this.menuBar.addEventListener("back", onBack, false, 0, true);
 			
-			this.bind((this.module as BloodRiver).info.data.room, this.infoBar, {name: "roomName"});
-			this.bind((this.module as BloodRiver).info.data.table, this.infoBar, {name: "tableName"});
+			this.bind(CommonData.room, this.infoBar, {name: "roomName"});
+			this.bind(CommonData.table, this.infoBar, {name: "tableName"});
 			
-			this.bind((this.module as BloodRiver).info.data.user, this.tableBar, {nickname: "nickname", chips: "chips"});
+			this.bind(CommonData.user, this.tableBar, {nickname: "nickname", chips: "chips"});
 		}
 		
 		override public function onRemove():void
@@ -153,8 +153,8 @@ package com.ourgame.mahjong.bloodriver.view
 			LayerManager.instance.background.removeChild(this.background);
 			this.background = null;
 			
-			this.unBind((this.module as BloodRiver).info.data.room, this.infoBar);
-			this.unBind((this.module as BloodRiver).info.data.table, this.infoBar);
+			this.unBind(CommonData.room, this.infoBar);
+			this.unBind(CommonData.table, this.infoBar);
 			
 			this.unBind(GameData.currentGame, this.swapBoard);
 		}

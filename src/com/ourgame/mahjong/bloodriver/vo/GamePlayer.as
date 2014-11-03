@@ -40,11 +40,13 @@ package com.ourgame.mahjong.bloodriver.vo
 			var array:Array = new Array(wan, bing, tiao);
 			array.sortOn("length");
 			
-			for each (var list:CardList in array)
+			for (var i:int = array.length; i > 0; i--)
 			{
+				var list:CardList = array[i - 1];
+				
 				if (list.length < 3)
 				{
-					array.splice(array.indexOf(list), 1);
+					array.splice(i - 1, 1);
 				}
 			}
 			

@@ -1,6 +1,5 @@
 package com.ourgame.mahjong.bloodriver.controller
 {
-	import com.ourgame.mahjong.bloodriver.BloodRiver;
 	import com.ourgame.mahjong.bloodriver.enum.ActionType;
 	import com.ourgame.mahjong.bloodriver.enum.WinType;
 	import com.ourgame.mahjong.bloodriver.method.GameMethod;
@@ -35,12 +34,11 @@ package com.ourgame.mahjong.bloodriver.controller
 	import com.ourgame.mahjong.bloodriver.vo.ResultInfo;
 	import com.ourgame.mahjong.bloodriver.vo.ResultRecord;
 	import com.ourgame.mahjong.bloodriver.vo.Win;
-	import com.ourgame.mahjong.libaray.DataExchange;
+	import com.ourgame.mahjong.libaray.data.CommonData;
 	import com.ourgame.mahjong.libaray.vo.UserInfo;
 	import com.ourgame.mahjong.libaray.vo.socket.MJDataPack;
 	import com.wecoit.debug.Log;
 	import com.wecoit.mvc.Controller;
-	import com.wecoit.mvc.State;
 	import com.wecoit.mvc.core.INotice;
 	
 	/**
@@ -60,8 +58,6 @@ package com.ourgame.mahjong.bloodriver.controller
 		// -------------------------------------------------------------------------------------------------------- 属性
 		
 		// -------------------------------------------------------------------------------------------------------- 变量
-		
-		private var data:DataExchange;
 		
 		private var socket:MainSocketModel;
 		
@@ -85,7 +81,6 @@ package com.ourgame.mahjong.bloodriver.controller
 			this.register(OperateMethod.DISCARD, DISCARD);
 			this.register(OperateMethod.ACTION, ACTION);
 			
-			this.data = ((this.context as State).manager as BloodRiver).info.data;
 			this.socket = this.context.getModel(MainSocketModel) as MainSocketModel;
 		}
 		
@@ -120,7 +115,7 @@ package com.ourgame.mahjong.bloodriver.controller
 			var card:Card = notice.params;
 			
 			var body:CReqAct = new CReqAct();
-			body.seat = this.data.user.seat;
+			body.seat = CommonData.user.seat;
 			body.act = ActionType.DISCARD;
 			body.targetTile = card.id;
 			
@@ -135,7 +130,7 @@ package com.ourgame.mahjong.bloodriver.controller
 			var action:Action = notice.params;
 			
 			var body:CReqAct = new CReqAct();
-			body.seat = this.data.user.seat;
+			body.seat = CommonData.user.seat;
 			body.act = action.type;
 			body.targetTile = action.card.id;
 			body.provider = action.seat;
@@ -215,7 +210,7 @@ package com.ourgame.mahjong.bloodriver.controller
 			
 			for each (var info:Player in body.players)
 			{
-				var user:UserInfo = this.data.table.getUserByID(info.id.low);
+				var user:UserInfo = CommonData.table.getUserByID(info.id.low);
 				var player:GamePlayer = new GamePlayer(user);
 				user.seat = info.seat;
 				user.chips = info.score;
@@ -272,7 +267,7 @@ package com.ourgame.mahjong.bloodriver.controller
 				self.push(new Card(cardID));
 			}
 			
-			cards[this.data.user.seat] = self;
+			cards[CommonData.user.seat] = self;
 			
 			this.notify(GameMethod.DEAL_CARDS, [body.waitingTime, cards], this);
 		}

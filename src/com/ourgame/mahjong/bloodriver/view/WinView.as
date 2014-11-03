@@ -1,6 +1,5 @@
 package com.ourgame.mahjong.bloodriver.view
 {
-	import com.ourgame.mahjong.bloodriver.BloodRiver;
 	import com.ourgame.mahjong.bloodriver.data.GameData;
 	import com.ourgame.mahjong.bloodriver.enum.Position;
 	import com.ourgame.mahjong.bloodriver.enum.WinType;
@@ -16,6 +15,7 @@ package com.ourgame.mahjong.bloodriver.view
 	import com.ourgame.mahjong.bloodriver.vo.CardGroup;
 	import com.ourgame.mahjong.bloodriver.vo.GamePlayer;
 	import com.ourgame.mahjong.bloodriver.vo.Win;
+	import com.ourgame.mahjong.libaray.data.CommonData;
 	import com.wecoit.mvc.View;
 	import com.wecoit.mvc.core.INotice;
 	
@@ -56,7 +56,7 @@ package com.ourgame.mahjong.bloodriver.view
 			var pool:TilesPool = null;
 			var hand:TilesHand = null;
 			
-			switch ((this.module as BloodRiver).info.data.table.getSeatPosition(action.seat))
+			switch (CommonData.table.getSeatPosition(action.seat))
 			{
 				case Position.CURRENT:
 					pool = (this.context as GameState).tiles.poolCurrent;
@@ -78,11 +78,12 @@ package com.ourgame.mahjong.bloodriver.view
 			
 			pool.removeCard(action.card);
 			hand.removeCard(action.card);
+			hand.resetTiles();
 			hand.sort();
 			
 			for (var i:int = 0; i < info.fan.length; i++)
 			{
-				var position:uint = (this.module as BloodRiver).info.data.table.getSeatPosition(i);
+				var position:uint = CommonData.table.getSeatPosition(i);
 				
 				if (info.fan[i] != 0)
 				{

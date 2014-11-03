@@ -1,6 +1,5 @@
 package com.ourgame.mahjong.bloodriver.controller
 {
-	import com.ourgame.mahjong.bloodriver.BloodRiver;
 	import com.ourgame.mahjong.bloodriver.data.GameData;
 	import com.ourgame.mahjong.bloodriver.enum.ActionType;
 	import com.ourgame.mahjong.bloodriver.enum.CardGroupType;
@@ -17,10 +16,9 @@ package com.ourgame.mahjong.bloodriver.controller
 	import com.ourgame.mahjong.bloodriver.vo.ResultInfo;
 	import com.ourgame.mahjong.bloodriver.vo.ResultRecord;
 	import com.ourgame.mahjong.bloodriver.vo.Win;
-	import com.ourgame.mahjong.libaray.DataExchange;
+	import com.ourgame.mahjong.libaray.data.CommonData;
 	import com.wecoit.debug.Log;
 	import com.wecoit.mvc.Controller;
-	import com.wecoit.mvc.State;
 	import com.wecoit.mvc.core.INotice;
 	
 	/**
@@ -40,8 +38,6 @@ package com.ourgame.mahjong.bloodriver.controller
 		// -------------------------------------------------------------------------------------------------------- 属性
 		
 		// -------------------------------------------------------------------------------------------------------- 变量
-		
-		private var data:DataExchange;
 		
 		// -------------------------------------------------------------------------------------------------------- 构造
 		
@@ -74,8 +70,6 @@ package com.ourgame.mahjong.bloodriver.controller
 			this.register(GameMethod.WIN, WIN);
 			this.register(GameMethod.OVER, OVER);
 			this.register(GameMethod.RESULT, RESULT);
-			
-			this.data = ((this.context as State).manager as BloodRiver).info.data;
 		}
 		
 		// -------------------------------------------------------------------------------------------------------- 函数
@@ -90,7 +84,7 @@ package com.ourgame.mahjong.bloodriver.controller
 		private function GAME_START(notice:INotice):void
 		{
 			GameData.currentGame = notice.params;
-			GameData.currentPlayer = GameData.currentGame.playerList.element(this.data.user.seat);
+			GameData.currentPlayer = GameData.currentGame.playerList.element(CommonData.user.seat);
 			GameData.records = new Vector.<ResultRecord>();
 			
 			(this.context as GameState).shuffle.play(notice);

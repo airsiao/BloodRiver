@@ -1,6 +1,8 @@
 package com.ourgame.mahjong.bloodriver.state
 {
+	import com.ourgame.mahjong.bloodriver.controller.ConnectController;
 	import com.ourgame.mahjong.bloodriver.controller.StartupController;
+	import com.ourgame.mahjong.bloodriver.model.TableModel;
 	import com.ourgame.mahjong.bloodriver.view.MainView;
 	import com.wecoit.mvc.State;
 	
@@ -33,7 +35,6 @@ package com.ourgame.mahjong.bloodriver.state
 		{
 			super(key);
 			
-			this.add(new ConnectState());
 			this.add(new TableState());
 		}
 		
@@ -46,8 +47,11 @@ package com.ourgame.mahjong.bloodriver.state
 		
 		override public function onEnter():void
 		{
+			this.addModel(TableModel);
+			
 			this.addView(this.view);
 			
+			this.addController(new ConnectController());
 			this.addController(new StartupController());
 		}
 	

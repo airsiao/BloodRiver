@@ -9,7 +9,6 @@ package com.ourgame.mahjong.bloodriver.view
 	import com.ourgame.mahjong.bloodriver.state.GameState;
 	import com.ourgame.mahjong.bloodriver.ui.ActionButton;
 	import com.ourgame.mahjong.bloodriver.ui.LayerManager;
-	import com.ourgame.mahjong.bloodriver.ui.Tile;
 	import com.ourgame.mahjong.bloodriver.utils.compareActionByType;
 	import com.ourgame.mahjong.bloodriver.vo.Action;
 	import com.ourgame.mahjong.bloodriver.vo.Card;
@@ -110,11 +109,11 @@ package com.ourgame.mahjong.bloodriver.view
 				
 				for each (var ting:TingInfo in GameData.currentPlayer.handCards.tings)
 				{
-					var drop:Tile = (this.context as GameState).tiles.handCurrent.getTileByCard(ting.drop);
+					var hands:Vector.<Card> = GameData.currentPlayer.handCards.cards.getCards(ting.drop.color, ting.drop.point);
 					
-					if (drop != null)
+					for each (var drop:Card in hands)
 					{
-						drop.tingInfo = ting;
+						(this.context as GameState).tiles.handCurrent.getTileByCard(ting.drop).tingInfo = ting;
 					}
 				}
 				

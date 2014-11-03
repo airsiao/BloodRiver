@@ -1,10 +1,10 @@
 package com.ourgame.mahjong.bloodriver.view
 {
-	import com.ourgame.mahjong.bloodriver.BloodRiver;
 	import com.ourgame.mahjong.bloodriver.enum.Position;
 	import com.ourgame.mahjong.bloodriver.state.GameState;
 	import com.ourgame.mahjong.bloodriver.ui.TilesHand;
 	import com.ourgame.mahjong.bloodriver.vo.Action;
+	import com.ourgame.mahjong.libaray.data.CommonData;
 	import com.wecoit.mvc.View;
 	import com.wecoit.mvc.core.INotice;
 	
@@ -45,7 +45,7 @@ package com.ourgame.mahjong.bloodriver.view
 			
 			var hand:TilesHand = null;
 			
-			switch ((this.module as BloodRiver).info.data.table.getSeatPosition(action.seat))
+			switch (CommonData.table.getSeatPosition(action.seat))
 			{
 				case Position.CURRENT:
 					hand = (this.context as GameState).tiles.handCurrent;

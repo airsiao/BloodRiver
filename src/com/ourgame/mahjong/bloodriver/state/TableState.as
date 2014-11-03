@@ -1,6 +1,5 @@
 package com.ourgame.mahjong.bloodriver.state
 {
-	import com.ourgame.mahjong.bloodriver.BloodRiver;
 	import com.ourgame.mahjong.bloodriver.controller.ConsoleController;
 	import com.ourgame.mahjong.bloodriver.controller.MainSocketController;
 	import com.ourgame.mahjong.bloodriver.controller.TableController;
@@ -9,6 +8,7 @@ package com.ourgame.mahjong.bloodriver.state
 	import com.ourgame.mahjong.bloodriver.model.MainSocketModel;
 	import com.ourgame.mahjong.bloodriver.view.RoleView;
 	import com.ourgame.mahjong.bloodriver.view.TableView;
+	import com.ourgame.mahjong.libaray.data.CommonData;
 	import com.ourgame.mahjong.libaray.enum.PlayMode;
 	import com.wecoit.mvc.State;
 	
@@ -58,7 +58,7 @@ package com.ourgame.mahjong.bloodriver.state
 		{
 			this.addModel(GameModel);
 			
-			if ((this.manager as BloodRiver).info.data.playMode == PlayMode.CONSOLE)
+			if (CommonData.playMode == PlayMode.CONSOLE)
 			{
 				this.addModel(ConsoleModel);
 				this.addController(new ConsoleController());

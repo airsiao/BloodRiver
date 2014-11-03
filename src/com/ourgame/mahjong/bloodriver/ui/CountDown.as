@@ -108,9 +108,15 @@ package com.ourgame.mahjong.bloodriver.ui
 		public function show():void
 		{
 			this.visible = true;
+			this.alpha = 1;
 			this.scaleX = 0.8;
 			this.scaleY = 0.8;
 			TweenMax.to(this, 0.1, {scaleX: 1.1, scaleY: 1.1, onComplete: onShowComplete});
+		}
+		
+		public function hide():void
+		{
+			TweenMax.to(this, 0.1, {alpha: 0, onComplete: onHideComplete});
 		}
 		
 		// -------------------------------------------------------------------------------------------------------- 函数
@@ -145,6 +151,12 @@ package com.ourgame.mahjong.bloodriver.ui
 		private function onShowComplete():void
 		{
 			TweenMax.to(this, 0.13, {scaleX: 1, scaleY: 1});
+		}
+		
+		private function onHideComplete():void
+		{
+			this.visible = false;
+			this.alpha = 1;
 		}
 		
 		private function zoomIn():void

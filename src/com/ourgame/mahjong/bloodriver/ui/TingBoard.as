@@ -79,6 +79,7 @@ package com.ourgame.mahjong.bloodriver.ui
 				var tile:TileTing = new TileTing(card, fan, GameData.currentGame.mahjong.getCards(card.color, card.point).length);
 				tile.x = offset + index * 70;
 				tile.y = 16;
+				this.cards.push(tile);
 				this.addChild(tile);
 				index++;
 			}

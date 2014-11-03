@@ -1,6 +1,5 @@
 package com.ourgame.mahjong.bloodriver.controller
 {
-	import com.ourgame.mahjong.bloodriver.BloodRiver;
 	import com.ourgame.mahjong.bloodriver.method.GameMethod;
 	import com.ourgame.mahjong.bloodriver.method.SocketMethod;
 	import com.ourgame.mahjong.bloodriver.model.MainSocketModel;
@@ -8,7 +7,7 @@ package com.ourgame.mahjong.bloodriver.controller
 	import com.ourgame.mahjong.bloodriver.protoc.message.SAckEnterGame;
 	import com.ourgame.mahjong.bloodriver.protoc.protocol.MJBloodRiverProtocol;
 	import com.ourgame.mahjong.bloodriver.state.GameState;
-	import com.ourgame.mahjong.libaray.DataExchange;
+	import com.ourgame.mahjong.libaray.data.CommonData;
 	import com.ourgame.mahjong.libaray.vo.socket.MJDataPack;
 	import com.wecoit.debug.Log;
 	import com.wecoit.mvc.Controller;
@@ -33,8 +32,6 @@ package com.ourgame.mahjong.bloodriver.controller
 		
 		// -------------------------------------------------------------------------------------------------------- 变量
 		
-		private var data:DataExchange;
-		
 		private var socket:MainSocketModel;
 		
 		// -------------------------------------------------------------------------------------------------------- 构造
@@ -55,7 +52,6 @@ package com.ourgame.mahjong.bloodriver.controller
 			
 			this.register(GameMethod.GAME_ENTER, GAME_ENTER);
 			
-			this.data = ((this.context as State).manager as BloodRiver).info.data;
 			this.socket = this.context.getModel(MainSocketModel) as MainSocketModel;
 		}
 		
@@ -71,7 +67,7 @@ package com.ourgame.mahjong.bloodriver.controller
 		private function GAME_ENTER(notice:INotice):void
 		{
 			var body:CReqEnterGame = new CReqEnterGame();
-			body.gameId = this.data.gameID;
+			body.gameId = CommonData.gameID;
 			
 			Log.debug("发送进入游戏请求", body);
 			

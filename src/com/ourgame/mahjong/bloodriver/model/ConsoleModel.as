@@ -1,16 +1,14 @@
 package com.ourgame.mahjong.bloodriver.model
 {
 	import com.netease.protobuf.UInt64;
-	import com.ourgame.mahjong.bloodriver.BloodRiver;
 	import com.ourgame.mahjong.bloodriver.method.GameMethod;
 	import com.ourgame.mahjong.bloodriver.vo.Game;
 	import com.ourgame.mahjong.bloodriver.vo.GamePlayer;
 	import com.ourgame.mahjong.bloodriver.vo.Mahjong;
 	import com.ourgame.mahjong.bloodriver.vo.Robot;
-	import com.ourgame.mahjong.libaray.DataExchange;
+	import com.ourgame.mahjong.libaray.data.CommonData;
 	import com.ourgame.mahjong.libaray.vo.TableInfo;
 	import com.wecoit.mvc.Model;
-	import com.wecoit.mvc.State;
 	
 	/**
 	 * 单机数据模型
@@ -34,8 +32,6 @@ package com.ourgame.mahjong.bloodriver.model
 		
 		private var game:Game;
 		
-		private var data:DataExchange;
-		
 		// -------------------------------------------------------------------------------------------------------- 构造
 		
 		/**
@@ -52,10 +48,9 @@ package com.ourgame.mahjong.bloodriver.model
 		{
 			this.mahjong = new Mahjong();
 			
-			this.data = ((this.context as State).manager as BloodRiver).info.data;
-			this.data.user.seat = 0;
-			this.data.table = new TableInfo();
-			this.data.table.userList.add(this.data.user);
+			CommonData.user.seat = 0;
+			CommonData.table = new TableInfo();
+			CommonData.table.userList.add(CommonData.user);
 		}
 		
 		override public function onRemove():void
