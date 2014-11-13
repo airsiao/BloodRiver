@@ -1,11 +1,14 @@
 package com.ourgame.mahjong.bloodriver
 {
-	import com.ourgame.mahjong.bloodriver.state.MainState;
-	import com.ourgame.mahjong.libaray.vo.GameInfo;
-	import com.wecoit.core.AssetsManager;
-	import com.wecoit.data.HashMap;
-	import com.wecoit.mvc.Application;
-	import com.wecoit.mvc.core.IState;
+	import com.ourgame.mahjong.bloodriver.common.data.CommonData;
+	import com.ourgame.mahjong.bloodriver.common.uitls.SocketProcessor;
+	import com.wecoit.debug.Log;
+	import com.wecoit.display.DisplayElement;
+	import com.wecoit.events.BytesEvent;
+	import com.wecoit.loader.ApplicationLoader;
+	
+	import flash.events.ProgressEvent;
+	import flash.system.ApplicationDomain;
 	
 	[SWF(width="960", height="600", backgroundColor="#000000", frameRate="24")]
 	
@@ -13,7 +16,7 @@ package com.ourgame.mahjong.bloodriver
 	 * 血流成河程序
 	 * @author SiaoLeon
 	 */
-	public class BloodRiver extends Application
+	public class BloodRiver extends DisplayElement
 	{
 		// -------------------------------------------------------------------------------------------------------- 静态常量
 		
@@ -25,122 +28,71 @@ package com.ourgame.mahjong.bloodriver
 		
 		// -------------------------------------------------------------------------------------------------------- 属性
 		
-		/**
-		 * 信息
-		 */
-		private var _info:GameInfo;
-		
-		public function get info():GameInfo
-		{
-			return this._info;
-		}
-		
-		public function set info(value:GameInfo):void
-		{
-			this._info = value;
-			
-			var assets:HashMap = this.info.assets;
-			
-			for each (var key:* in assets.keys)
-			{
-				AssetsManager.instance.saveAsset(key, assets.getValue(key));
-			}
-		}
-		
 		// -------------------------------------------------------------------------------------------------------- 变量
+		
+		private var loader:ApplicationLoader;
 		
 		// -------------------------------------------------------------------------------------------------------- 构造
 		
 		/**
 		 * 构造函数
 		 */
-		public function BloodRiver(root:IState=null)
+		public function BloodRiver()
 		{
-			super(new MainState());
-		
-			//			//听牌测试
-			//			
-			//			var time:Number = getTimer();
-			//			
-			//			var cards:CardList = new CardList();
-			//			cards.add(MahjongFactory.instance.create(CardColor.WAN, 1, 0));
-			//			cards.add(MahjongFactory.instance.create(CardColor.WAN, 1, 1));
-			//			cards.add(MahjongFactory.instance.create(CardColor.WAN, 1, 2));
-			//			cards.add(MahjongFactory.instance.create(CardColor.WAN, 2, 0));
-			//			cards.add(MahjongFactory.instance.create(CardColor.WAN, 3, 0));
-			//			cards.add(MahjongFactory.instance.create(CardColor.WAN, 4, 0));
-			//			cards.add(MahjongFactory.instance.create(CardColor.WAN, 5, 0));
-			//			cards.add(MahjongFactory.instance.create(CardColor.WAN, 5, 1));
-			//			cards.add(MahjongFactory.instance.create(CardColor.WAN, 6, 0));
-			//			cards.add(MahjongFactory.instance.create(CardColor.WAN, 7, 0));
-			//			cards.add(MahjongFactory.instance.create(CardColor.WAN, 8, 0));
-			//			cards.add(MahjongFactory.instance.create(CardColor.WAN, 9, 0));
-			//			cards.add(MahjongFactory.instance.create(CardColor.WAN, 9, 1));
-			//			cards.add(MahjongFactory.instance.create(CardColor.WAN, 9, 2));
-			//			
-			//			var hands:HandCards = new HandCards();
-			//			hands.cards = cards;
-			//			trace("手牌：", hands);
-			//			
-			//			trace("听牌：", hands.tings);
-			//			
-			//			trace("耗时：", getTimer() - time);
-		
-			//==============================================================================================================
-		
-			//			//胡牌测试
-			//			
-			//			var time:Number = getTimer();
-			//			
-			//			var cards:CardList = new CardList();
-			//			cards.add(MahjongFactory.instance.create(CardColor.WAN, 1, 0));
-			//			cards.add(MahjongFactory.instance.create(CardColor.WAN, 1, 1));
-			//			cards.add(MahjongFactory.instance.create(CardColor.WAN, 1, 2));
-			//			cards.add(MahjongFactory.instance.create(CardColor.WAN, 2, 0));
-			//			cards.add(MahjongFactory.instance.create(CardColor.WAN, 3, 0));
-			//			cards.add(MahjongFactory.instance.create(CardColor.WAN, 4, 0));
-			//			cards.add(MahjongFactory.instance.create(CardColor.WAN, 5, 0));
-			//			cards.add(MahjongFactory.instance.create(CardColor.WAN, 6, 0));
-			//			cards.add(MahjongFactory.instance.create(CardColor.WAN, 7, 0));
-			//			cards.add(MahjongFactory.instance.create(CardColor.WAN, 8, 0));
-			//			cards.add(MahjongFactory.instance.create(CardColor.WAN, 9, 0));
-			//			cards.add(MahjongFactory.instance.create(CardColor.WAN, 9, 1));
-			//			cards.add(MahjongFactory.instance.create(CardColor.WAN, 9, 2));
-			//			
-			//			var hands:HandCards = new HandCards();
-			//			hands.cards = cards;
-			//			trace("手牌：", hands);
-			//			
-			//			trace("听牌：", hands.cards.tings);
-			//			
-			//			var draw:Card = MahjongFactory.instance.create(CardColor.WAN, 9, 3);
-			//			trace("抓牌：", draw);
-			//			hands.cards.add(draw);
-			//			
-			//			trace(hands.cards.isWin);
-			//			
-			//			trace(hands.fanTypes);
-			//			
-			//			trace("耗时：", getTimer() - time);
-		
-			//==============================================================================================================
-		
-			//			//换牌测试
-			//			var mahjong:Mahjong = new Mahjong();
-			//			var player:Player = new Player();
-			//			
-			//			for (var i:int = 0; i < 14; i++)
-			//			{
-			//				player.handCards.cards.add(mahjong.deal());
-			//			}
-			//			
-			//			trace("玩家手牌", player.handCards);
-			//			trace("玩家换牌", player.swap);
+			super();
 		}
-	
+		
 		// -------------------------------------------------------------------------------------------------------- 方法
-	
+		
 		// -------------------------------------------------------------------------------------------------------- 函数
+		
+		override protected function onAddedToStage():void
+		{
+			if (this.parent.hasOwnProperty("proxy"))
+			{
+				CommonData.dataPorxy = this.parent["proxy"];
+			}
+			
+			CommonData.baseDomain = ApplicationDomain.currentDomain;
+			CommonData.socketProxy = new SocketProcessor();
+			
+			this.loader = new ApplicationLoader();
+			this.loader.addEventListener(BytesEvent.ERROR, onError, false, 0, true);
+			this.loader.addEventListener(ProgressEvent.PROGRESS, onProgress, false, 0, true);
+			this.loader.addEventListener(BytesEvent.COMPLETE, onComplete, false, 0, true);
+			this.loader.load("Lobby", CommonData.basePath, new ApplicationDomain(CommonData.baseDomain));
+		}
+		
+		override protected function onRemovedFromStage():void
+		{
+			this.loader.removeEventListener(BytesEvent.ERROR, onError);
+			this.loader.removeEventListener(ProgressEvent.PROGRESS, onProgress);
+			this.loader.removeEventListener(BytesEvent.COMPLETE, onComplete);
+			this.loader = null;
+		}
+		
+		private function onError(event:BytesEvent):void
+		{
+			Log.info("加载错误", this.loader.current);
+			
+			this.loader = null;
+		}
+		
+		private function onProgress(event:ProgressEvent):void
+		{
+			var pre:Number = this.loader.currentLoaded / this.loader.currentTotal / this.loader.countTotal + this.loader.countLoaded / this.loader.countTotal;
+			pre = isNaN(pre) ? this.loader.countLoaded / this.loader.countTotal : pre;
+			
+			Log.debug("加载进度：", Math.floor(pre * 100), this.loader.countLoaded, this.loader.countTotal);
+		}
+		
+		private function onComplete(event:BytesEvent):void
+		{
+			Log.info("加载完成");
+			
+			this.addChild(this.loader.main);
+			this.loader = null;
+		}
 	
 	}
 }

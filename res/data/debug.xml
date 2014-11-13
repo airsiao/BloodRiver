@@ -6,14 +6,8 @@
 	<!-- 默认桌子ID -->
 	<option name="TableID">1</option>
 	
-	<!-- 联众ID -->
-	<option name="ourgameID">lx0004</option>
-	<!-- 用户名 -->
-	<option name="username">lx0017</option>
-	<!-- 角色名 -->
-	<option name="rolename">lx0017</option>
-	<!-- 昵称 -->
-	<option name="nickname">lx0017</option>
+	<!-- 测试ID -->
+	<option name="testID">lx0001</option>
 	<!-- 证书 -->
 	<option name="ticket">
 	</option>

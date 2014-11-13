@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table>
+
+	<!-- 麻将牌 -->
+	<asset name="Card" ver="0.0.0.1" description="麻将牌" path="assets/">card.swf</asset>
+	
+	<!-- 特效 -->
+	<asset name="Effect" ver="0.0.0.1" description="特效" path="assets/">effect.swf</asset>
+	
+	<!-- 角色 -->
+	<asset name="Role" ver="0.0.0.1" description="角色" path="assets/">role.swf</asset>
+	
+	<!-- 界面资源 -->
+	<asset name="UI" ver="0.0.0.1" description="界面资源" path="assets/">table.swf</asset>
+	
+	<!-- 主程序 -->
+	<asset name="Table" ver="0.0.0.1" description="主程序">Table.swf</asset>
+	
+</Table>

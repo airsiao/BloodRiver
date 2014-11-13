@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Lobby>
+
+	<!-- 服务配置 -->
+	<asset name="services" ver="0.0.0.1" description="服务配置" path="data/">services.xml</asset>
+	
+	<!-- 游戏列表 -->
+	<asset name="Games" ver="0.0.0.1" description="游戏列表" path="data/">games.xml</asset>
+	
+	<!-- 界面资源 -->
+	<asset name="UI" ver="0.0.0.1" description="界面资源" path="assets/">lobby.swf</asset>
+	
+	<!-- 主程序 -->
+	<asset name="Lobby" ver="0.0.0.1" description="主程序">Lobby.swf</asset>
+	
+</Lobby>

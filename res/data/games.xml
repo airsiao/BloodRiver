@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<games>
+
+	<!-- 血流成河 -->
+	<game id="1" name="Table" description="血流成河" channelID="*">data/table.xml</game>
+	
+</games>
