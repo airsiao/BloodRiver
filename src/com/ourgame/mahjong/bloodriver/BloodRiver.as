@@ -1,7 +1,7 @@
 package com.ourgame.mahjong.bloodriver
 {
 	import com.ourgame.mahjong.bloodriver.common.data.CommonData;
-	import com.ourgame.mahjong.bloodriver.common.uitls.SocketProcessor;
+	import com.ourgame.mahjong.bloodriver.common.utils.SocketProcessor;
 	import com.wecoit.debug.Log;
 	import com.wecoit.display.DisplayElement;
 	import com.wecoit.events.BytesEvent;

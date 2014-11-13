@@ -1,6 +1,6 @@
 package com.ourgame.mahjong.bloodriver.lobby.ui
 {
-	import com.ourgame.mahjong.bloodriver.common.uitls.currency;
+	import com.ourgame.mahjong.bloodriver.common.utils.currency;
 	import com.ourgame.mahjong.bloodriver.common.vo.RoomInfo;
 	import com.ourgame.mahjong.bloodriver.lobby.enum.UILobbyDefinition;
 	import com.wecoit.component.StateButton;

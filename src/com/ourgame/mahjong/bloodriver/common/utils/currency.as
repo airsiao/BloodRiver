@@ -1,4 +1,4 @@
-package com.ourgame.mahjong.bloodriver.common.uitls
+package com.ourgame.mahjong.bloodriver.common.utils
 {
 	/**
 	 * 把阿拉伯数字单位转换成中文大写，如：一二三

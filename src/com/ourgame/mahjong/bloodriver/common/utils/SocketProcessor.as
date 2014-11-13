@@ -1,4 +1,4 @@
-package com.ourgame.mahjong.bloodriver.common.uitls
+package com.ourgame.mahjong.bloodriver.common.utils
 {
 	import com.ourgame.mahjong.bloodriver.common.events.SocketEvent;
 	import com.ourgame.mahjong.bloodriver.common.vo.ISocketProxy;
